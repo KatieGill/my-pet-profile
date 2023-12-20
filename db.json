@@ -1,0 +1,156 @@
+{
+  "users": [
+    {
+      "id": 1,
+      "username": "User1",
+      "password": "password1"
+    },
+    {
+      "id": 2,
+      "username": "User2",
+      "password": "password2"
+    },
+    {
+      "id": 3,
+      "username": "User3",
+      "password": "password3"
+    },
+    {
+      "username": "Katie",
+      "password": "password",
+      "id": 4
+    },
+    {
+      "username": "Katie1",
+      "password": "password",
+      "id": 5
+    }
+  ],
+  "pets": [
+    {
+      "id": 1,
+      "userId": 3,
+      "name": "Fluffy",
+      "species": "cat",
+      "breed": "Persian",
+      "image": "./assets/cat.png",
+      "dob": "2017-06-16"
+    },
+    {
+      "id": 2,
+      "userId": 2,
+      "name": "Rover",
+      "species": "dog",
+      "breed": "Golden Retriever",
+      "image": "./assets/dog.png",
+      "dob": "2020-01-30"
+    },
+    {
+      "id": 3,
+      "userId": 1,
+      "name": "Biscuit",
+      "species": "dog",
+      "breed": "Boxer",
+      "image": "./assets/dog.png",
+      "dob": "2019-11-05"
+    }
+  ],
+  "diets": [
+    {
+      "id": 1,
+      "userId": 2,
+      "petId": 1,
+      "name": "Purina Cat Chow",
+      "amount": "1/4 cup",
+      "frequency": "twice daily"
+    },
+    {
+      "id": 2,
+      "userId": 3,
+      "petId": 3,
+      "name": "Purina Dog Chow",
+      "amount": "3/4 cup",
+      "frequency": "twice daily"
+    },
+    {
+      "id": 3,
+      "userId": 1,
+      "petId": 2,
+      "name": "Eukanuba puppy",
+      "amount": "1/2 cup",
+      "frequency": "3 times daily"
+    }
+  ],
+  "medications": [
+    {
+      "id": 1,
+      "userId": 2,
+      "petId": 1,
+      "name": "glucosamine",
+      "amount": "2 capsules",
+      "frequency": "twice daily",
+      "note": "for joint health"
+    },
+    {
+      "id": 2,
+      "userId": 3,
+      "petId": 3,
+      "name": "cephalexin",
+      "amount": "1 capsules",
+      "frequency": "twice daily",
+      "note": "antibioitic for skin"
+    }
+  ],
+  "hospitals": [
+    {
+      "id": 1,
+      "name": "Banfield",
+      "phone": "1234567899",
+      "address": "123 Main St"
+    },
+    {
+      "id": 2,
+      "name": "Blue Pearl",
+      "phone": "1234567899",
+      "address": "123 Main St"
+    },
+    {
+      "id": 3,
+      "name": "Home Town Vet",
+      "phone": "1234567899",
+      "address": "123 Main St"
+    },
+    {
+      "id": 4,
+      "name": "Specialty Hospital",
+      "phone": "1234567899",
+      "address": "123 Main St"
+    }
+  ],
+  "hospital-notes": [
+    {
+      "id": 1,
+      "userId": 2,
+      "hospitalId": 3,
+      "note": "get vaccines here"
+    },
+    {
+      "id": 2,
+      "userId": 1,
+      "hospitalID": 2,
+      "note": "for emergencies"
+    }
+  ],
+  "hospital-favorites": [
+    {
+      "id": 1,
+      "userId": 2,
+      "hospitalId": 3
+    },
+    {
+      "id": 1,
+      "userId": 1,
+      "hospitalId": 2
+    }
+  ]
+}
