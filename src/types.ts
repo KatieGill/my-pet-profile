@@ -1,4 +1,5 @@
 import { z } from "zod";
+import { catBreeds, dogBreeds } from "./assets/breedLists";
 
 export const userSchema = z.object({
   id: z.number(),
@@ -6,11 +7,16 @@ export const userSchema = z.object({
   password: z.string(),
 });
 
+export const speciesSchema = z.enum(["dog", "cat"]);
+
+//export const catBreedSchema = z.enum(catBreeds);
+//export const dogBreedSchema = z.enum(dogBreeds);
+
 export const petSchema = z.object({
   id: z.number(),
   userId: z.number(),
   name: z.string(),
-  species: z.enum(["dog", "cat"]),
+  species: speciesSchema,
   breed: z.string(),
   image: z.string(),
   dob: z.date(),
@@ -61,3 +67,4 @@ export type Diet = z.infer<typeof dietSchema>;
 export type Medication = z.infer<typeof medicationSchema>;
 export type HospitalNote = z.infer<typeof hospitalNoteSchema>;
 export type HospitalFavorite = z.infer<typeof hospitalFavoriteSchema>;
+export type Species = z.infer<typeof speciesSchema>;

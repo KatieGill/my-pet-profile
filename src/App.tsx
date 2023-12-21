@@ -1,13 +1,11 @@
 import "./App.css";
 import { HomePage } from "./Components/HomePage";
-import { AuthProvider } from "./Providers/AuthProvider";
+import { UserProfile } from "./Components/UserProfile/UserProfile";
+import { useAuthContext } from "./Providers/UseContext";
 
 function App() {
-  return (
-    <>
-      <HomePage />
-    </>
-  );
+  const { user } = useAuthContext();
+  return <>{user ? <UserProfile /> : <HomePage />}</>;
 }
 
 export default App;

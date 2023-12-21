@@ -1,6 +1,7 @@
-import { Form, useNavigate } from "react-router-dom";
-import { useAuthContext } from "../Providers/AuthProvider";
+import { useNavigate } from "react-router-dom";
+import { useAuthContext } from "../Providers/UseContext";
 import { useState } from "react";
+import toast from "react-hot-toast";
 
 export const LoginForm = () => {
   const { login } = useAuthContext();
@@ -16,12 +17,14 @@ export const LoginForm = () => {
       id="login-form"
       onSubmit={(e) => {
         e.preventDefault();
-        login({ username: usernameInput, password: passwordInput }).then(
-          resetState
-        );
+        login({ username: usernameInput, password: passwordInput })
+          .then(() => {
+            resetState();
+            navigate("/user-profile");
+          })
+          .catch((error: Error) => toast.error(error.message));
       }}
     >
-      <Form afterSubmit={() => navigate("/")} />
       <h4>Login</h4>
       <label htmlFor="username">Username:</label>
       <input

@@ -24,6 +24,11 @@
       "username": "Katie1",
       "password": "password",
       "id": 5
+    },
+    {
+      "username": "Katie2",
+      "password": "pass",
+      "id": 6
     }
   ],
   "pets": [

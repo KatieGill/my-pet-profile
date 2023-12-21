@@ -126,10 +126,24 @@ export const Requests = {
       .then((users) => users.find((user) => user.username === username))
       .then((user) => {
         if (!user) {
-          throw new Error("User not found");
+          throw new Error("Username not found");
         } else {
           return user;
         }
       });
+  },
+
+  getPets: (userId: number) => {
+    return fetch(`${baseUrl}/pets`)
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error("Unable to fetch all pets");
+        } else {
+          return response.json();
+        }
+      })
+      .then((data) => z.array(petSchema).parse(data))
+      .then((pets) => pets.filter((pet) => pet.userId === userId))
+      .then((userPets) => userPets);
   },
 };
