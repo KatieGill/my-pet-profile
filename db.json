@@ -29,6 +29,11 @@
       "username": "Katie2",
       "password": "pass",
       "id": 6
+    },
+    {
+      "username": "Penelope",
+      "password": "puppy",
+      "id": 7
     }
   ],
   "pets": [
@@ -58,6 +63,96 @@
       "breed": "Boxer",
       "image": "./assets/dog.png",
       "dob": "2019-11-05"
+    },
+    {
+      "userId": 4,
+      "name": "Indy",
+      "species": "cat",
+      "breed": "Domestic Shorthair",
+      "image": "/assets/cat-images/brown-cat.png",
+      "dob": "2013-06-06",
+      "id": 4
+    },
+    {
+      "userId": 4,
+      "name": "Teddy",
+      "species": "cat",
+      "breed": "Domestic Longhair",
+      "image": "/assets/cat-images/gray-cat.png",
+      "dob": "2011-12-06",
+      "id": 5
+    },
+    {
+      "userId": 7,
+      "name": "Pom Pom",
+      "species": "dog",
+      "breed": "Pomeranian",
+      "image": "/assets/dog-images/white-dog.png",
+      "dob": "2020-12-25",
+      "id": 6
+    },
+    {
+      "userId": 7,
+      "name": "Bluey",
+      "species": "dog",
+      "breed": "Blue Heeler",
+      "image": "/assets/dog-images/red-dog.png",
+      "dob": "2015-12-01",
+      "id": 7
+    },
+    {
+      "userId": 7,
+      "name": "Puffy",
+      "species": "dog",
+      "breed": "Shih Tzu",
+      "image": "/assets/dog-images/red-dog.png",
+      "dob": "2023-05-11",
+      "id": 8
+    },
+    {
+      "userId": 7,
+      "name": "Coco",
+      "species": "dog",
+      "breed": "Poodle",
+      "image": "/assets/dog-images/blonde-dog.png",
+      "dob": "2018-07-07",
+      "id": 9
+    },
+    {
+      "userId": 7,
+      "name": "Watermelon",
+      "species": "dog",
+      "breed": "Rottweiler",
+      "image": "/assets/dog-images/black-dog.png",
+      "dob": "2022-12-01",
+      "id": 10
+    },
+    {
+      "userId": 7,
+      "name": "Sparkles",
+      "species": "dog",
+      "breed": "Great Dane",
+      "image": "/assets/dog-images/brown-dog.png",
+      "dob": "1989-04-11",
+      "id": 11
+    },
+    {
+      "userId": 7,
+      "name": "Fluffy Ball",
+      "species": "cat",
+      "breed": "Domestic Longhair",
+      "image": "/assets/cat-images/gray-cat.png",
+      "dob": "2022-05-19",
+      "id": 12
+    },
+    {
+      "userId": 7,
+      "name": "Beary Blue",
+      "species": "cat",
+      "breed": "Domestic Longhair",
+      "image": "/assets/cat-images/orange-cat.png",
+      "dob": "2023-12-23",
+      "id": 13
     }
   ],
   "diets": [
@@ -84,6 +179,22 @@
       "name": "Eukanuba puppy",
       "amount": "1/2 cup",
       "frequency": "3 times daily"
+    },
+    {
+      "userId": 4,
+      "name": "Purina ProPlan",
+      "petId": 4,
+      "amount": "1/4 cup",
+      "frequency": "twice daily",
+      "id": 4
+    },
+    {
+      "userId": 4,
+      "name": "Purina ProPlan ",
+      "petId": 4,
+      "amount": "1/4 can",
+      "frequency": "twice daily",
+      "id": 5
     }
   ],
   "medications": [
@@ -104,6 +215,15 @@
       "amount": "1 capsules",
       "frequency": "twice daily",
       "note": "antibioitic for skin"
+    },
+    {
+      "userId": 4,
+      "petId": 4,
+      "name": "Paroxetine 5mg",
+      "amount": "1/2 tablet",
+      "frequency": "once daily",
+      "note": "for anxiety",
+      "id": 4
     }
   ],
   "hospitals": [

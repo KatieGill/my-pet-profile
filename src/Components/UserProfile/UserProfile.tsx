@@ -1,11 +1,18 @@
 import { Link, useNavigate } from "react-router-dom";
 import { useAuthContext, useUserDataContext } from "../../Providers/UseContext";
 import { Pets } from "./components/Pets";
+import { useEffect } from "react";
 
 export const UserProfile = () => {
-  const { userPets } = useUserDataContext();
-  const { logout } = useAuthContext();
+  const { userPets, getUserPets } = useUserDataContext();
+  const { logout, user } = useAuthContext();
   const navigate = useNavigate();
+
+  useEffect(() => {
+    if (user) {
+      getUserPets(user.id);
+    }
+  }, [getUserPets, user]);
 
   return (
     <>
@@ -21,9 +28,7 @@ export const UserProfile = () => {
       </div>
       <h2>Pet Profiles</h2>
       <div className="btn">
-        <a>
-          <Link to="/add-pet">Add New Pet</Link>
-        </a>
+        <Link to="/add-pet">Add New Pet</Link>
       </div>
       <div>
         {userPets.length > 0 ? (

@@ -146,4 +146,34 @@ export const Requests = {
       .then((pets) => pets.filter((pet) => pet.userId === userId))
       .then((userPets) => userPets);
   },
+
+  getDiets: (userId: number) => {
+    return fetch(`${baseUrl}/diets`)
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error("Unable to fetch all diets");
+        } else {
+          return response.json();
+        }
+      })
+      .then((data) => z.array(dietSchema).parse(data))
+      .then((diets) => diets.filter((diet) => diet.userId === userId))
+      .then((userDiets) => userDiets);
+  },
+
+  getMedications: (userId: number) => {
+    return fetch(`${baseUrl}/medications`)
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error("Unable to fetch all diets");
+        } else {
+          return response.json();
+        }
+      })
+      .then((data) => z.array(medicationSchema).parse(data))
+      .then((medications) =>
+        medications.filter((medication) => medication.userId === userId)
+      )
+      .then((userMedications) => userMedications);
+  },
 };

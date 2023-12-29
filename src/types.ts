@@ -19,7 +19,7 @@ export const petSchema = z.object({
   species: speciesSchema,
   breed: z.string(),
   image: z.string(),
-  dob: z.date(),
+  dob: z.coerce.date(),
 });
 
 export const dietSchema = z.object({
