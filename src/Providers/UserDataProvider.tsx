@@ -1,6 +1,13 @@
 import { ReactNode, createContext, useEffect, useState } from "react";
 import { Requests } from "../api";
-import { Diet, Hospital, HospitalFavorite, Medication, Pet } from "../types";
+import {
+  Diet,
+  Hospital,
+  HospitalFavorite,
+  HospitalNote,
+  Medication,
+  Pet,
+} from "../types";
 import { useAuthContext } from "./UseContext";
 import toast from "react-hot-toast";
 
@@ -16,6 +23,8 @@ type UserDataProvider = {
   setPetMedications: (medications: Medication[]) => void;
   hospitalFavorites: Hospital[];
   setHospitalFavorites: (favoriteHospitals: Hospital[]) => void;
+  hospitalNotes: HospitalNote[];
+  setHospitalNotes: (hospitalNotes: HospitalNote[]) => void;
   getUserHospitalFavorites: (useId: number) => Promise<void>;
   getPetDiets: (petId: number) => Promise<void>;
   getPetMedications: (petId: number) => Promise<void>;
@@ -23,6 +32,7 @@ type UserDataProvider = {
   postDiet: (diet: Omit<Diet, "id">) => Promise<string>;
   postMedication: (medication: Omit<Medication, "id">) => Promise<string>;
   postHospitalFavorite: (userId: number, hospitalId: number) => Promise<string>;
+  postHospitalNote: (hospitalNote: Omit<HospitalNote, "id">) => Promise<string>;
   deleteDiet: (diet: Diet) => Promise<string>;
   deleteMedication: (medication: Medication) => Promise<string>;
   deleteHospitalFavorite: (
@@ -39,6 +49,7 @@ export const UserDataProvider = ({ children }: { children: ReactNode }) => {
   const [petDiets, setPetDiets] = useState<Diet[]>([]);
   const [petMedications, setPetMedications] = useState<Medication[]>([]);
   const [hospitalFavorites, setHospitalFavorites] = useState<Hospital[]>([]);
+  const [hospitalNotes, setHospitalNotes] = useState<HospitalNote[]>([]);
 
   const { user } = useAuthContext();
 
@@ -72,6 +83,11 @@ export const UserDataProvider = ({ children }: { children: ReactNode }) => {
     setPetMedications(petMedications);
   };
 
+  const getUserHospitalNotes = async (userId: number) => {
+    const hospitalNotes = await Requests.getUserHospitalNotes(userId);
+    setHospitalNotes(hospitalNotes);
+  };
+
   const postPet = (pet: Omit<Pet, "id">) => {
     return Requests.postPet(pet)
       .then(() => getUserPets(pet.userId))
@@ -99,6 +115,12 @@ export const UserDataProvider = ({ children }: { children: ReactNode }) => {
       .then(() => toast.success("Added hospital to your favorites list"));
   };
 
+  const postHospitalNote = (hospitalNote: Omit<HospitalNote, "id">) => {
+    return Requests.postHospitalNote(hospitalNote)
+      .then(() => getUserHospitalNotes(hospitalNote.userId))
+      .then(() => toast.success("Added note to selected hospital"));
+  };
+
   const deleteDiet = (diet: Diet) => {
     return Requests.deleteDiet(diet.id)
       .then(() => getPetDiets(diet.petId))
@@ -121,6 +143,7 @@ export const UserDataProvider = ({ children }: { children: ReactNode }) => {
     if (user) {
       getUserPets(user.id);
       getUserHospitalFavorites(user.id);
+      getUserHospitalNotes(user.id);
     }
     if (currentPet) {
       getPetDiets(currentPet.id);
@@ -144,12 +167,15 @@ export const UserDataProvider = ({ children }: { children: ReactNode }) => {
           hospitalFavorites,
           setHospitalFavorites,
           getUserHospitalFavorites,
+          hospitalNotes,
+          setHospitalNotes,
           getPetDiets,
           getPetMedications,
           postPet,
           postDiet,
           postMedication,
           postHospitalFavorite,
+          postHospitalNote,
           deleteDiet,
           deleteMedication,
           deleteHospitalFavorite,

@@ -5,9 +5,11 @@ import {
 } from "../../../Providers/UseContext";
 import { Requests } from "../../../api";
 import { HospitalFavorite } from "../../../types";
+import { Link } from "react-router-dom";
 
 export const HospitalFavorites = () => {
-  const { hospitalFavorites, deleteHospitalFavorite } = useUserDataContext();
+  const { hospitalFavorites, deleteHospitalFavorite, hospitalNotes } =
+    useUserDataContext();
   const { user } = useAuthContext();
   const [userFavorites, setUserFavorites] = useState<HospitalFavorite[]>([]);
 
@@ -25,6 +27,9 @@ export const HospitalFavorites = () => {
   return (
     <>
       {hospitalFavorites.map((hospital) => {
+        const note = hospitalNotes.find(
+          (note) => note.hospitalId === hospital.id
+        );
         return (
           <div className="hospital-card" key={hospital.id}>
             <h3>{hospital.name}</h3>
@@ -33,6 +38,19 @@ export const HospitalFavorites = () => {
             </div>
             <div>{hospital.address}</div>
             <div>{hospital.phone}</div>
+            <div>
+              {note ? (
+                note.note
+              ) : (
+                <Link
+                  to="/add-hospital-note"
+                  state={{ hospitalId: hospital.id }}
+                >
+                  Add a note
+                </Link>
+              )}
+            </div>
+
             <button
               onClick={() => {
                 const favorite = userFavorites.find(

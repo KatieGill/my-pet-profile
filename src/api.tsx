@@ -206,6 +206,20 @@ export const Requests = {
       .then((hospitalFavorites) => hospitalFavorites);
   },
 
+  getUserHospitalNotes: (userId: number) => {
+    return fetch(`${baseUrl}/hospital-notes`)
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error("Unable to fetch all hospital notes");
+        } else {
+          return response.json();
+        }
+      })
+      .then((data) => z.array(hospitalNoteSchema).parse(data))
+      .then((notes) => notes.filter((note) => note.userId === userId))
+      .then((userNotes) => userNotes);
+  },
+
   deleteDiet: (dietId: number) => {
     return fetch(`${baseUrl}/diets/${dietId}`, {
       method: "DELETE",
