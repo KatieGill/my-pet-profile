@@ -13,6 +13,7 @@ import { AddPet } from "./Components/UserProfile/components/AddPet.tsx";
 import { PetProfile } from "./Components/PetProfile/PetProfile.tsx";
 import { CreateDietForm } from "./Components/PetProfile/components/CreateDietForm.tsx";
 import { CreateMedicationForm } from "./Components/PetProfile/components/CreateMedFrom.tsx";
+import { Hospitals } from "./Components/UserProfile/components/Hospitals.tsx";
 
 const router = createBrowserRouter([
   { path: "/", element: <App /> },
@@ -23,6 +24,7 @@ const router = createBrowserRouter([
   { path: "/pet-profile", element: <PetProfile /> },
   { path: "/add-diet", element: <CreateDietForm /> },
   { path: "/add-medication", element: <CreateMedicationForm /> },
+  { path: "/vet-hospitals", element: <Hospitals /> },
 ]);
 
 ReactDOM.createRoot(document.getElementById("root")!).render(

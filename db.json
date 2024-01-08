@@ -158,7 +158,6 @@
   "diets": [
     {
       "id": 1,
-      "userId": 2,
       "petId": 1,
       "name": "Purina Cat Chow",
       "amount": "1/4 cup",
@@ -166,7 +165,6 @@
     },
     {
       "id": 2,
-      "userId": 3,
       "petId": 3,
       "name": "Purina Dog Chow",
       "amount": "3/4 cup",
@@ -174,14 +172,12 @@
     },
     {
       "id": 3,
-      "userId": 1,
       "petId": 2,
       "name": "Eukanuba puppy",
       "amount": "1/2 cup",
       "frequency": "3 times daily"
     },
     {
-      "userId": 4,
       "name": "Purina ProPlan",
       "petId": 4,
       "amount": "1/4 cup",
@@ -189,18 +185,16 @@
       "id": 4
     },
     {
-      "userId": 4,
-      "name": "Purina ProPlan ",
-      "petId": 4,
+      "name": "Purina ProPlan",
+      "petId": 5,
       "amount": "1/4 can",
       "frequency": "twice daily",
-      "id": 5
+      "id": 7
     }
   ],
   "medications": [
     {
       "id": 1,
-      "userId": 2,
       "petId": 1,
       "name": "glucosamine",
       "amount": "2 capsules",
@@ -209,21 +203,11 @@
     },
     {
       "id": 2,
-      "userId": 3,
       "petId": 3,
       "name": "cephalexin",
       "amount": "1 capsules",
       "frequency": "twice daily",
       "note": "antibioitic for skin"
-    },
-    {
-      "userId": 4,
-      "petId": 4,
-      "name": "Paroxetine 5mg",
-      "amount": "1/2 tablet",
-      "frequency": "once daily",
-      "note": "for anxiety",
-      "id": 4
     }
   ],
   "hospitals": [
@@ -231,25 +215,29 @@
       "id": 1,
       "name": "Banfield",
       "phone": "1234567899",
-      "address": "123 Main St"
+      "address": "123 Main St",
+      "image": ""
     },
     {
       "id": 2,
       "name": "Blue Pearl",
       "phone": "1234567899",
-      "address": "123 Main St"
+      "address": "123 Main St",
+      "image": ""
     },
     {
       "id": 3,
       "name": "Home Town Vet",
       "phone": "1234567899",
-      "address": "123 Main St"
+      "address": "123 Main St",
+      "image": ""
     },
     {
       "id": 4,
       "name": "Specialty Hospital",
       "phone": "1234567899",
-      "address": "123 Main St"
+      "address": "123 Main St",
+      "image": ""
     }
   ],
   "hospital-notes": [
@@ -276,6 +264,16 @@
       "id": 1,
       "userId": 1,
       "hospitalId": 2
+    },
+    {
+      "userId": 4,
+      "hospitalId": 4,
+      "id": 2
+    },
+    {
+      "userId": 4,
+      "hospitalId": 3,
+      "id": 3
     }
   ]
 }

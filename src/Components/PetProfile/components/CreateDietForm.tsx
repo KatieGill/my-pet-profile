@@ -1,15 +1,12 @@
 import { useState } from "react";
-import {
-  useAuthContext,
-  useUserDataContext,
-} from "../../../Providers/UseContext";
+import { useUserDataContext } from "../../../Providers/UseContext";
 import { useLocation, useNavigate } from "react-router-dom";
 
 export const CreateDietForm = () => {
   const [nameInput, setNameInput] = useState("");
   const [amountInput, setAmountInput] = useState("");
   const [frequencyInput, setFrequencyInput] = useState("");
-  const { user } = useAuthContext();
+
   const location = useLocation();
   const { petId } = location.state;
   const { postDiet } = useUserDataContext();
@@ -24,16 +21,14 @@ export const CreateDietForm = () => {
     <form
       onSubmit={(e) => {
         e.preventDefault();
-        if (user) {
-          postDiet({
-            userId: user.id,
-            name: nameInput,
-            petId: petId,
-            amount: amountInput,
-            frequency: frequencyInput,
-          }).then(resetState);
-          navigate(-1);
-        }
+
+        postDiet({
+          name: nameInput,
+          petId: petId,
+          amount: amountInput,
+          frequency: frequencyInput,
+        }).then(resetState);
+        navigate(-1);
       }}
     >
       <label htmlFor="diet-name">Diet name:</label>

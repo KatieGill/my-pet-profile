@@ -2,14 +2,19 @@ import { useLocation } from "react-router";
 import { Pet } from "../../types";
 import { Link } from "react-router-dom";
 import { Diets } from "./components/Diets";
-import { useUserDataContext } from "../../Providers/UseContext";
 import { Medications } from "./components/Medications";
+import { useEffect } from "react";
+import { useUserDataContext } from "../../Providers/UseContext";
 
 export const PetProfile = () => {
   const location = useLocation();
   const { pet } = location.state;
   const { id, name, userId, species, breed, image, dob } = pet as Pet;
-  const { filterPetDiets, filterPetMedications } = useUserDataContext();
+  const { setCurrentPet, petDiets, petMedications } = useUserDataContext();
+
+  useEffect(() => {
+    setCurrentPet(pet);
+  }, [pet, setCurrentPet]);
 
   const calculateAge = (dob: Date) => {
     const today = new Date();
@@ -27,10 +32,6 @@ export const PetProfile = () => {
   };
 
   const age = calculateAge(dob);
-
-  const petDiets = filterPetDiets(id);
-  const petMedications = filterPetMedications(id);
-  console.log(petMedications);
 
   return (
     <>
@@ -64,6 +65,7 @@ export const PetProfile = () => {
           <div>{name} does not have any medications yet</div>
         )}
       </div>
+      <Link to="/user-profile">Home</Link>
     </>
   );
 };

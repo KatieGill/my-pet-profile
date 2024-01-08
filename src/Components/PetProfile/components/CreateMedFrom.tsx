@@ -1,8 +1,5 @@
 import { useLocation, useNavigate } from "react-router-dom";
-import {
-  useAuthContext,
-  useUserDataContext,
-} from "../../../Providers/UseContext";
+import { useUserDataContext } from "../../../Providers/UseContext";
 import { useState } from "react";
 
 export const CreateMedicationForm = () => {
@@ -10,7 +7,6 @@ export const CreateMedicationForm = () => {
   const [amountInput, setAmountInput] = useState<string>("");
   const [frequencyInput, setFrequencyInput] = useState<string>("");
   const [noteInput, setNoteInput] = useState<string | undefined>(undefined);
-  const { user } = useAuthContext();
   const location = useLocation();
   const petId = location.state.petId;
   const { postMedication } = useUserDataContext();
@@ -21,23 +17,19 @@ export const CreateMedicationForm = () => {
     setNoteInput(undefined);
   };
   const navigate = useNavigate();
-  console.log("pet id", petId);
 
   return (
     <form
       onSubmit={(e) => {
         e.preventDefault();
-        if (user) {
-          postMedication({
-            userId: user?.id,
-            petId: petId,
-            name: nameInput,
-            amount: amountInput,
-            frequency: frequencyInput,
-            note: noteInput,
-          }).then(resetState);
-          navigate(-1);
-        }
+        postMedication({
+          petId: petId,
+          name: nameInput,
+          amount: amountInput,
+          frequency: frequencyInput,
+          note: noteInput,
+        }).then(resetState);
+        navigate(-1);
       }}
     >
       <label htmlFor="med-name">Medication name:</label>

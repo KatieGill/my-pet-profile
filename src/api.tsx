@@ -12,6 +12,7 @@ import {
   hospitalNoteSchema,
   HospitalFavorite,
   hospitalFavoriteSchema,
+  hospitalSchema,
 } from "./types";
 
 const baseUrl = "http://localhost:3000";
@@ -147,7 +148,7 @@ export const Requests = {
       .then((userPets) => userPets);
   },
 
-  getDiets: (userId: number) => {
+  getDiets: (petId: number) => {
     return fetch(`${baseUrl}/diets`)
       .then((response) => {
         if (!response.ok) {
@@ -157,11 +158,11 @@ export const Requests = {
         }
       })
       .then((data) => z.array(dietSchema).parse(data))
-      .then((diets) => diets.filter((diet) => diet.userId === userId))
-      .then((userDiets) => userDiets);
+      .then((diets) => diets.filter((diet) => diet.petId === petId))
+      .then((petDiets) => petDiets);
   },
 
-  getMedications: (userId: number) => {
+  getMedications: (petId: number) => {
     return fetch(`${baseUrl}/medications`)
       .then((response) => {
         if (!response.ok) {
@@ -172,8 +173,66 @@ export const Requests = {
       })
       .then((data) => z.array(medicationSchema).parse(data))
       .then((medications) =>
-        medications.filter((medication) => medication.userId === userId)
+        medications.filter((medication) => medication.petId === petId)
       )
-      .then((userMedications) => userMedications);
+      .then((petMedications) => petMedications);
+  },
+
+  getHospitals: () => {
+    return fetch(`${baseUrl}/hospitals`)
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error("Unable to fetch all hospitals");
+        } else {
+          return response.json();
+        }
+      })
+      .then((data) => z.array(hospitalSchema).parse(data));
+  },
+
+  getUserHospitalFavorites: (userId: number) => {
+    return fetch(`${baseUrl}/hospital-favorites`)
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error("Unable to fetch all hospital favorites");
+        } else {
+          return response.json();
+        }
+      })
+      .then((data) => z.array(hospitalFavoriteSchema).parse(data))
+      .then((favorites) =>
+        favorites.filter((favorites) => favorites.userId === userId)
+      )
+      .then((hospitalFavorites) => hospitalFavorites);
+  },
+
+  deleteDiet: (dietId: number) => {
+    return fetch(`${baseUrl}/diets/${dietId}`, {
+      method: "DELETE",
+    }).then((response) => {
+      if (!response.ok) {
+        throw new Error("Unable to delete diet");
+      }
+    });
+  },
+
+  deleteMedication: (medicationId: number) => {
+    return fetch(`${baseUrl}/medications/${medicationId}`, {
+      method: "DELETE",
+    }).then((response) => {
+      if (!response.ok) {
+        throw new Error("Unable to delete medication");
+      }
+    });
+  },
+
+  deleteHospitalFavorite: (hospitalFavoriteId: number) => {
+    return fetch(`${baseUrl}/hospital-favorites/${hospitalFavoriteId}`, {
+      method: "DELETE",
+    }).then((response) => {
+      if (!response.ok) {
+        throw new Error("Unable to remove favorite");
+      }
+    });
   },
 };

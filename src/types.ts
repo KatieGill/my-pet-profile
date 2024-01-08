@@ -1,5 +1,4 @@
 import { z } from "zod";
-import { catBreeds, dogBreeds } from "./assets/breedLists";
 
 export const userSchema = z.object({
   id: z.number(),
@@ -8,9 +7,6 @@ export const userSchema = z.object({
 });
 
 export const speciesSchema = z.enum(["dog", "cat"]);
-
-//export const catBreedSchema = z.enum(catBreeds);
-//export const dogBreedSchema = z.enum(dogBreeds);
 
 export const petSchema = z.object({
   id: z.number(),
@@ -24,7 +20,6 @@ export const petSchema = z.object({
 
 export const dietSchema = z.object({
   id: z.number(),
-  userId: z.number(),
   petId: z.number(),
   name: z.string(),
   amount: z.string(),
@@ -33,7 +28,6 @@ export const dietSchema = z.object({
 
 export const medicationSchema = z.object({
   id: z.number(),
-  userId: z.number(),
   petId: z.number(),
   name: z.string(),
   amount: z.string(),
@@ -46,6 +40,7 @@ export const hospitalSchema = z.object({
   name: z.string(),
   phone: z.string(),
   address: z.string(),
+  image: z.string(),
 });
 
 export const hospitalNoteSchema = z.object({
@@ -65,6 +60,7 @@ export type User = z.infer<typeof userSchema>;
 export type Pet = z.infer<typeof petSchema>;
 export type Diet = z.infer<typeof dietSchema>;
 export type Medication = z.infer<typeof medicationSchema>;
+export type Hospital = z.infer<typeof hospitalSchema>;
 export type HospitalNote = z.infer<typeof hospitalNoteSchema>;
 export type HospitalFavorite = z.infer<typeof hospitalFavoriteSchema>;
 export type Species = z.infer<typeof speciesSchema>;

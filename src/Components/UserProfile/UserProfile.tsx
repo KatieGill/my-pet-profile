@@ -1,18 +1,12 @@
 import { Link, useNavigate } from "react-router-dom";
 import { useAuthContext, useUserDataContext } from "../../Providers/UseContext";
 import { Pets } from "./components/Pets";
-import { useEffect } from "react";
+import { HospitalFavorites } from "./components/HospitalFavorites";
 
 export const UserProfile = () => {
-  const { userPets, getUserPets } = useUserDataContext();
-  const { logout, user } = useAuthContext();
+  const { userPets, hospitalFavorites } = useUserDataContext();
+  const { logout } = useAuthContext();
   const navigate = useNavigate();
-
-  useEffect(() => {
-    if (user) {
-      getUserPets(user.id);
-    }
-  }, [getUserPets, user]);
 
   return (
     <>
@@ -49,6 +43,15 @@ export const UserProfile = () => {
           Animals stickers created by DinosoftLabs - Flaticon
         </a>
       </div>
+      <div>
+        <h2>Favorite Veterinary Hospitals</h2>
+        {hospitalFavorites?.length > 0 ? (
+          <HospitalFavorites />
+        ) : (
+          <div>You do not have any favorite hospitals yet!</div>
+        )}
+      </div>
+      <Link to="/vet-hospitals">Explore Veterinary Hospitals</Link>
     </>
   );
 };
