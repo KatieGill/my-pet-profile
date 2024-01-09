@@ -1,6 +1,6 @@
 import { useLocation } from "react-router";
-import { Pet } from "../../types";
-import { Link } from "react-router-dom";
+import { Pet } from "../../Types/types";
+import { Link, useNavigate } from "react-router-dom";
 import { Diets } from "./components/Diets";
 import { Medications } from "./components/Medications";
 import { useEffect } from "react";
@@ -10,7 +10,8 @@ export const PetProfile = () => {
   const location = useLocation();
   const { pet } = location.state;
   const { id, name, userId, species, breed, image, dob } = pet as Pet;
-  const { setCurrentPet, petDiets, petMedications } = useUserDataContext();
+  const { setCurrentPet, petDiets, petMedications, deletePet } =
+    useUserDataContext();
 
   useEffect(() => {
     setCurrentPet(pet);
@@ -32,9 +33,13 @@ export const PetProfile = () => {
   };
 
   const age = calculateAge(dob);
+  const navigate = useNavigate();
 
   return (
     <>
+      <Link to="/delete-pet-profile" state={{ pet }}>
+        Delete Pet Profile
+      </Link>
       <div>{name}</div>
       <div className="profile-img">
         <img src={image} alt="profile image" />

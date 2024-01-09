@@ -13,7 +13,7 @@ import {
   HospitalFavorite,
   hospitalFavoriteSchema,
   hospitalSchema,
-} from "./types";
+} from "./Types/types";
 
 const baseUrl = "http://localhost:3000";
 
@@ -191,33 +191,121 @@ export const Requests = {
   },
 
   getUserHospitalFavorites: (userId: number) => {
-    return fetch(`${baseUrl}/hospital-favorites`)
-      .then((response) => {
-        if (!response.ok) {
-          throw new Error("Unable to fetch all hospital favorites");
-        } else {
-          return response.json();
-        }
-      })
-      .then((data) => z.array(hospitalFavoriteSchema).parse(data))
-      .then((favorites) =>
-        favorites.filter((favorites) => favorites.userId === userId)
-      )
-      .then((hospitalFavorites) => hospitalFavorites);
+    return (
+      fetch(`${baseUrl}/hospital-favorites`)
+        .then((response) => {
+          if (!response.ok) {
+            throw new Error("Unable to fetch all hospital favorites");
+          } else {
+            return response.json();
+          }
+        })
+        //.then((data) => z.array(hospitalFavoriteSchema).parse(data))
+        .then((favorites) =>
+          favorites.filter((favorites) => favorites.userId === userId)
+        )
+        .then((data) => z.array(hospitalFavoriteSchema).parse(data))
+        .then((hospitalFavorites) => hospitalFavorites)
+    );
   },
 
   getUserHospitalNotes: (userId: number) => {
-    return fetch(`${baseUrl}/hospital-notes`)
+    return (
+      fetch(`${baseUrl}/hospital-notes`)
+        .then((response) => {
+          if (!response.ok) {
+            throw new Error("Unable to fetch all hospital notes");
+          } else {
+            return response.json();
+          }
+        })
+        //.then((data) => z.array(hospitalNoteSchema).parse(data))
+        .then((notes) => notes.filter((note) => note.userId === userId))
+        .then((data) => z.array(hospitalNoteSchema).parse(data))
+        .then((userNotes) => userNotes)
+    );
+  },
+
+  patchHospitalNote: (hospitalNote: HospitalNote) => {
+    return fetch(`${baseUrl}/hospital-notes/${hospitalNote.id}`, {
+      body: JSON.stringify({ note: hospitalNote.note }),
+      method: "PATCH",
+      headers: { "Content-Type": "application/json" },
+    })
       .then((response) => {
         if (!response.ok) {
-          throw new Error("Unable to fetch all hospital notes");
+          throw new Error("Unable to edit note");
         } else {
           return response.json();
         }
       })
-      .then((data) => z.array(hospitalNoteSchema).parse(data))
-      .then((notes) => notes.filter((note) => note.userId === userId))
-      .then((userNotes) => userNotes);
+      .then((data) => hospitalNoteSchema.parse(data));
+  },
+
+  putDiet: (diet: Diet) => {
+    return fetch(`${baseUrl}/diets/${diet.id}`, {
+      body: JSON.stringify({
+        petId: diet.petId,
+        name: diet.name,
+        amount: diet.amount,
+        frequency: diet.frequency,
+      }),
+      method: "PUT",
+      headers: { "Content-type": "application/json" },
+    })
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error("Unable to update diet");
+        } else {
+          return response.json();
+        }
+      })
+      .then((data) => dietSchema.parse(data));
+  },
+
+  putMedication: (medication: Medication) => {
+    return fetch(`${baseUrl}/medications/${medication.id}`, {
+      body: JSON.stringify({
+        petId: medication.petId,
+        name: medication.name,
+        amount: medication.amount,
+        frequency: medication.frequency,
+        note: medication.note,
+      }),
+      method: "PUT",
+      headers: { "Content-type": "application/json" },
+    })
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error("Unable to update medication");
+        } else {
+          return response.json();
+        }
+      })
+      .then((data) => medicationSchema.parse(data));
+  },
+
+  putPet: (pet: Pet) => {
+    return fetch(`${baseUrl}/pets/${pet.id}`, {
+      body: JSON.stringify({
+        userId: pet.userId,
+        name: pet.name,
+        species: pet.species,
+        breed: pet.breed,
+        image: pet.image,
+        dob: pet.dob,
+      }),
+      method: "PUT",
+      headers: { "Content-type": "application/json" },
+    })
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error("Unable to update pet");
+        } else {
+          return response.json();
+        }
+      })
+      .then((data) => petSchema.parse(data));
   },
 
   deleteDiet: (dietId: number) => {
@@ -246,6 +334,26 @@ export const Requests = {
     }).then((response) => {
       if (!response.ok) {
         throw new Error("Unable to remove favorite");
+      }
+    });
+  },
+
+  deleteHospitalNote: (hospitalNoteId: number) => {
+    return fetch(`${baseUrl}/hospital-notes/${hospitalNoteId}`, {
+      method: "DELETE",
+    }).then((response) => {
+      if (!response.ok) {
+        throw new Error("Unable to delete note");
+      }
+    });
+  },
+
+  deletePet: (petId: number) => {
+    return fetch(`${baseUrl}/pets/${petId}`, {
+      method: "DELETE",
+    }).then((response) => {
+      if (!response.ok) {
+        throw new Error("Unable to delete pet");
       }
     });
   },

@@ -1,4 +1,8 @@
-export const catBreeds = [
+import { z } from "zod";
+
+export const speciesSchema = z.enum(["dog", "cat"]);
+
+export const breedSchema = z.enum([
   "Mixed / Other",
   "Abyssinian",
   "Aegean",
@@ -98,9 +102,6 @@ export const catBreeds = [
   "Turkish Angora",
   "Turkish Van",
   "Ukrainian Levkoy",
-];
-
-export const dogBreeds = [
   "Mixed / Other",
   "Afghan Hound",
   "Afghan Shepherd",
@@ -592,4 +593,4 @@ export const dogBreeds = [
   "White Shepherd",
   "Wirehaired Pointing Griffon",
   "Wirehaired Vizsla",
-];
+]);

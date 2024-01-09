@@ -4,12 +4,16 @@ import {
   useUserDataContext,
 } from "../../../Providers/UseContext";
 import { Requests } from "../../../api";
-import { HospitalFavorite } from "../../../types";
+import { HospitalFavorite } from "../../../Types/types";
 import { Link } from "react-router-dom";
 
 export const HospitalFavorites = () => {
-  const { hospitalFavorites, deleteHospitalFavorite, hospitalNotes } =
-    useUserDataContext();
+  const {
+    hospitalFavorites,
+    deleteHospitalFavorite,
+    hospitalNotes,
+    deleteHospitalNote,
+  } = useUserDataContext();
   const { user } = useAuthContext();
   const [userFavorites, setUserFavorites] = useState<HospitalFavorite[]>([]);
 
@@ -40,7 +44,19 @@ export const HospitalFavorites = () => {
             <div>{hospital.phone}</div>
             <div>
               {note ? (
-                note.note
+                <>
+                  <div>{note.note}</div>
+                  <Link to="/edit-hospital-note" state={{ note }}>
+                    Edit note
+                  </Link>
+                  <button
+                    onClick={() => {
+                      deleteHospitalNote(note);
+                    }}
+                  >
+                    Delete Note
+                  </button>
+                </>
               ) : (
                 <Link
                   to="/add-hospital-note"

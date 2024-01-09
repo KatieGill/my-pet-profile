@@ -6,11 +6,11 @@ import {
 import { useLocation, useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
 
-export const AddHospitalNote = () => {
+export const EditHospitalNote = () => {
   const location = useLocation();
-  const { hospitalId } = location.state;
-  const [noteInput, setNoteInput] = useState<string>("");
-  const { postHospitalNote } = useUserDataContext();
+  const { note } = location.state;
+  const [noteInput, setNoteInput] = useState<string>(note.note);
+  const { patchHospitalNote } = useUserDataContext();
   const { user } = useAuthContext();
   const navigate = useNavigate();
 
@@ -20,9 +20,10 @@ export const AddHospitalNote = () => {
         onSubmit={(e) => {
           e.preventDefault();
           if (user) {
-            postHospitalNote({
-              userId: user.id,
-              hospitalId: hospitalId,
+            patchHospitalNote({
+              id: note.id,
+              userId: note.userId,
+              hospitalId: note.hospitalId,
               note: noteInput,
             })
               .then(() => {
@@ -33,11 +34,12 @@ export const AddHospitalNote = () => {
           }
         }}
       >
-        <h2>Add a note to the selected veterinary hospital</h2>
+        <h2>Edit veterinary hospital note</h2>
         <label htmlFor="note"></label>
         <textarea
           name="note"
           id="note-input"
+          value={noteInput}
           cols="30"
           rows="10"
           onChange={(e) => {

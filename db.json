@@ -84,30 +84,12 @@
     },
     {
       "userId": 7,
-      "name": "Pom Pom",
-      "species": "dog",
-      "breed": "Pomeranian",
-      "image": "/assets/dog-images/white-dog.png",
-      "dob": "2020-12-25",
-      "id": 6
-    },
-    {
-      "userId": 7,
       "name": "Bluey",
       "species": "dog",
       "breed": "Blue Heeler",
       "image": "/assets/dog-images/red-dog.png",
       "dob": "2015-12-01",
       "id": 7
-    },
-    {
-      "userId": 7,
-      "name": "Puffy",
-      "species": "dog",
-      "breed": "Shih Tzu",
-      "image": "/assets/dog-images/red-dog.png",
-      "dob": "2023-05-11",
-      "id": 8
     },
     {
       "userId": 7,
@@ -179,17 +161,17 @@
     },
     {
       "name": "Purina ProPlan",
-      "petId": 4,
-      "amount": "1/4 cup",
-      "frequency": "twice daily",
-      "id": 4
-    },
-    {
-      "name": "Purina ProPlan",
       "petId": 5,
       "amount": "1/4 can",
       "frequency": "twice daily",
       "id": 7
+    },
+    {
+      "petId": 4,
+      "name": "Cat Chow",
+      "amount": "1/4 cup",
+      "frequency": "twice daily",
+      "id": 8
     }
   ],
   "medications": [
@@ -208,6 +190,14 @@
       "amount": "1 capsules",
       "frequency": "twice daily",
       "note": "antibioitic for skin"
+    },
+    {
+      "petId": 4,
+      "name": "Paraxotine 10mg",
+      "amount": "1/2 tablet",
+      "frequency": "once daily",
+      "note": "for anxiety",
+      "id": 3
     }
   ],
   "hospitals": [
@@ -255,45 +245,15 @@
     },
     {
       "userId": 4,
-      "hospitalId": 3,
-      "note": "for vaccines",
+      "hospitalId": 4,
+      "note": "for emergencies",
       "id": 3
     },
     {
       "userId": 4,
       "hospitalId": 3,
-      "note": "for vaccines",
+      "note": "for grooming",
       "id": 4
-    },
-    {
-      "userId": 4,
-      "hospitalId": 3,
-      "note": "for vaccines",
-      "id": 5
-    },
-    {
-      "userId": 4,
-      "hospitalId": 3,
-      "note": "for vaccines",
-      "id": 6
-    },
-    {
-      "userId": 4,
-      "hospitalId": 3,
-      "note": "wellness",
-      "id": 7
-    },
-    {
-      "userId": 4,
-      "hospitalId": 3,
-      "note": "wellness",
-      "id": 8
-    },
-    {
-      "userId": 4,
-      "hospitalId": 4,
-      "note": "emergencies",
-      "id": 9
     }
   ],
   "hospital-favorites": [
@@ -309,13 +269,18 @@
     },
     {
       "userId": 4,
-      "hospitalId": 4,
-      "id": 2
+      "hospitalId": 3,
+      "id": 3
     },
     {
       "userId": 4,
-      "hospitalId": 3,
-      "id": 3
+      "hospitalId": 2,
+      "id": 4
+    },
+    {
+      "userId": 4,
+      "hospitalId": 4,
+      "id": 5
     }
   ]
 }

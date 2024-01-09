@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { Requests } from "../../../api";
-import { Hospital } from "../../../types";
+import { Hospital } from "../../../Types/types";
 import {
   useAuthContext,
   useUserDataContext,

@@ -5,7 +5,7 @@ import {
 } from "../../../Providers/UseContext";
 import { dogBreeds, catBreeds } from "../../../assets/breedLists";
 import { dogImages, catImages } from "../../../assets/breedImages";
-import { Species } from "../../../types";
+import { Species } from "../../../Types/types";
 import toast from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
 
