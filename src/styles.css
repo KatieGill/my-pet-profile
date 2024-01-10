@@ -1,0 +1,92 @@
+:root {
+  --bg-dark: #232946;
+  --bg-light: #b8c1ec;
+  --bg-white: #fffffe;
+  --text-header: #fffffe;
+  --text-light: #b8c1ec;
+  --text-dark: #121629;
+  --bg-btn: #eebbc3;
+}
+
+body {
+  background-color: var(--bg-dark);
+  font-family: 'Inter', sans-serif;
+  font-size: 1rem;
+  color: var(--text-light);
+  font-weight: 400;
+  line-height: 1.5;
+  text-align: center;
+}
+
+.container {
+  max-width: 1400px;
+  width: 100%;
+  padding-left: 15px;
+  padding-right: 15px;
+  margin-left: auto;
+  margin-right: auto;
+  text-align: center;
+}
+
+.container-sm {
+  background-color: var(--bg-white);
+  max-width: 1200px;
+  padding-top: 20px;
+  padding-bottom: 20px;
+  border-radius: 5px;
+}
+
+.home-page {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.btn {
+  border: 1px solid var(--bg-btn);
+  background-color: var(--bg-btn);
+  padding: 5px 10px;
+  width: fit-content;
+  border-radius: 5px;
+  color: var(--text-dark);
+  font-family: 'Inter', sans-serif;
+  font-size: 1rem;
+  font-weight: 400;
+  line-height: 1.5;
+}
+
+a {
+  text-decoration: none;
+  color: var(--text-dark);
+}
+
+.btn a {
+  color: var(--text-dark);
+}
+
+.btn:hover {
+  cursor: pointer;
+}
+
+h1 {
+  font-size: 6rem;
+}
+
+h2 {
+  font-size: 3rem;
+}
+
+h3 {
+  font-size: 2rem;
+}
+
+h1, h2, h3 {
+  font-family: 'Lilita One', sans-serif;
+  font-weight: 500;
+}
+
+.nav {
+  display: flex;
+  justify-content: right;
+}
+

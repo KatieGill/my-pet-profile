@@ -146,9 +146,10 @@ export const UserDataProvider = ({ children }: { children: ReactNode }) => {
   };
 
   const putPet = (pet: Pet) => {
-    return Requests.putPet(pet)
-      .then(() => getUserPets(pet.userId))
-      .then(() => toast.success("Updated pet"));
+    return Requests.putPet(pet).then(() => {
+      getUserPets(pet.userId);
+      toast.success("Updated pet");
+    });
   };
 
   const deleteDiet = (diet: Diet) => {

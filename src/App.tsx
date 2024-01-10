@@ -1,4 +1,3 @@
-import "./App.css";
 import { HomePage } from "./Components/HomePage";
 import { UserProfile } from "./Components/UserProfile/UserProfile";
 import { useAuthContext } from "./Providers/UseContext";

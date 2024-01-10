@@ -40,6 +40,7 @@ export const hospitalSchema = z.object({
   phone: z.string(),
   address: z.string(),
   image: z.string(),
+  website: z.string(),
 });
 
 export const hospitalNoteSchema = z.object({
@@ -62,3 +63,5 @@ export type Medication = z.infer<typeof medicationSchema>;
 export type Hospital = z.infer<typeof hospitalSchema>;
 export type HospitalNote = z.infer<typeof hospitalNoteSchema>;
 export type HospitalFavorite = z.infer<typeof hospitalFavoriteSchema>;
+export type Species = z.infer<typeof speciesSchema>;
+export type Breed = z.infer<typeof breedSchema>;

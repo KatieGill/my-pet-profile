@@ -1,7 +1,7 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
 import App from "./App.tsx";
-import "./index.css";
+import "./styles.css";
 import { RouterProvider, createBrowserRouter } from "react-router-dom";
 import { CreateLoginForm } from "./Components/CreateLoginForm.tsx";
 import { LoginForm } from "./Components/LoginForm.tsx";
@@ -19,6 +19,7 @@ import { EditHospitalNote } from "./Components/UserProfile/components/EditHospit
 import { EditDietForm } from "./Components/PetProfile/components/EditDietForm.tsx";
 import { EditMedicationForm } from "./Components/PetProfile/components/EditMedicationFrom.tsx";
 import { ConfirmDelete } from "./Components/PetProfile/components/ConfirmDelete.tsx";
+import { EditPet } from "./Components/PetProfile/components/EditPet.tsx";
 
 const router = createBrowserRouter([
   { path: "/", element: <App /> },
@@ -35,6 +36,7 @@ const router = createBrowserRouter([
   { path: "/edit-diet", element: <EditDietForm /> },
   { path: "/edit-medication", element: <EditMedicationForm /> },
   { path: "/delete-pet-profile", element: <ConfirmDelete /> },
+  { path: "/edit-pet", element: <EditPet /> },
 ]);
 
 ReactDOM.createRoot(document.getElementById("root")!).render(

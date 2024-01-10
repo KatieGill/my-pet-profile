@@ -38,48 +38,75 @@ export const HospitalFavorites = () => {
           <div className="hospital-card" key={hospital.id}>
             <h3>{hospital.name}</h3>
             <div className="hospital-img">
-              <img src={hospital.image} alt="" />
+              <img src={hospital.image} alt="vet hospital image" />
             </div>
             <div>{hospital.address}</div>
             <div>{hospital.phone}</div>
             <div>
+              <a
+                href={hospital.website}
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                Visit Website
+              </a>
+            </div>
+            <div className="hospital-note-container">
               {note ? (
                 <>
-                  <div>{note.note}</div>
-                  <Link to="/edit-hospital-note" state={{ note }}>
-                    Edit note
-                  </Link>
-                  <button
-                    onClick={() => {
-                      deleteHospitalNote(note);
-                    }}
-                  >
-                    Delete Note
-                  </button>
+                  <div className="hospital-note">{note.note}</div>
+                  <div className="note-buttons">
+                    <div className="">
+                      <Link to="/edit-hospital-note" state={{ note, hospital }}>
+                        <i
+                          className="fa-regular fa-pen-to-square"
+                          title="edit note"
+                        ></i>
+                      </Link>
+                    </div>
+                    <button
+                      className=""
+                      onClick={() => {
+                        deleteHospitalNote(note);
+                      }}
+                    >
+                      <i className="fa-solid fa-trash" title="delete note"></i>
+                    </button>
+                  </div>
                 </>
               ) : (
-                <Link
-                  to="/add-hospital-note"
-                  state={{ hospitalId: hospital.id }}
-                >
-                  Add a note
-                </Link>
+                <div className="add-note">
+                  <Link to="/add-hospital-note" state={{ hospital: hospital }}>
+                    <span>
+                      Create a note{" "}
+                      <i
+                        className="fa-solid fa-note-sticky"
+                        title="create a note"
+                      ></i>
+                    </span>
+                  </Link>
+                </div>
               )}
             </div>
-
-            <button
-              onClick={() => {
-                const favorite = userFavorites.find(
-                  (favorite) => favorite.hospitalId === hospital.id
-                );
-                if (favorite) {
-                  deleteHospitalFavorite(favorite);
-                  getUserFavorites(favorite.userId);
-                }
-              }}
-            >
-              Remove from favorites list
-            </button>
+            <div className="favorite-btn-container">
+              <button
+                className="heart-btn"
+                onClick={() => {
+                  const favorite = userFavorites.find(
+                    (favorite) => favorite.hospitalId === hospital.id
+                  );
+                  if (favorite) {
+                    deleteHospitalFavorite(favorite);
+                    getUserFavorites(favorite.userId);
+                  }
+                }}
+              >
+                <i
+                  className="fa-solid fa-heart-crack"
+                  title="remove from favorites list"
+                ></i>
+              </button>
+            </div>
           </div>
         );
       })}

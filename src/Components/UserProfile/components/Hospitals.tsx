@@ -24,38 +24,59 @@ export const Hospitals = () => {
 
   return (
     <>
-      {allHospitals.map((hospital) => {
-        return (
-          <div className="hospital-card" key={hospital.id}>
-            <h3>{hospital.name}</h3>
-            <div className="hospital-img">
-              <img src={hospital.image} alt="" />
+      <nav className="nav">
+        <div className="btn">
+          <Link to="/user-profile">Home</Link>
+        </div>
+      </nav>
+      <div className="container container-sm cards-container">
+        {allHospitals.map((hospital) => {
+          return (
+            <div className="hospital-card" key={hospital.id}>
+              <h3>{hospital.name}</h3>
+              <div className="hospital-img">
+                <img src={hospital.image} alt="" />
+              </div>
+              <div>{hospital.address}</div>
+              <div>{hospital.phone}</div>
+              <div>
+                <a
+                  href={hospital.website}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  Visit Website
+                </a>
+              </div>
+              <div className="favorite-btn-container">
+                <button
+                  className="heart-btn"
+                  onClick={() => {
+                    if (user) {
+                      if (
+                        hospitalFavorites.find(
+                          (favorite) => favorite.name === hospital.name
+                        )
+                      ) {
+                        toast.error(
+                          "This hospital is already in your favorites list"
+                        );
+                      } else {
+                        postHospitalFavorite(user.id, hospital.id);
+                      }
+                    }
+                  }}
+                >
+                  <i
+                    className="fa-solid fa-heart"
+                    title="add to favorites list"
+                  ></i>
+                </button>
+              </div>
             </div>
-            <div>{hospital.address}</div>
-            <div>{hospital.phone}</div>
-            <button
-              onClick={() => {
-                if (user) {
-                  if (
-                    hospitalFavorites.find(
-                      (favorite) => favorite.name === hospital.name
-                    )
-                  ) {
-                    toast.error(
-                      "This hospital is already in your favorites list"
-                    );
-                  } else {
-                    postHospitalFavorite(user.id, hospital.id);
-                  }
-                }
-              }}
-            >
-              Add to favorites
-            </button>
-          </div>
-        );
-      })}
-      <Link to="/user-profile">Home</Link>
+          );
+        })}
+      </div>
     </>
   );
 };

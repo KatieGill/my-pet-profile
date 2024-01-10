@@ -70,7 +70,7 @@
       "species": "cat",
       "breed": "Domestic Shorthair",
       "image": "/assets/cat-images/brown-cat.png",
-      "dob": "2013-06-06",
+      "dob": "2013-06-06T00:00:00.000Z",
       "id": 4
     },
     {
@@ -79,7 +79,7 @@
       "species": "cat",
       "breed": "Domestic Longhair",
       "image": "/assets/cat-images/gray-cat.png",
-      "dob": "2011-12-06",
+      "dob": "2011-12-06T00:00:00.000Z",
       "id": 5
     },
     {
@@ -203,31 +203,83 @@
   "hospitals": [
     {
       "id": 1,
-      "name": "Banfield",
-      "phone": "1234567899",
-      "address": "123 Main St",
-      "image": ""
+      "name": "Family Pet Practice",
+      "phone": "2486816200",
+      "address": "4260 Elizabeth Lake Rd, Waterford Twp, MI 48329",
+      "image": "/assets/hospital-images/family-pet-practice.jpg",
+      "website": "https://www.familypetpractice.com"
     },
     {
       "id": 2,
-      "name": "Blue Pearl",
-      "phone": "1234567899",
-      "address": "123 Main St",
-      "image": ""
+      "name": "Exclusively Cats Veterinary Hospital",
+      "phone": "2486665287",
+      "address": "6650 Highland Rd #116, Waterford Twp, MI 43327",
+      "image": "/assets/hospital-images/e-cats.jpg",
+      "website": "https://www.ecats.vet"
     },
     {
       "id": 3,
-      "name": "Home Town Vet",
-      "phone": "1234567899",
-      "address": "123 Main St",
-      "image": ""
+      "name": "Banfield Pet Hospital",
+      "phone": "2486743101",
+      "address": "4525 Highland Rd, Waterford Twp, MI 48328",
+      "image": "/assets/hospital-images/banfield.jpg",
+      "website": "https://banfield.com"
     },
     {
       "id": 4,
-      "name": "Specialty Hospital",
-      "phone": "1234567899",
-      "address": "123 Main St",
-      "image": ""
+      "name": "Union Lake Veterinary Hospital",
+      "phone": "2483631508",
+      "address": "6545 Cooley Lake Rd, Waterford Twp, MI 48327",
+      "image": "/assets/hospital-images/union-lake.jpg",
+      "website": "https://unionlakeveterinaryhospital.com"
+    },
+    {
+      "id": 5,
+      "name": "Pet Authority Animal Hospital",
+      "phone": "2486731288",
+      "address": "4588 W Walton Blvd, Waterford Twp, MI 48329",
+      "image": "/assets/hospital-images/pet-authority.jpg",
+      "website": "https://petsloved.com"
+    },
+    {
+      "id": 6,
+      "name": "Oakland Veterinary Referral Services",
+      "phone": "2483346877",
+      "address": "1400 S Telegraph Rd, Bloomfield Twp, MI 48302",
+      "image": "/assets/hospital-images/ovrs.jpg",
+      "website": "https://ovrs.com"
+    },
+    {
+      "id": 7,
+      "name": "Blue Pearl Pet Hospital",
+      "phone": "2483713713",
+      "address": "3412 Walton Blvd, Auburn Hills, MI 48326",
+      "image": "/assets/hospital-images/blue-pearl.jpg",
+      "website": "https://bluepearlvet.com/hospital/auburn-hills-mi/"
+    },
+    {
+      "id": 8,
+      "name": "Veterinary Vision of Rochester",
+      "phone": "248402-9844",
+      "address": "278 E Auburn Rd, Rochester Hills, MI 48307",
+      "image": "/assets/hospital-images/vet-vision.jpg",
+      "website": "https://vet-vision.com"
+    },
+    {
+      "id": 9,
+      "name": "Veterinary Cardiology Consultants",
+      "phone": "2489464322",
+      "address": "24360 Novi Rd Suite B, Novi, MI 48375",
+      "image": "/assets/hospital-images/cardiology-consultants.png",
+      "website": "https://vetcardiologyconsultants.com"
+    },
+    {
+      "id": 10,
+      "name": "Michigan State University Veterinary Medical Center",
+      "phone": "5173535420",
+      "address": "736 Wilson Rd, East Lansing, MI 48824",
+      "image": "/assets/hospital-images/msu.jpg",
+      "website": "https://cvm.msu.edu/hospital/small-animal"
     }
   ],
   "hospital-notes": [
@@ -252,8 +304,14 @@
     {
       "userId": 4,
       "hospitalId": 3,
-      "note": "for grooming",
+      "note": "Go here for vaccines",
       "id": 4
+    },
+    {
+      "userId": 4,
+      "hospitalId": 5,
+      "note": "vaccines",
+      "id": 5
     }
   ],
   "hospital-favorites": [
@@ -269,18 +327,13 @@
     },
     {
       "userId": 4,
-      "hospitalId": 3,
+      "hospitalId": 5,
+      "id": 2
+    },
+    {
+      "userId": 4,
+      "hospitalId": 6,
       "id": 3
-    },
-    {
-      "userId": 4,
-      "hospitalId": 2,
-      "id": 4
-    },
-    {
-      "userId": 4,
-      "hospitalId": 4,
-      "id": 5
     }
   ]
 }

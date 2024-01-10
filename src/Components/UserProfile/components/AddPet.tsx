@@ -126,6 +126,15 @@ export const AddPet = () => {
           <img src={imageInput} alt="pet profile image" />
         )}
       </div>
+      <a href="https://www.flaticon.com/free-stickers/dog" title="dog stickers">
+        Dog stickers created by DinosoftLabs - Flaticon
+      </a>
+      <a
+        href="https://www.flaticon.com/free-stickers/animals"
+        title="animals stickers"
+      >
+        Animals stickers created by DinosoftLabs - Flaticon
+      </a>
     </>
   );
 };
