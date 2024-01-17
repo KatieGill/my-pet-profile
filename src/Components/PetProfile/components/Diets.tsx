@@ -8,20 +8,30 @@ export const Diets = ({ dietArray }: { dietArray: Diet[] }) => {
     <>
       {dietArray.map((diet) => {
         return (
-          <div key={diet.id}>
-            <div>Diet: {diet.name}</div>
-            <div>Amount: {diet.amount}</div>
-            <div>Frequency: {diet.frequency}</div>
-            <Link to="/edit-diet" state={{ diet }}>
-              Edit Diet
-            </Link>
-            <button
-              onClick={() => {
-                deleteDiet(diet);
-              }}
-            >
-              Delete
-            </button>
+          <div className="card" key={diet.id}>
+            <div className="diet-info">
+              <div>Diet name: {diet.name}</div>
+              <div>Amount fed: {diet.amount}</div>
+              <div>Frequency fed: {diet.frequency}</div>
+            </div>
+            <div className="card-btns">
+              <div className="btn icon-btn">
+                <Link to="/edit-diet" state={{ diet }}>
+                  <i
+                    className="fa-regular fa-pen-to-square"
+                    title="edit diet"
+                  ></i>
+                </Link>
+              </div>
+              <button
+                className="btn icon-btn"
+                onClick={() => {
+                  deleteDiet(diet);
+                }}
+              >
+                <i className="fa-solid fa-trash" title="delete diet"></i>
+              </button>
+            </div>
           </div>
         );
       })}

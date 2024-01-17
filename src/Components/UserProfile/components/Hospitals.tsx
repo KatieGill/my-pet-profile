@@ -32,14 +32,14 @@ export const Hospitals = () => {
       <div className="container container-sm cards-container">
         {allHospitals.map((hospital) => {
           return (
-            <div className="hospital-card" key={hospital.id}>
+            <div className="hospital-card card" key={hospital.id}>
               <h3>{hospital.name}</h3>
               <div className="hospital-img">
                 <img src={hospital.image} alt="" />
               </div>
-              <div>{hospital.address}</div>
+              <div className="card-address">{hospital.address}</div>
               <div>{hospital.phone}</div>
-              <div>
+              <div className="card-website">
                 <a
                   href={hospital.website}
                   target="_blank"
@@ -50,7 +50,7 @@ export const Hospitals = () => {
               </div>
               <div className="favorite-btn-container">
                 <button
-                  className="heart-btn"
+                  className="btn icon-btn"
                   onClick={() => {
                     if (user) {
                       if (

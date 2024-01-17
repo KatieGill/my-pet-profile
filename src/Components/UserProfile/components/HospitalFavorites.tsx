@@ -35,14 +35,14 @@ export const HospitalFavorites = () => {
           (note) => note.hospitalId === hospital.id
         );
         return (
-          <div className="hospital-card" key={hospital.id}>
+          <div className="hospital-card card" key={hospital.id}>
             <h3>{hospital.name}</h3>
             <div className="hospital-img">
               <img src={hospital.image} alt="vet hospital image" />
             </div>
-            <div>{hospital.address}</div>
+            <div className="card-address">{hospital.address}</div>
             <div>{hospital.phone}</div>
-            <div>
+            <div className="card-website">
               <a
                 href={hospital.website}
                 target="_blank"
@@ -56,7 +56,7 @@ export const HospitalFavorites = () => {
                 <>
                   <div className="hospital-note">{note.note}</div>
                   <div className="note-buttons">
-                    <div className="">
+                    <div className="btn icon-btn">
                       <Link to="/edit-hospital-note" state={{ note, hospital }}>
                         <i
                           className="fa-regular fa-pen-to-square"
@@ -65,7 +65,7 @@ export const HospitalFavorites = () => {
                       </Link>
                     </div>
                     <button
-                      className=""
+                      className="btn icon-btn"
                       onClick={() => {
                         deleteHospitalNote(note);
                       }}
@@ -75,7 +75,7 @@ export const HospitalFavorites = () => {
                   </div>
                 </>
               ) : (
-                <div className="add-note">
+                <div className="add-note icon-btn">
                   <Link to="/add-hospital-note" state={{ hospital: hospital }}>
                     <span>
                       Create a note{" "}
@@ -90,7 +90,7 @@ export const HospitalFavorites = () => {
             </div>
             <div className="favorite-btn-container">
               <button
-                className="heart-btn"
+                className="btn icon-btn"
                 onClick={() => {
                   const favorite = userFavorites.find(
                     (favorite) => favorite.hospitalId === hospital.id

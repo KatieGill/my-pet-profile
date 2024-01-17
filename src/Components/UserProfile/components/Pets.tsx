@@ -9,7 +9,7 @@ export const Pets = () => {
       {userPets.map((pet) => {
         return (
           <Link to="/pet-profile" state={{ pet: pet }} key={pet.id}>
-            <div className="pet-card">
+            <div className="pet-card card">
               <h3>{pet.name}</h3>
               <div className="pet-img">
                 <img src={pet.image} alt="pet profile image" />

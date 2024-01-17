@@ -8,7 +8,7 @@ export const CreateDietForm = () => {
   const [frequencyInput, setFrequencyInput] = useState("");
 
   const location = useLocation();
-  const { petId } = location.state;
+  const { petId, petName } = location.state;
   const { postDiet } = useUserDataContext();
 
   const resetState = () => {
@@ -18,47 +18,75 @@ export const CreateDietForm = () => {
   };
   const navigate = useNavigate();
   return (
-    <form
-      onSubmit={(e) => {
-        e.preventDefault();
+    <div className="form-container">
+      <h2>Add a new diet for {petName}</h2>
+      <form
+        className="form-grid"
+        onSubmit={(e) => {
+          e.preventDefault();
 
-        postDiet({
-          name: nameInput,
-          petId: petId,
-          amount: amountInput,
-          frequency: frequencyInput,
-        }).then(resetState);
-        navigate(-1);
-      }}
-    >
-      <label htmlFor="diet-name">Diet name:</label>
-      <input
-        type="text"
-        name="diet-name"
-        value={nameInput}
-        onChange={(e) => {
-          setNameInput(e.target.value);
+          postDiet({
+            name: nameInput,
+            petId: petId,
+            amount: amountInput,
+            frequency: frequencyInput,
+          }).then(resetState);
+          navigate(-1);
         }}
-      />
-      <label htmlFor="diet-amount">Amount fed:</label>
-      <input
-        type="text"
-        name="diet-amount"
-        value={amountInput}
-        onChange={(e) => {
-          setAmountInput(e.target.value);
-        }}
-      />
-      <label htmlFor="diet-frequency">Frequency Fed:</label>
-      <input
-        type="text"
-        name="diet-frequency"
-        value={frequencyInput}
-        onChange={(e) => {
-          setFrequencyInput(e.target.value);
-        }}
-      />
-      <input type="submit" />
-    </form>
+      >
+        <div className="form-field-container">
+          <label htmlFor="diet-name">Diet name:</label>
+        </div>
+
+        <div className="form-field-container form-input">
+          {" "}
+          <input
+            type="text"
+            name="diet-name"
+            value={nameInput}
+            onChange={(e) => {
+              setNameInput(e.target.value);
+            }}
+          />
+        </div>
+
+        <div className="form-field-container">
+          {" "}
+          <label htmlFor="diet-amount">Amount fed:</label>
+        </div>
+
+        <div className="form-field-container form-input">
+          {" "}
+          <input
+            type="text"
+            name="diet-amount"
+            value={amountInput}
+            onChange={(e) => {
+              setAmountInput(e.target.value);
+            }}
+          />
+        </div>
+
+        <div className="form-field-container">
+          <label htmlFor="diet-frequency">Frequency Fed:</label>
+        </div>
+
+        <div className="form-field-container form-input">
+          {" "}
+          <input
+            type="text"
+            name="diet-frequency"
+            value={frequencyInput}
+            onChange={(e) => {
+              setFrequencyInput(e.target.value);
+            }}
+          />
+        </div>
+
+        <div className="form-field-container form-submit">
+          <input type="submit" />
+        </div>
+      </form>
+    </div>
   );
 };

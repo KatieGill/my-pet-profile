@@ -5,7 +5,7 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  margin: 100px;
+  margin: 25px 125px;
   padding: 50px;
   border-radius: 5px;
 }
@@ -14,20 +14,21 @@ form h2 {
   text-align: center;
 }
 
-.input-container {
-  margin: 10px;
-}
-
 form label {
   margin-right: 8px;
 }
 
-form input {
+form input,
+form select {
   background-color: var(--bg-white);
   border: 1px solid var(--bg-dark);
   border-radius: 2px;
   padding: 5px;
   width: 100%;
+}
+
+form select {
+  height: 100%;
 }
 
 .btn-submit {
@@ -37,18 +38,23 @@ form input {
 .form-field-container {
   display: flex;
   align-items: center;
-  justify-content: center;
+  justify-content: right;
 }
 
-#login-form,
-#create-login-form {
+.form-field-container.age-label {
+  justify-content: left;
+}
+
+.form-grid {
   display: grid;
   grid-gap: 10px;
   grid-template-columns: repeat(3, 1fr);
 }
 
-#login-form {
-  grid-template-rows: repeat(3, 1fr);
+.pet-form-grid {
+  display: grid;
+  grid-gap: 10px;
+  grid-template-columns: repeat(8, 1fr)
 }
 
 .form-input {
@@ -59,12 +65,65 @@ form input {
   grid-column: 2/3;
 }
 
-#create-login-form {
-  grid-template-rows: repeat(4, 1fr);
-}
-
 .hospital-note-form .form-field-container {
   margin-bottom: 10px;
+  justify-content: center;
+}
+
+.pet-form-label {
+  grid-column: 1/3;
+}
+
+.pet-form-label-right {
+  grid-column: 5/7;
+}
+
+.pet-form-input-left {
+  grid-column: 3/5;
+}
+
+.pet-form-input-right {
+  grid-column: 7/9;
+}
+
+.pet-form-name-input {
+  grid-column: 3/9;
+}
+
+.age-input {
+  grid-column: 3/4;
+}
+
+.age-label {
+  grid-column: 4/5;
+}
+
+.pet-form-submit {
+  grid-column: -6/-4;
+}
+
+.image-preview {
+  grid-column: 6/9;
+  grid-row: 3/8;
+  width: 230px;
+  height: 200px;
+  overflow: hidden;
+}
+
+.image-preview img {
+  height: 100%;
+
+}
+
+.image-credits {
+  display: flex;
+  flex-direction: column;
+  font-size: 12px;
+  margin-bottom: 50px;
+}
+
+.image-credits a {
+  color: var(--text-light);
 }
 
 

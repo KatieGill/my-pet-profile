@@ -21,7 +21,7 @@ export const CreateLoginForm = () => {
     <div className="form-container">
       <h2>Welcome New User!</h2>
       <form
-        id="create-login-form"
+        className="form-grid"
         onSubmit={(e) => {
           e.preventDefault();
           if (passwordInput === confirmPasswordInput) {

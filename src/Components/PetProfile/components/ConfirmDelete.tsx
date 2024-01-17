@@ -11,6 +11,7 @@ export const ConfirmDelete = () => {
     <>
       <h2>Are you sure you want to permanently delete your pet's profile?</h2>
       <button
+        className="btn"
         onClick={() => {
           navigate(-1);
         }}
@@ -18,6 +19,7 @@ export const ConfirmDelete = () => {
         NO
       </button>
       <button
+        className="btn"
         onClick={() => {
           deletePet(pet).then(() => {
             navigate("/user-profile");

@@ -1,0 +1,34 @@
+.pet-profile-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.pet-info-container {
+  display: flex;
+  align-items: center;
+}
+
+.pet-info-container div {
+  margin: 10px 20px;
+}
+
+.pet-data {
+  background-color: var(--bg-white);
+  color: var(--text-dark);
+  padding: 5px;
+  border-radius: 5px;
+}
+
+.profile-img {
+  max-width: 250px
+}
+
+.profile-img img {
+  width: 100%
+}
+
+.diet-info,
+.medication-info {
+  padding: 20px;
+}

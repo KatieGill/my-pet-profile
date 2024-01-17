@@ -17,7 +17,7 @@ export const LoginForm = () => {
     <div className="form-container">
       <h2>Login</h2>
       <form
-        id="login-form"
+        className="form-grid"
         onSubmit={(e) => {
           e.preventDefault();
           login({ username: usernameInput, password: passwordInput })
