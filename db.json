@@ -75,11 +75,11 @@
     },
     {
       "userId": 4,
-      "name": "Ted",
+      "name": "Teddy",
       "species": "cat",
       "breed": "Domestic Longhair",
       "image": "/assets/cat-images/gray-cat.png",
-      "dob": "2011-12-06",
+      "dob": "2011-12-06T00:00:00.000Z",
       "id": 5
     },
     {
@@ -188,6 +188,13 @@
       "amount": "1/4 can",
       "frequency": "twice daily",
       "id": 9
+    },
+    {
+      "petId": 5,
+      "name": "Purina ProPlan",
+      "amount": "1/4 cup",
+      "frequency": "twice daily",
+      "id": 10
     }
   ],
   "medications": [

@@ -134,6 +134,12 @@ export const Requests = {
       });
   },
 
+  getAllUsernames: () => {
+    return fetch(`${baseUrl}/users`)
+      .then((response) => response.json())
+      .then((data) => data.map((user) => user.username));
+  },
+
   getPets: (userId: number) => {
     return fetch(`${baseUrl}/pets`)
       .then((response) => {

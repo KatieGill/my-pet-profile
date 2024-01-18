@@ -2,29 +2,74 @@ import "../forms.css";
 import { useState } from "react";
 import { useAuthContext } from "../Providers/UseContext";
 import toast from "react-hot-toast";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import {
+  arePasswordsValid,
+  isPasswordValid,
+  isUsernameAvailable,
+  isUsernameValid,
+} from "../utils/validations";
+import { ErrorMessage } from "../ErrorMessage";
+
+const passwordsMatchError = "Passwords do not match.";
+const usernameError = "Username must be at least 2 characters long";
+const usernameNotAvailableError =
+  "Username already exists. Login or choose a new username.";
+const passwordsLengthError = "Password must be at least 5 characters long";
 
 export const CreateLoginForm = () => {
   const { registerUser } = useAuthContext();
-  const [usernameInput, setUsernameInput] = useState("");
-  const [passwordInput, setPasswordInput] = useState("");
-  const [confirmPasswordInput, setConfirmPasswordInput] = useState("");
+  const [usernameInput, setUsernameInput] = useState<string>("");
+  const [passwordInput, setPasswordInput] = useState<string>("");
+  const [confirmPasswordInput, setConfirmPasswordInput] = useState<string>("");
+  const [shouldShowErrorMessage, setShouldShowErrorMessage] =
+    useState<boolean>(false);
+  const [usernameIsAvailable, setUsernameIsAvailable] = useState<boolean>(true);
+
+  const usernameAvailable = async (usernameInput: string) => {
+    const available = await isUsernameAvailable(usernameInput);
+    setUsernameIsAvailable(available);
+  };
+
+  usernameAvailable(usernameInput);
+
+  const passwordsAreValid = arePasswordsValid(
+    passwordInput,
+    confirmPasswordInput
+  );
+  const passwordIsValid = isPasswordValid(passwordInput);
+  const usernameIsValid = isUsernameValid(usernameInput);
+
+  const shouldShowPasswordsMatchError =
+    !passwordsAreValid && shouldShowErrorMessage;
+  const shouldShowPasswordsLengthError =
+    !passwordIsValid && shouldShowErrorMessage;
+  const shouldShowUsernameError = !usernameIsValid && shouldShowErrorMessage;
+  const shouldShowUsernameNotAvailableError =
+    !usernameIsAvailable && shouldShowErrorMessage;
 
   const resetState = () => {
     setUsernameInput("");
     setPasswordInput("");
     setConfirmPasswordInput("");
+    setShouldShowErrorMessage(false);
+    setUsernameIsAvailable(true);
   };
 
   const navigate = useNavigate();
   return (
     <div className="form-container">
+      <div className="btn form-home-btn">
+        <Link to="/">Home</Link>
+      </div>
       <h2>Welcome New User!</h2>
       <form
         className="form-grid"
         onSubmit={(e) => {
           e.preventDefault();
-          if (passwordInput === confirmPasswordInput) {
+          if (!usernameIsValid || !passwordsAreValid || !usernameIsAvailable) {
+            setShouldShowErrorMessage(true);
+          } else {
             registerUser({
               username: usernameInput,
               password: passwordInput,
@@ -32,8 +77,6 @@ export const CreateLoginForm = () => {
               .then(resetState)
               .catch(() => toast.error("Unable to register user"));
             navigate("/login");
-          } else {
-            toast.error("Passwords did not match");
           }
         }}
       >
@@ -50,7 +93,11 @@ export const CreateLoginForm = () => {
             }}
           />
         </div>
-
+        <ErrorMessage message={usernameError} show={shouldShowUsernameError} />
+        <ErrorMessage
+          message={usernameNotAvailableError}
+          show={shouldShowUsernameNotAvailableError}
+        />
         <div className="form-field-container">
           <label htmlFor="password">Create a Password:</label>
         </div>
@@ -77,6 +124,14 @@ export const CreateLoginForm = () => {
             }}
           />
         </div>
+        <ErrorMessage
+          message={passwordsMatchError}
+          show={shouldShowPasswordsMatchError}
+        />
+        <ErrorMessage
+          message={passwordsLengthError}
+          show={shouldShowPasswordsLengthError}
+        />
         <div className="form-field-container form-submit">
           <input type="submit" className="btn btn-submit"></input>
         </div>

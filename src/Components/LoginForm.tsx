@@ -1,31 +1,47 @@
 import "../forms.css";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useAuthContext } from "../Providers/UseContext";
 import { useState } from "react";
-import toast from "react-hot-toast";
+import { ErrorMessage } from "../ErrorMessage";
 
 export const LoginForm = () => {
   const { login } = useAuthContext();
-  const [usernameInput, setUsernameInput] = useState("");
-  const [passwordInput, setPasswordInput] = useState("");
+  const [usernameInput, setUsernameInput] = useState<string>("");
+  const [passwordInput, setPasswordInput] = useState<string>("");
+  const [shouldShowErrorMessage, setShouldShowErrorMessage] =
+    useState<boolean>(false);
+  const [errorMessage, setErrorMessage] = useState<string>("");
   const navigate = useNavigate();
+
   const resetState = () => {
     setUsernameInput("");
     setPasswordInput("");
+    setShouldShowErrorMessage(false);
   };
+
   return (
     <div className="form-container">
+      <div className="btn form-home-btn">
+        <Link to="/">Home</Link>
+      </div>
       <h2>Login</h2>
       <form
         className="form-grid"
         onSubmit={(e) => {
           e.preventDefault();
-          login({ username: usernameInput, password: passwordInput })
+
+          login({
+            username: usernameInput,
+            password: passwordInput,
+          })
             .then(() => {
               resetState();
               navigate("/user-profile");
             })
-            .catch((error: Error) => toast.error(error.message));
+            .catch((error: Error) => {
+              setErrorMessage(error.message);
+              setShouldShowErrorMessage(true);
+            });
         }}
       >
         <div className="form-field-container">
@@ -59,6 +75,7 @@ export const LoginForm = () => {
             }}
           />
         </div>
+        <ErrorMessage message={errorMessage} show={shouldShowErrorMessage} />
         <div className="form-field-container form-submit">
           <input className="btn btn-submit" type="submit"></input>
         </div>

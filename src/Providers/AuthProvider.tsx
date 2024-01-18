@@ -26,6 +26,9 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
 
   const login = async (user: Omit<User, "id">) => {
     const currentUser = await Requests.getUser(user.username);
+    if (!currentUser) {
+      throw new Error("Username does not exist");
+    }
     if (user.password !== currentUser.password) {
       throw new Error("Password incorrect");
     } else {

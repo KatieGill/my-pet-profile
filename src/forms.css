@@ -31,6 +31,10 @@ form select {
   height: 100%;
 }
 
+.form-container h2 {
+  margin-top: 0px;
+}
+
 .btn-submit {
   padding: 5px 30px;
 }
@@ -43,6 +47,10 @@ form select {
 
 .form-field-container.age-label {
   justify-content: left;
+}
+
+.form-home-btn {
+  margin-right: auto;
 }
 
 .form-grid {
@@ -124,6 +132,12 @@ form select {
 
 .image-credits a {
   color: var(--text-light);
+}
+
+.error-message {
+  grid-column: 1/4;
+  color: #f54242;
+  font-weight: 600;
 }
 
 

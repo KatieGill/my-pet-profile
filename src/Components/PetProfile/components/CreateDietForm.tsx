@@ -84,7 +84,7 @@ export const CreateDietForm = () => {
         </div>
 
         <div className="form-field-container form-submit">
-          <input type="submit" />
+          <input type="submit" className="btn" />
         </div>
       </form>
     </div>
