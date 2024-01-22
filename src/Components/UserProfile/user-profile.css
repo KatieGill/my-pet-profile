@@ -24,10 +24,6 @@
   overflow: hidden;
 }
 
-.card-website a:hover {
-  font-weight: 600;
-}
-
 .hospital-note-container {
   width: 200px;
   display: flex;
@@ -58,4 +54,27 @@
 .no-card-view {
   color: var(--text-dark);
   padding: 100px;
+}
+
+.hospital-info-container {
+  text-align: left;
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  margin: 10px 50px;
+}
+
+.hospital-info-link {
+  grid-column: 2/7;
+}
+
+.hospital-info-link a:hover,
+.add-note:hover {
+  font-weight: 600;
+}
+
+.hospital-info-icon {
+  grid-column: 1/2;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }

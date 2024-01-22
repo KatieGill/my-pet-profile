@@ -25,6 +25,9 @@ export const isUsernameAvailable = async (username: string) => {
     });
 };
 
+export const isInputValid = (input: string) => {
+  return input.length > 0;
+};
 export const isPetNameValid = (petName: string) => {
   return petName.length > 0;
 };
@@ -35,4 +38,8 @@ export const isImageSelected = (image: string) => {
 
 export const isDobValid = (dob: Date) => {
   return dob !== ("" as unknown as Date);
+};
+
+export const isNoteValid = (note: string) => {
+  return note.length > 0;
 };

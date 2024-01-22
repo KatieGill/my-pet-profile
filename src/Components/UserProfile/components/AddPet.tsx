@@ -10,14 +10,15 @@ import { useNavigate } from "react-router-dom";
 import {
   isDobValid,
   isImageSelected,
-  isPetNameValid,
+  isInputValid,
 } from "../../../utils/validations";
 import { ErrorMessage } from "../../../ErrorMessage";
 import { ApproximateAge } from "./ApproximateAge";
-
-const petNameError = "Pet name must be as least 1 character long";
-const imageError = "Please select a profile image";
-const dobError = "Please enter a birthday";
+import {
+  dobError,
+  imageError,
+  petNameError,
+} from "../../../utils/errorMessages";
 
 export const AddPet = () => {
   const { user } = useAuthContext();
@@ -32,7 +33,7 @@ export const AddPet = () => {
   const [showApproximateAgeInput, setShowApproximateAgeInput] =
     useState<boolean>(false);
 
-  const petNameIsValid = isPetNameValid(nameInput);
+  const petNameIsValid = isInputValid(nameInput);
   const imageIsSelected = isImageSelected(imageInput);
   const dobIsValid = isDobValid(dobInput);
 
@@ -74,7 +75,7 @@ export const AddPet = () => {
                 })
                   .then(() => {
                     resetState();
-                    navigate("/user-profile");
+                    navigate(-1);
                   })
                   .catch((e: Error) => console.log(e.message));
               }
@@ -210,6 +211,15 @@ export const AddPet = () => {
           )}
           <ErrorMessage message={dobError} show={shouldShowDobError} />
           <div className="form-field-container pet-form-submit">
+            <button
+              className="btn"
+              onClick={(e) => {
+                e.preventDefault();
+                navigate(-1);
+              }}
+            >
+              Cancel
+            </button>
             <input type="submit" className="btn btn-submit" />
           </div>
         </form>

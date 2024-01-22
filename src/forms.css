@@ -139,6 +139,11 @@ form select {
   grid-column: 2/6;
   color: #f54242;
   font-weight: 600;
+  text-align: left;
+}
+
+.pet-data-form .error-message {
+  grid-column: 2/4;
 }
 
 .display {

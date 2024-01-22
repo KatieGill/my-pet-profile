@@ -2,6 +2,13 @@ import { useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { useUserDataContext } from "../../../Providers/UseContext";
 import { Diet } from "../../../Types/types";
+import { isInputValid } from "../../../utils/validations";
+import { ErrorMessage } from "../../../ErrorMessage";
+import {
+  dietAmountErrorMessage,
+  dietFrequencyErrorMessage,
+  dietNameErrorMessage,
+} from "../../../utils/errorMessages";
 
 export const EditDietForm = () => {
   const location = useLocation();
@@ -11,30 +18,45 @@ export const EditDietForm = () => {
   const [nameInput, setNameInput] = useState(name);
   const [amountInput, setAmountInput] = useState(amount);
   const [frequencyInput, setFrequencyInput] = useState(frequency);
-
+  const [shouldShowErrorMessage, setShouldShowErrorMessage] =
+    useState<boolean>(false);
   const { putDiet } = useUserDataContext();
+
+  const nameIsValid = isInputValid(nameInput);
+  const amountIsValid = isInputValid(amountInput);
+  const frequencyIsValid = isInputValid(frequencyInput);
+
+  const shouldShowNameError = !nameIsValid && shouldShowErrorMessage;
+  const shouldShowAmountError = !amountIsValid && shouldShowErrorMessage;
+  const shouldShowFrequencyError = !frequencyIsValid && shouldShowErrorMessage;
 
   const resetState = () => {
     setNameInput("");
     setAmountInput("");
     setFrequencyInput("");
+    setShouldShowErrorMessage(false);
   };
   const navigate = useNavigate();
 
   return (
-    <div className="form-container">
+    <div className="form-container pet-data-form">
+      <h2>Edit the Selected Diet</h2>
       <form
         className="form-grid"
         onSubmit={(e) => {
           e.preventDefault();
-          putDiet({
-            id: id,
-            petId: petId,
-            name: nameInput,
-            amount: amountInput,
-            frequency: frequencyInput,
-          }).then(resetState);
-          navigate(-1);
+          if (!nameIsValid || !amountIsValid || !frequencyIsValid) {
+            setShouldShowErrorMessage(true);
+          } else {
+            putDiet({
+              id: id,
+              petId: petId,
+              name: nameInput,
+              amount: amountInput,
+              frequency: frequencyInput,
+            }).then(resetState);
+            navigate(-1);
+          }
         }}
       >
         <div className="form-field-container">
@@ -51,7 +73,10 @@ export const EditDietForm = () => {
             }}
           />
         </div>
-
+        <ErrorMessage
+          message={dietNameErrorMessage}
+          show={shouldShowNameError}
+        />
         <div className="form-field-container">
           <label htmlFor="diet-amount">Amount fed:</label>
         </div>
@@ -66,7 +91,10 @@ export const EditDietForm = () => {
             }}
           />
         </div>
-
+        <ErrorMessage
+          message={dietAmountErrorMessage}
+          show={shouldShowAmountError}
+        />
         <div className="form-field-container">
           <label htmlFor="diet-frequency">Frequency Fed:</label>
         </div>
@@ -81,8 +109,20 @@ export const EditDietForm = () => {
             }}
           />
         </div>
-
+        <ErrorMessage
+          message={dietFrequencyErrorMessage}
+          show={shouldShowFrequencyError}
+        />
         <div className="form-field-container form-submit">
+          <button
+            className="btn"
+            onClick={(e) => {
+              e.preventDefault();
+              navigate(-1);
+            }}
+          >
+            Cancel
+          </button>
           <input type="submit" className="btn" />
         </div>
       </form>

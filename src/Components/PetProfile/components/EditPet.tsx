@@ -12,12 +12,13 @@ import { ApproximateAge } from "../../UserProfile/components/ApproximateAge";
 import {
   isDobValid,
   isImageSelected,
-  isPetNameValid,
+  isInputValid,
 } from "../../../utils/validations";
-
-const petNameError = "Pet name must be as least 1 character long";
-const imageError = "Please select a profile image";
-const dobError = "Please enter a birthday";
+import {
+  dobError,
+  imageError,
+  petNameError,
+} from "../../../utils/errorMessages";
 
 export const EditPet = () => {
   const { user } = useAuthContext();
@@ -35,7 +36,7 @@ export const EditPet = () => {
   const [showApproximateAgeInput, setShowApproximateAgeInput] =
     useState<boolean>(true);
 
-  const petNameIsValid = isPetNameValid(nameInput);
+  const petNameIsValid = isInputValid(nameInput);
   const imageIsSelected = isImageSelected(imageInput);
   const dobIsValid = isDobValid(dobInput);
 

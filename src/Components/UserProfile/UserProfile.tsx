@@ -2,7 +2,7 @@ import "./user-profile.css";
 import { Link, useNavigate } from "react-router-dom";
 import { useAuthContext, useUserDataContext } from "../../Providers/UseContext";
 import { Pets } from "./components/Pets";
-import { HospitalFavorites } from "./components/HospitalFavorites";
+import { HospitalCard } from "./components/HospitalCard";
 
 export const UserProfile = () => {
   const { userPets, hospitalFavorites } = useUserDataContext();
@@ -40,13 +40,16 @@ export const UserProfile = () => {
       </div>
       <h2>Favorite Veterinary Hospitals</h2>
 
-      <div className="container container-sm">
+      <div className="container container-sm" id="hospital-favorites">
         <div className="btn cards-nav">
           <Link to="/vet-hospitals">Explore Veterinary Hospitals</Link>
         </div>
         <div className="cards-container">
           {hospitalFavorites?.length > 0 ? (
-            <HospitalFavorites />
+            <HospitalCard
+              hospitalArray={hospitalFavorites}
+              isFavoriteList={true}
+            />
           ) : (
             <div className="no-card-view">
               You do not have any favorite hospitals yet!

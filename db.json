@@ -168,7 +168,7 @@
     },
     {
       "petId": 4,
-      "name": "Cat Chow",
+      "name": "Purina ProPlan",
       "amount": "1/4 cup",
       "frequency": "twice daily",
       "id": 8
@@ -212,6 +212,14 @@
       "frequency": "once daily",
       "note": "for anxiety",
       "id": 3
+    },
+    {
+      "petId": 4,
+      "name": "Glucosamine",
+      "amount": "500mg",
+      "frequency": "once daily",
+      "note": "for joints",
+      "id": 5
     }
   ],
   "hospitals": [
@@ -326,6 +334,12 @@
       "hospitalId": 5,
       "note": "vaccines",
       "id": 5
+    },
+    {
+      "userId": 4,
+      "hospitalId": 6,
+      "note": "emergencies",
+      "id": 6
     }
   ],
   "hospital-favorites": [

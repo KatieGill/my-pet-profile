@@ -3,17 +3,27 @@ import {
   useAuthContext,
   useUserDataContext,
 } from "../../../Providers/UseContext";
-import { useLocation, useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
 import { Hospital } from "../../../Types/types";
+import { isNoteValid } from "../../../utils/validations";
+import { ErrorMessage } from "../../../ErrorMessage";
+
+const noteErrorMessage =
+  "Please enter a note for the selected veterinary hospital";
 
 export const AddHospitalNote = () => {
   const location = useLocation();
   const { id, name } = location.state.hospital as Hospital;
   const [noteInput, setNoteInput] = useState<string>("");
+  const [shouldShowErrorMessage, setShouldShowErrorMessage] =
+    useState<boolean>(false);
   const { postHospitalNote } = useUserDataContext();
   const { user } = useAuthContext();
   const navigate = useNavigate();
+
+  const noteIsValid = isNoteValid(noteInput);
+  const shouldShowNoteErrorMessage = !noteIsValid && shouldShowErrorMessage;
 
   return (
     <>
@@ -23,17 +33,21 @@ export const AddHospitalNote = () => {
           className="hospital-note-form"
           onSubmit={(e) => {
             e.preventDefault();
-            if (user) {
-              postHospitalNote({
-                userId: user.id,
-                hospitalId: id,
-                note: noteInput,
-              })
-                .then(() => {
-                  setNoteInput("");
-                  navigate("/user-profile");
+            if (!noteIsValid) {
+              setShouldShowErrorMessage(true);
+            } else {
+              if (user) {
+                postHospitalNote({
+                  userId: user.id,
+                  hospitalId: id,
+                  note: noteInput,
                 })
-                .catch((e: Error) => toast.error(e.message));
+                  .then(() => {
+                    setNoteInput("");
+                    navigate(-1);
+                  })
+                  .catch((e: Error) => toast.error(e.message));
+              }
             }
           }}
         >
@@ -51,8 +65,20 @@ export const AddHospitalNote = () => {
               }}
             ></textarea>
           </div>
-
+          <ErrorMessage
+            message={noteErrorMessage}
+            show={shouldShowNoteErrorMessage}
+          />
           <div className="form-field-container">
+            <button
+              className="btn"
+              onClick={(e) => {
+                e.preventDefault();
+                navigate(-1);
+              }}
+            >
+              Cancel
+            </button>
             <input type="submit" className="btn btn-submit" />
           </div>
         </form>

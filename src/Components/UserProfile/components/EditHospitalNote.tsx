@@ -53,6 +53,15 @@ export const EditHospitalNote = () => {
             }}
           ></textarea>
           <div className="form-field-container">
+            <button
+              className="btn"
+              onClick={(e) => {
+                e.preventDefault();
+                navigate("/user-profile");
+              }}
+            >
+              Cancel
+            </button>
             <input type="submit" className="btn btn-submit" />
           </div>
         </form>
