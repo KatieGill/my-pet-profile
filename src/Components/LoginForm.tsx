@@ -11,6 +11,9 @@ export const LoginForm = () => {
   const [shouldShowErrorMessage, setShouldShowErrorMessage] =
     useState<boolean>(false);
   const [errorMessage, setErrorMessage] = useState<string>("");
+  const [showPassword, setShowPassword] = useState<"text" | "password">(
+    "password"
+  );
   const navigate = useNavigate();
 
   const resetState = () => {
@@ -44,7 +47,7 @@ export const LoginForm = () => {
             });
         }}
       >
-        <div className="form-field-container">
+        <div className="form-field-container form-label">
           <label id="username-label" htmlFor="username">
             Username:
           </label>
@@ -60,20 +63,37 @@ export const LoginForm = () => {
           />
         </div>
 
-        <div className="form-field-container">
+        <div className="form-field-container form-label">
           <label id="password-label" htmlFor="password">
             Password:
           </label>
         </div>
         <div className="form-field-container form-input">
           <input
-            type="text"
+            type={showPassword}
             name="password"
             value={passwordInput}
             onChange={(e) => {
               setPasswordInput(e.target.value);
             }}
           />
+        </div>
+        <div className="form-field-container show-password-icon">
+          <button
+            className="btn icon-btn"
+            onClick={(e) => {
+              e.preventDefault();
+              showPassword === "text"
+                ? setShowPassword("password")
+                : setShowPassword("text");
+            }}
+          >
+            {showPassword === "password" ? (
+              <i title="show password" className="fa-solid fa-eye"></i>
+            ) : (
+              <i title="hide password" className="fa-solid fa-eye-slash"></i>
+            )}
+          </button>
         </div>
         <ErrorMessage message={errorMessage} show={shouldShowErrorMessage} />
         <div className="form-field-container form-submit">

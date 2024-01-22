@@ -25,6 +25,9 @@ export const CreateLoginForm = () => {
   const [shouldShowErrorMessage, setShouldShowErrorMessage] =
     useState<boolean>(false);
   const [usernameIsAvailable, setUsernameIsAvailable] = useState<boolean>(true);
+  const [showPassword, setShowPassword] = useState<"text" | "password">(
+    "password"
+  );
 
   const usernameAvailable = async (usernameInput: string) => {
     const available = await isUsernameAvailable(usernameInput);
@@ -80,7 +83,7 @@ export const CreateLoginForm = () => {
           }
         }}
       >
-        <div className="form-field-container">
+        <div className="form-field-container form-label">
           <label htmlFor="username">Create a Username:</label>
         </div>
         <div className="form-field-container form-input">
@@ -98,12 +101,12 @@ export const CreateLoginForm = () => {
           message={usernameNotAvailableError}
           show={shouldShowUsernameNotAvailableError}
         />
-        <div className="form-field-container">
+        <div className="form-field-container form-label">
           <label htmlFor="password">Create a Password:</label>
         </div>
         <div className="form-field-container form-input">
           <input
-            type="text"
+            type={showPassword}
             name="password"
             value={passwordInput}
             onChange={(e) => {
@@ -111,12 +114,29 @@ export const CreateLoginForm = () => {
             }}
           />
         </div>
-        <div className="form-field-container">
+        <div className="form-field-container show-password-icon">
+          <button
+            className="btn icon-btn"
+            onClick={(e) => {
+              e.preventDefault();
+              showPassword === "text"
+                ? setShowPassword("password")
+                : setShowPassword("text");
+            }}
+          >
+            {showPassword === "password" ? (
+              <i title="show password" className="fa-solid fa-eye"></i>
+            ) : (
+              <i title="hide password" className="fa-solid fa-eye-slash"></i>
+            )}
+          </button>
+        </div>
+        <div className="form-field-container form-label">
           <label htmlFor="confirm-password">Confirm password:</label>
         </div>
         <div className="form-field-container form-input">
           <input
-            type="text"
+            type={showPassword}
             name="confirm-password"
             value={confirmPasswordInput}
             onChange={(e) => {

@@ -7,6 +7,7 @@ import {
 } from "../../../Providers/UseContext";
 import toast from "react-hot-toast";
 import { Link } from "react-router-dom";
+import { getSearchLocation } from "../../../utils/functions";
 
 export const Hospitals = () => {
   const [allHospitals, setAllHospitals] = useState<Hospital[]>([]);
@@ -31,14 +32,25 @@ export const Hospitals = () => {
       </nav>
       <div className="container container-sm cards-container">
         {allHospitals.map((hospital) => {
+          const location = getSearchLocation(hospital.address);
           return (
             <div className="hospital-card card" key={hospital.id}>
               <h3>{hospital.name}</h3>
               <div className="hospital-img">
                 <img src={hospital.image} alt="" />
               </div>
-              <div className="card-address">{hospital.address}</div>
-              <div>{hospital.phone}</div>
+              <div className="card-address">
+                <a
+                  href={`https://www.google.com/maps?q=${location}`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  {hospital.address}
+                </a>
+              </div>
+              <div>
+                <a href={`tel: ${hospital.phone}`}>{hospital.phone}</a>
+              </div>
               <div className="card-website">
                 <a
                   href={hospital.website}

@@ -69,8 +69,16 @@ form select {
   grid-column: 2/4;
 }
 
+.form-label {
+  grid-column: 1/2;
+}
+
 .form-submit {
   grid-column: 2/3;
+}
+
+.show-password-icon {
+  grid-column: -1;
 }
 
 .hospital-note-form .form-field-container {
@@ -82,16 +90,9 @@ form select {
   grid-column: 1/3;
 }
 
-.pet-form-label-right {
-  grid-column: 5/7;
-}
-
-.pet-form-input-left {
+.pet-form-input,
+.calculate-birthday-btn {
   grid-column: 3/5;
-}
-
-.pet-form-input-right {
-  grid-column: 7/9;
 }
 
 .pet-form-name-input {
@@ -135,9 +136,38 @@ form select {
 }
 
 .error-message {
-  grid-column: 1/4;
+  grid-column: 2/6;
   color: #f54242;
   font-weight: 600;
 }
+
+.display {
+  display: none;
+}
+
+.show-approximate-age {
+  grid-column: 2/5;
+}
+
+.show-approximate-age button,
+.enter-birthday-button button,
+.calculate-birthday-btn button {
+  font-size: 11px;
+}
+
+.enter-birthday-button {
+  grid-column: 5/7;
+}
+
+.calculated-birthday-display {
+  grid-column: 3/6;
+}
+
+.calculate-birthday-btn,
+.enter-birthday-button,
+.calculated-birthday-display {
+  justify-content: left;
+}
+
 
 

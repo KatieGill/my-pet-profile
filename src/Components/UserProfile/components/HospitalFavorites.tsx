@@ -6,6 +6,7 @@ import {
 import { Requests } from "../../../api";
 import { HospitalFavorite } from "../../../Types/types";
 import { Link } from "react-router-dom";
+import { getSearchLocation } from "../../../utils/functions";
 
 export const HospitalFavorites = () => {
   const {
@@ -31,6 +32,7 @@ export const HospitalFavorites = () => {
   return (
     <>
       {hospitalFavorites.map((hospital) => {
+        const location = getSearchLocation(hospital.address);
         const note = hospitalNotes.find(
           (note) => note.hospitalId === hospital.id
         );
@@ -40,7 +42,15 @@ export const HospitalFavorites = () => {
             <div className="hospital-img">
               <img src={hospital.image} alt="vet hospital image" />
             </div>
-            <div className="card-address">{hospital.address}</div>
+            <div className="card-address">
+              <a
+                href={`https://www.google.com/maps?q=${location}`}
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                {hospital.address}
+              </a>
+            </div>
             <div>{hospital.phone}</div>
             <div className="card-website">
               <a

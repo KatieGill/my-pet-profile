@@ -5,9 +5,19 @@ import {
 } from "../../../Providers/UseContext";
 import { dogBreeds, catBreeds } from "../../../assets/breedLists";
 import { dogImages, catImages } from "../../../assets/breedImages";
-import { Breed, Species } from "../../../Types/types";
-import toast from "react-hot-toast";
+import { Breed, Pet, Species } from "../../../Types/types";
 import { useLocation, useNavigate } from "react-router-dom";
+import { ErrorMessage } from "../../../ErrorMessage";
+import { ApproximateAge } from "../../UserProfile/components/ApproximateAge";
+import {
+  isDobValid,
+  isImageSelected,
+  isPetNameValid,
+} from "../../../utils/validations";
+
+const petNameError = "Pet name must be as least 1 character long";
+const imageError = "Please select a profile image";
+const dobError = "Please enter a birthday";
 
 export const EditPet = () => {
   const { user } = useAuthContext();
@@ -20,35 +30,18 @@ export const EditPet = () => {
   const [breedInput, setBreedInput] = useState<Breed>(breed);
   const [imageInput, setImageInput] = useState<string>(image);
   const [dobInput, setDobInput] = useState<Date>(dob);
-  const [yearsInput, setYearsInput] = useState<number>(0);
-  const [monthsInput, setMonthsInput] = useState<number>(0);
-  const [daysInput, setDaysInput] = useState<number>(0);
+  const [shouldShowErrorMessage, setShouldShouldErrorMessage] =
+    useState<boolean>(false);
+  const [showApproximateAgeInput, setShowApproximateAgeInput] =
+    useState<boolean>(true);
 
-  const getBirthday = () => {
-    const today = new Date();
-    const todayYear = today.getFullYear();
-    const todayMonth = today.getMonth() + 1;
-    const todayDate = today.getDate();
-    let birthYear = todayYear - yearsInput;
-    let birthMonth = todayMonth - monthsInput;
-    let birthDate = todayDate - daysInput;
-    if (monthsInput > todayMonth) {
-      birthYear--;
-      birthMonth = birthMonth + 12;
-    }
-    if (birthDate > todayDate) {
-      birthMonth--;
-      birthDate = birthDate + 31;
-    }
-    if (birthDate < 10) {
-      birthDate = birthDate.toString().padStart(2, "0");
-    }
-    if (birthMonth < 10) {
-      birthMonth = birthMonth.toString().padStart(2, "0");
-    }
-    const birthday = `${birthYear}-${birthMonth}-${birthDate}`;
-    setDobInput(birthday as unknown as Date);
-  };
+  const petNameIsValid = isPetNameValid(nameInput);
+  const imageIsSelected = isImageSelected(imageInput);
+  const dobIsValid = isDobValid(dobInput);
+
+  const shouldShowPetNameError = !petNameIsValid && shouldShowErrorMessage;
+  const shouldShowImageError = !imageIsSelected && shouldShowErrorMessage;
+  const shouldShowDobError = !dobIsValid && shouldShowErrorMessage;
 
   const resetState = () => {
     setNameInput("");
@@ -56,9 +49,8 @@ export const EditPet = () => {
     setBreedInput("Mixed / Other");
     setImageInput("");
     setDobInput("" as unknown as Date);
-    setYearsInput(0);
-    setMonthsInput(0);
-    setDaysInput(0);
+    setShouldShouldErrorMessage(false);
+    setShowApproximateAgeInput(true);
   };
 
   const navigate = useNavigate();
@@ -71,37 +63,37 @@ export const EditPet = () => {
           className="pet-form-grid"
           onSubmit={(e) => {
             e.preventDefault();
-            if (yearsInput > 0 || monthsInput > 0 || daysInput > 0) {
-              getBirthday();
-            }
-            if (user) {
-              putPet({
-                id: id,
-                userId: userId,
-                name: nameInput,
-                species: speciesInput,
-                breed: breedInput,
-                image: imageInput,
-                dob: dobInput,
-              })
-                .then(() => {
-                  resetState();
-                  navigate("/pet-profile", {
-                    state: {
-                      pet: {
-                        id: id,
-                        userId: userId,
-                        name: nameInput,
-                        species: speciesInput,
-                        breed: breedInput,
-                        image: imageInput,
-                        dob: dobInput,
-                      },
-                    },
-                  });
+            if (!petNameIsValid || !imageIsSelected || !dobIsValid) {
+              setShouldShouldErrorMessage(true);
+            } else {
+              if (user) {
+                putPet({
+                  id: id,
+                  userId: userId,
+                  name: nameInput,
+                  species: speciesInput,
+                  breed: breedInput,
+                  image: imageInput,
+                  dob: dobInput,
                 })
-
-                .catch((e: Error) => toast.error(e.message));
+                  .then(() => {
+                    resetState();
+                    navigate("/pet-profile", {
+                      state: {
+                        pet: {
+                          id: id,
+                          userId: userId,
+                          name: nameInput,
+                          species: speciesInput,
+                          breed: breedInput,
+                          image: imageInput,
+                          dob: dobInput,
+                        },
+                      },
+                    });
+                  })
+                  .catch((e: Error) => console.log(e.message));
+              }
             }
           }}
         >
@@ -118,12 +110,11 @@ export const EditPet = () => {
               }}
             />
           </div>
-
+          <ErrorMessage message={petNameError} show={shouldShowPetNameError} />
           <div className="form-field-container pet-form-label">
-            {" "}
             <label htmlFor="species">Select a Species:</label>
           </div>
-          <div className="form-field-container pet-form-input-left">
+          <div className="form-field-container pet-form-input">
             <select
               name="species"
               id="species-select"
@@ -136,10 +127,10 @@ export const EditPet = () => {
               <option value="cat">Cat</option>
             </select>
           </div>
-          <div className="form-field-container pet-form-label-right">
+          <div className="form-field-container pet-form-label">
             <label htmlFor="breed">Select a Breed:</label>
           </div>
-          <div className="form-field-container pet-form-input-right">
+          <div className="form-field-container pet-form-input">
             {" "}
             <select
               name="breed"
@@ -159,10 +150,9 @@ export const EditPet = () => {
             </select>
           </div>
           <div className="form-field-container pet-form-label">
-            {" "}
             <label htmlFor="image">Profile Image</label>
           </div>
-          <div className="form-field-container pet-form-input-left">
+          <div className="form-field-container pet-form-input">
             <select
               name="image"
               id="image-select"
@@ -181,6 +171,7 @@ export const EditPet = () => {
               })}
             </select>
           </div>
+          <ErrorMessage message={imageError} show={shouldShowImageError} />
           <div className="form-field-container image-preview">
             {imageInput === "" ? (
               <div>Select an image to preview</div>
@@ -188,69 +179,46 @@ export const EditPet = () => {
               <img src={imageInput} alt="pet profile image" />
             )}
           </div>
-          <div className="form-field-container pet-form-label">
-            <label htmlFor="dob">Birthday:</label>
-          </div>
-          <div className="form-field-container pet-form-input-left">
-            <input
-              type="date"
-              name="dob"
-              onChange={(e) => {
-                setDobInput(e.target.value as unknown as Date);
-              }}
+          {showApproximateAgeInput ? (
+            ""
+          ) : (
+            <>
+              <div className="form-field-container pet-form-label">
+                <label htmlFor="dob">Birthday:</label>
+              </div>
+
+              <div className="form-field-container pet-form-input">
+                <input
+                  type="date"
+                  name="dob"
+                  onChange={(e) => {
+                    setDobInput(e.target.value as unknown as Date);
+                  }}
+                />
+              </div>
+            </>
+          )}
+          {showApproximateAgeInput ? (
+            <ApproximateAge
+              setDobInput={setDobInput}
+              dobInput={dobInput}
+              setShowApproximateAgeInput={setShowApproximateAgeInput}
             />
-          </div>
-          <div className="form-field-container pet-form-label">
-            <span>Approximate Age:</span>
-          </div>
-
-          <div className="form-field-container age-input">
-            <input
-              type="number"
-              name="age-years"
-              min="0"
-              max="30"
-              onChange={(e) => {
-                setYearsInput(e.target.value as unknown as number);
-              }}
-            />
-          </div>
-
-          <div className="form-field-container age-label">
-            <label htmlFor="age-years">years</label>
-          </div>
-
-          <div className="form-field-container age-input">
-            <input
-              type="number"
-              name="age-months"
-              min="0"
-              max="12"
-              onChange={(e) => {
-                setMonthsInput(e.target.value as unknown as number);
-              }}
-            />
-          </div>
-
-          <div className="form-field-container age-label">
-            <label htmlFor="age-months">months</label>
-          </div>
-
-          <div className="form-field-container age-input">
-            <input
-              type="number"
-              name="age-days"
-              min="0"
-              max="31"
-              onChange={(e) => {
-                setDaysInput(e.target.value as unknown as number);
-              }}
-            />
-          </div>
-
-          <div className="form-field-container age-label">
-            <label htmlFor="age-days">days</label>
-          </div>
+          ) : (
+            <div className="show-approximate-age">
+              <div>Unsure of your pet's birthday?</div>
+              <button
+                className="btn"
+                onClick={(e) => {
+                  e.preventDefault();
+                  setShowApproximateAgeInput(true);
+                }}
+              >
+                Enter approximate age
+              </button>
+            </div>
+          )}
+          <ErrorMessage message={dobError} show={shouldShowDobError} />
           <div className="form-field-container pet-form-submit">
             <input type="submit" className="btn" />
           </div>

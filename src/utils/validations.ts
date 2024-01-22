@@ -24,3 +24,15 @@ export const isUsernameAvailable = async (username: string) => {
       return true;
     });
 };
+
+export const isPetNameValid = (petName: string) => {
+  return petName.length > 0;
+};
+
+export const isImageSelected = (image: string) => {
+  return image !== "";
+};
+
+export const isDobValid = (dob: Date) => {
+  return dob !== ("" as unknown as Date);
+};
