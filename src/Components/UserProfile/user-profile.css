@@ -16,6 +16,7 @@
 
 .pet-card:hover {
   background-color: var(--bg-btn);
+  transform: translateY(-6px);
 }
 
 .hospital-img {

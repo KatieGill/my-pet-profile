@@ -12,6 +12,9 @@ export const UserProfile = () => {
   return (
     <>
       <nav className="nav">
+        <div className="logo-small">
+          <img src="/assets/logo.png" alt="logo" />
+        </div>
         <button
           className="btn"
           onClick={() => {
@@ -33,7 +36,8 @@ export const UserProfile = () => {
             <Pets />
           ) : (
             <div className="no-card-view">
-              You do not have any pet profiles yet!
+              <p>You do not have any pet profiles yet!</p>
+              <p>Click 'Add New Pet' to get started</p>
             </div>
           )}
         </div>
@@ -52,7 +56,8 @@ export const UserProfile = () => {
             />
           ) : (
             <div className="no-card-view">
-              You do not have any favorite hospitals yet!
+              <p>You do not have any favorite hospitals yet!</p>
+              <p>Click 'Explore Veterinary Hospitals' to get started</p>
             </div>
           )}
         </div>

@@ -19,6 +19,9 @@ export const Hospitals = () => {
   return (
     <>
       <nav className="nav">
+        <div className="logo-small">
+          <img src="/assets/logo.png" alt="logo" />
+        </div>
         <button
           className="btn"
           onClick={() => {
@@ -28,6 +31,18 @@ export const Hospitals = () => {
           Home
         </button>
       </nav>
+      <h2>Explore Local Veterinary Hospitals</h2>
+      <div>
+        {" "}
+        <p>
+          Click the heart icon to add that veterinary hospital to your favorites
+          list
+        </p>
+        <p>
+          Click the links to get a map, call the hospital or visit their website
+        </p>
+      </div>
+
       <div className="container container-sm cards-container">
         <HospitalCard hospitalArray={allHospitals} isFavoriteList={false} />
       </div>

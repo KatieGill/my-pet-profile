@@ -31,7 +31,7 @@ export const EditHospitalNote = () => {
               })
                 .then(() => {
                   setNoteInput("");
-                  navigate("/user-profile");
+                  navigate(-1);
                 })
                 .catch((e: Error) => toast.error(e.message));
             }
@@ -53,16 +53,16 @@ export const EditHospitalNote = () => {
             }}
           ></textarea>
           <div className="form-field-container">
+            <input type="submit" className="btn btn-submit" />
             <button
               className="btn"
               onClick={(e) => {
                 e.preventDefault();
-                navigate("/user-profile");
+                navigate(-1);
               }}
             >
               Cancel
             </button>
-            <input type="submit" className="btn btn-submit" />
           </div>
         </form>
       </div>

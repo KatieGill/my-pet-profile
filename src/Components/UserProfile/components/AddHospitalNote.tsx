@@ -28,7 +28,7 @@ export const AddHospitalNote = () => {
   return (
     <>
       <div className="form-container">
-        <h2>Add a note to the selected veterinary hospital</h2>
+        <h3>Add a note to the selected veterinary hospital</h3>
         <form
           className="hospital-note-form"
           onSubmit={(e) => {
@@ -56,6 +56,7 @@ export const AddHospitalNote = () => {
           </div>
           <div className="form-field-container">
             <textarea
+              placeholder="This is a great place to document what services your pet receives here, which veterinarians you prefer or why you like this particular hospital!"
               name="note"
               id="note-input"
               cols="80"
@@ -70,6 +71,7 @@ export const AddHospitalNote = () => {
             show={shouldShowNoteErrorMessage}
           />
           <div className="form-field-container">
+            <input type="submit" className="btn btn-submit" />
             <button
               className="btn"
               onClick={(e) => {
@@ -79,7 +81,6 @@ export const AddHospitalNote = () => {
             >
               Cancel
             </button>
-            <input type="submit" className="btn btn-submit" />
           </div>
         </form>
       </div>

@@ -24,19 +24,18 @@ export const PetProfile = () => {
   return (
     <>
       <nav className="nav">
-        <div className="btn">
-          <Link to="/delete-pet-profile" state={{ pet }}>
-            Delete Pet Profile
-          </Link>
+        <div className="logo-small">
+          <img src="/assets/logo.png" alt="logo" />
         </div>
-
-        <div className="btn">
-          <Link to="/edit-pet" state={{ pet }}>
-            Edit Pet
-          </Link>
-        </div>
-        <div className="btn">
-          <Link to="/user-profile">Home</Link>
+        <div className="nav-buttons">
+          <div className="btn">
+            <Link to="/edit-pet" state={{ pet }}>
+              Edit Pet
+            </Link>
+          </div>
+          <div className="btn">
+            <Link to="/user-profile">Home</Link>
+          </div>
         </div>
       </nav>
       <div className="container pet-profile-container">

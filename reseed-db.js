@@ -1,4 +1,6 @@
-{
+import { writeFileSync } from "fs";
+
+const db = {
   "users": [
     {
       "username": "Katie",
@@ -120,21 +122,12 @@
       "image": "/assets/dog-images/black-dog.png",
       "dob": "2022-07-23",
       "id": 16
-    },
-    {
-      "userId": 4,
-      "name": "Indy",
-      "species": "dog",
-      "breed": "Mixed / Other",
-      "image": "/assets/dog-images/brown-dog.png",
-      "dob": "2024-01-01",
-      "id": 17
     }
   ],
   "diets": [
     {
-      "petId": 5,
       "name": "Purina ProPlan",
+      "petId": 5,
       "amount": "1/4 can",
       "frequency": "twice daily",
       "id": 7
@@ -380,14 +373,6 @@
       "frequency": "once monthly",
       "note": "heartworm, flea, tick prevention",
       "id": 20
-    },
-    {
-      "petId": 5,
-      "name": "Glucosamine",
-      "amount": "1/2 tablet",
-      "frequency": "once daily",
-      "note": "heartworm prevention",
-      "id": 21
     }
   ],
   "hospitals": [
@@ -565,3 +550,5 @@
     }
   ]
 }
+
+writeFileSync("db.json", JSON.stringify(db), { encoding: "utf-8" });

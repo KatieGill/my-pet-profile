@@ -13,10 +13,22 @@ export const Medications = ({
         return (
           <div className="card" key={medication.id}>
             <div className="medication-info">
-              <div>Medication name: {medication.name}</div>
-              <div>Amount given: {medication.amount}</div>
-              <div>Frequency given: {medication.frequency}</div>
-              {medication.note ? <div>Note: {medication.note}</div> : ""}
+              <div>
+                <strong>Medication name:</strong> {medication.name}
+              </div>
+              <div>
+                <strong>Amount given:</strong> {medication.amount}
+              </div>
+              <div>
+                <strong>Frequency given:</strong> {medication.frequency}
+              </div>
+              {medication.note ? (
+                <div>
+                  <strong>Note:</strong> {medication.note}
+                </div>
+              ) : (
+                ""
+              )}
             </div>
             <div className="card-btns">
               {" "}
