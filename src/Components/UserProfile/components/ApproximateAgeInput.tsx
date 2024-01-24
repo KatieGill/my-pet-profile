@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { calculateBirthday } from "../../../utils/functions";
 
-export const ApproximateAge = ({
+export const ApproximateAgeInput = ({
   setDobInput,
   dobInput,
   setShowApproximateAgeInput,
@@ -47,7 +47,6 @@ export const ApproximateAge = ({
       <div className="form-field-container pet-form-label age-title">
         <span>Approximate Age:</span>
       </div>
-
       <div className="form-field-container age-input">
         <input
           type="number"
@@ -63,7 +62,6 @@ export const ApproximateAge = ({
       <div className="form-field-container age-label">
         <label htmlFor="age-years">years</label>
       </div>
-
       <div className="form-field-container age-input">
         <input
           type="number"
@@ -79,7 +77,6 @@ export const ApproximateAge = ({
       <div className="form-field-container age-label">
         <label htmlFor="age-months">months</label>
       </div>
-
       <div className="form-field-container age-input">
         <input
           type="number"
@@ -103,7 +100,6 @@ export const ApproximateAge = ({
         ""
       )}
       <div className="form-field-container calculate-birthday-btn">
-        {" "}
         <button
           className="btn"
           onClick={(e) => {

@@ -56,7 +56,6 @@ export const UserDataProvider = ({ children }: { children: ReactNode }) => {
   const [petMedications, setPetMedications] = useState<Medication[]>([]);
   const [hospitalFavorites, setHospitalFavorites] = useState<Hospital[]>([]);
   const [hospitalNotes, setHospitalNotes] = useState<HospitalNote[]>([]);
-
   const { user } = useAuthContext();
 
   const getUserPets = async (userId: number) => {
@@ -75,7 +74,7 @@ export const UserDataProvider = ({ children }: { children: ReactNode }) => {
 
     const hospitalFavorites = hospitalFavoritesIds.map((favoriteId) => {
       return allHospitals.find((hospital) => hospital.id === favoriteId);
-    });
+    }) as Hospital[];
     setHospitalFavorites(hospitalFavorites);
   };
 

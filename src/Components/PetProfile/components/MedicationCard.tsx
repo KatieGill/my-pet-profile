@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
 import { useUserDataContext } from "../../../Providers/UseContext";
 import { Medication } from "../../../Types/types";
-export const Medications = ({
+export const MedicationCard = ({
   medicationArray,
 }: {
   medicationArray: Medication[];
@@ -31,9 +31,7 @@ export const Medications = ({
               )}
             </div>
             <div className="card-btns">
-              {" "}
               <div className="btn icon-btn">
-                {" "}
                 <Link to="/edit-medication" state={{ medication }}>
                   <i
                     className="fa-regular fa-pen-to-square"

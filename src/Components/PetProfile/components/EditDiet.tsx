@@ -2,7 +2,7 @@ import { useLocation } from "react-router-dom";
 import { DietForm } from "./DietForm";
 import { Diet } from "../../../Types/types";
 
-export const EditDietForm = () => {
+export const EditDiet = () => {
   const location = useLocation();
   const { diet } = location.state;
   const { id, name, petId, amount, frequency } = diet as Diet;

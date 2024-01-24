@@ -28,7 +28,7 @@
       "species": "cat",
       "breed": "Domestic Shorthair",
       "image": "/assets/cat-images/brown-cat.png",
-      "dob": "2023-07-02",
+      "dob": "2024-01-23T05:00:00.000Z",
       "id": 4
     },
     {
@@ -37,7 +37,7 @@
       "species": "cat",
       "breed": "Domestic Longhair",
       "image": "/assets/cat-images/gray-cat.png",
-      "dob": "2011-12-06",
+      "dob": "2012-01-24T05:00:00.000Z",
       "id": 5
     },
     {
@@ -46,7 +46,7 @@
       "species": "dog",
       "breed": "Blue Heeler",
       "image": "/assets/dog-images/red-dog.png",
-      "dob": "2015-12-01",
+      "dob": "2015-12-01T05:00:00.000Z",
       "id": 7
     },
     {
@@ -55,7 +55,7 @@
       "species": "dog",
       "breed": "Poodle",
       "image": "/assets/dog-images/blonde-dog.png",
-      "dob": "2018-07-07",
+      "dob": "2018-07-07T05:00:00.000Z",
       "id": 9
     },
     {
@@ -64,7 +64,7 @@
       "species": "dog",
       "breed": "Rottweiler",
       "image": "/assets/dog-images/black-dog.png",
-      "dob": "2022-12-01",
+      "dob": "2022-12-01T05:00:00.000Z",
       "id": 10
     },
     {
@@ -73,7 +73,7 @@
       "species": "dog",
       "breed": "Great Dane",
       "image": "/assets/dog-images/brown-dog.png",
-      "dob": "1989-04-11",
+      "dob": "1989-04-11T05:00:00.000Z",
       "id": 11
     },
     {
@@ -82,7 +82,7 @@
       "species": "cat",
       "breed": "Domestic Longhair",
       "image": "/assets/cat-images/gray-cat.png",
-      "dob": "2022-05-19",
+      "dob": "2022-05-19T05:00:00.000Z",
       "id": 12
     },
     {
@@ -91,7 +91,7 @@
       "species": "cat",
       "breed": "Domestic Longhair",
       "image": "/assets/cat-images/orange-cat.png",
-      "dob": "2023-12-23",
+      "dob": "2023-12-23T05:00:00.000Z",
       "id": 13
     },
     {
@@ -100,7 +100,7 @@
       "species": "dog",
       "breed": "Siberian Husky",
       "image": "/assets/dog-images/white-dog.png",
-      "dob": "2020-07-23",
+      "dob": "2020-07-23T05:00:00.000Z",
       "id": 14
     },
     {
@@ -109,7 +109,7 @@
       "species": "dog",
       "breed": "Australian Shepherd",
       "image": "/assets/dog-images/blonde-dog.png",
-      "dob": "2022-01-23",
+      "dob": "2022-01-23T05:00:00.000Z",
       "id": 15
     },
     {
@@ -118,17 +118,8 @@
       "species": "dog",
       "breed": "Mixed / Other",
       "image": "/assets/dog-images/black-dog.png",
-      "dob": "2022-07-23",
+      "dob": "2022-07-23T05:00:00.000Z",
       "id": 16
-    },
-    {
-      "userId": 4,
-      "name": "Indy",
-      "species": "dog",
-      "breed": "Mixed / Other",
-      "image": "/assets/dog-images/brown-dog.png",
-      "dob": "2024-01-01",
-      "id": 17
     }
   ],
   "diets": [
@@ -529,16 +520,6 @@
       "id": 2
     },
     {
-      "userId": 4,
-      "hospitalId": 6,
-      "id": 3
-    },
-    {
-      "userId": 4,
-      "hospitalId": 9,
-      "id": 4
-    },
-    {
       "userId": 8,
       "hospitalId": 8,
       "id": 5
@@ -562,6 +543,16 @@
       "userId": 7,
       "hospitalId": 2,
       "id": 9
+    },
+    {
+      "userId": 4,
+      "hospitalId": 10,
+      "id": 10
+    },
+    {
+      "userId": 4,
+      "hospitalId": 6,
+      "id": 11
     }
   ]
 }

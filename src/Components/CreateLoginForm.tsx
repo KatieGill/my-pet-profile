@@ -10,12 +10,12 @@ import {
   isUsernameValid,
 } from "../utils/validations";
 import { ErrorMessage } from "../ErrorMessage";
-
-const passwordsMatchError = "Passwords do not match.";
-const usernameError = "Username must be at least 2 characters long";
-const usernameNotAvailableError =
-  "Username already exists. Login or choose a new username.";
-const passwordsLengthError = "Password must be at least 5 characters long";
+import {
+  usernameError,
+  usernameNotAvailableError,
+  passwordsMatchError,
+  passwordsLengthError,
+} from "../utils/errorMessages";
 
 export const CreateLoginForm = () => {
   const { registerUser } = useAuthContext();
@@ -28,6 +28,7 @@ export const CreateLoginForm = () => {
   const [showPassword, setShowPassword] = useState<"text" | "password">(
     "password"
   );
+  const navigate = useNavigate();
 
   const usernameAvailable = async (usernameInput: string) => {
     const available = await isUsernameAvailable(usernameInput);
@@ -42,7 +43,6 @@ export const CreateLoginForm = () => {
   );
   const passwordIsValid = isPasswordValid(passwordInput);
   const usernameIsValid = isUsernameValid(usernameInput);
-
   const shouldShowPasswordsMatchError =
     !passwordsAreValid && shouldShowErrorMessage;
   const shouldShowPasswordsLengthError =
@@ -51,15 +51,6 @@ export const CreateLoginForm = () => {
   const shouldShowUsernameNotAvailableError =
     !usernameIsAvailable && shouldShowErrorMessage;
 
-  const resetState = () => {
-    setUsernameInput("");
-    setPasswordInput("");
-    setConfirmPasswordInput("");
-    setShouldShowErrorMessage(false);
-    setUsernameIsAvailable(true);
-  };
-
-  const navigate = useNavigate();
   return (
     <div className="form-container">
       <div className="btn form-home-btn">
@@ -77,9 +68,8 @@ export const CreateLoginForm = () => {
               username: usernameInput,
               password: passwordInput,
             })
-              .then(resetState)
+              .then(() => navigate("/login"))
               .catch(() => toast.error("Unable to register user"));
-            navigate("/login");
           }
         }}
       >

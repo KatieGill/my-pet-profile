@@ -2,8 +2,8 @@ import "./pet-profile.css";
 import { useLocation } from "react-router";
 import { Pet } from "../../Types/types";
 import { Link } from "react-router-dom";
-import { Diets } from "./components/Diets";
-import { Medications } from "./components/Medications";
+import { DietCard } from "./components/DietCard";
+import { MedicationCard } from "./components/MedicationCard";
 import { useEffect } from "react";
 import { useUserDataContext } from "../../Providers/UseContext";
 import { calculateAge, calculateBirthday } from "../../utils/functions";
@@ -11,15 +11,14 @@ import { calculateAge, calculateBirthday } from "../../utils/functions";
 export const PetProfile = () => {
   const location = useLocation();
   const { pet } = location.state;
-  const { id, name, userId, species, breed, image, dob } = pet as Pet;
+  const { id, name, breed, image, dob } = pet as Pet;
   const { setCurrentPet, petDiets, petMedications } = useUserDataContext();
+  const age = calculateAge(dob);
+  const birthday = calculateBirthday(dob);
 
   useEffect(() => {
     setCurrentPet(pet);
   }, [pet, setCurrentPet]);
-
-  const age = calculateAge(dob);
-  const birthday = calculateBirthday(dob);
 
   return (
     <>
@@ -38,6 +37,7 @@ export const PetProfile = () => {
           </div>
         </div>
       </nav>
+
       <div className="container pet-profile-container">
         <div>
           <h2>{name}</h2>
@@ -63,7 +63,7 @@ export const PetProfile = () => {
         <h3>{`${name}'s Diet:`}</h3>
         <div className="cards-container">
           {petDiets.length > 0 ? (
-            <Diets dietArray={petDiets} />
+            <DietCard dietArray={petDiets} />
           ) : (
             <div>{name} does not have any diets yet</div>
           )}
@@ -79,7 +79,7 @@ export const PetProfile = () => {
         <h3>{`${name}'s Medications:`}</h3>
         <div className="cards-container">
           {petMedications.length > 0 ? (
-            <Medications medicationArray={petMedications} />
+            <MedicationCard medicationArray={petMedications} />
           ) : (
             <div>{name} does not have any medications yet</div>
           )}

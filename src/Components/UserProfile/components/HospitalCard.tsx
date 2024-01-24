@@ -23,7 +23,6 @@ export const HospitalCard = ({
     hospitalFavorites,
     postHospitalFavorite,
   } = useUserDataContext();
-
   const { user } = useAuthContext();
   const [userFavorites, setUserFavorites] = useState<HospitalFavorite[]>([]);
 
@@ -100,7 +99,7 @@ export const HospitalCard = ({
                       <div className="btn icon-btn">
                         <Link
                           to="/edit-hospital-note"
-                          state={{ note, hospital }}
+                          state={{ hospitalNote: note, hospital: hospital }}
                         >
                           <i
                             className="fa-regular fa-pen-to-square"
@@ -135,7 +134,6 @@ export const HospitalCard = ({
             ) : (
               ""
             )}
-
             <div className="favorite-btn-container">
               {isFavoriteList ? (
                 <button

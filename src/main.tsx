@@ -11,13 +11,13 @@ import { UserDataProvider } from "./Providers/UserDataProvider.tsx";
 import { UserProfile } from "./Components/UserProfile/UserProfile.tsx";
 import { AddPet } from "./Components/UserProfile/components/AddPet.tsx";
 import { PetProfile } from "./Components/PetProfile/PetProfile.tsx";
-import { CreateDietForm } from "./Components/PetProfile/components/AddDietForm.tsx";
-import { CreateMedicationForm } from "./Components/PetProfile/components/AddMedicationForm.tsx";
-import { Hospitals } from "./Components/UserProfile/components/Hospitals.tsx";
+import { AddDiet } from "./Components/PetProfile/components/AddDiet.tsx";
+import { AddMedication } from "./Components/PetProfile/components/AddMedication.tsx";
+import { ExploreHospitals } from "./Components/UserProfile/components/ExploreHospitals.tsx";
 import { AddHospitalNote } from "./Components/UserProfile/components/AddHospitalNote.tsx";
 import { EditHospitalNote } from "./Components/UserProfile/components/EditHospitalNote.tsx";
-import { EditDietForm } from "./Components/PetProfile/components/EditDietForm.tsx";
-import { EditMedicationForm } from "./Components/PetProfile/components/EditMedicationFrom.tsx";
+import { EditDiet } from "./Components/PetProfile/components/EditDiet.tsx";
+import { EditMedication } from "./Components/PetProfile/components/EditMedication.tsx";
 import { ConfirmDelete } from "./Components/PetProfile/components/ConfirmDelete.tsx";
 import { EditPet } from "./Components/PetProfile/components/EditPet.tsx";
 
@@ -28,13 +28,13 @@ const router = createBrowserRouter([
   { path: "/user-profile", element: <UserProfile /> },
   { path: "/add-pet", element: <AddPet /> },
   { path: "/pet-profile", element: <PetProfile /> },
-  { path: "/add-diet", element: <CreateDietForm /> },
-  { path: "/add-medication", element: <CreateMedicationForm /> },
-  { path: "/vet-hospitals", element: <Hospitals /> },
+  { path: "/add-diet", element: <AddDiet /> },
+  { path: "/add-medication", element: <AddMedication /> },
+  { path: "/vet-hospitals", element: <ExploreHospitals /> },
   { path: "/add-hospital-note", element: <AddHospitalNote /> },
   { path: "/edit-hospital-note", element: <EditHospitalNote /> },
-  { path: "/edit-diet", element: <EditDietForm /> },
-  { path: "/edit-medication", element: <EditMedicationForm /> },
+  { path: "/edit-diet", element: <EditDiet /> },
+  { path: "/edit-medication", element: <EditMedication /> },
   { path: "/delete-pet-profile", element: <ConfirmDelete /> },
   { path: "/edit-pet", element: <EditPet /> },
 ]);

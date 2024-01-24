@@ -8,6 +8,7 @@
   margin: 25px 125px;
   padding: 50px;
   border-radius: 5px;
+  max-width: 1400px;
 }
 
 form h2 {

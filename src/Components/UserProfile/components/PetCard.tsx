@@ -1,9 +1,8 @@
 import { useUserDataContext } from "../../../Providers/UseContext";
 import { Link } from "react-router-dom";
 
-export const Pets = () => {
+export const PetCard = () => {
   const { userPets } = useUserDataContext();
-
   return (
     <>
       {userPets.map((pet) => {

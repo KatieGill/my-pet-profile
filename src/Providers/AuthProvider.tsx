@@ -7,8 +7,6 @@ import toast from "react-hot-toast";
 type AuthProvider = {
   user: User | null;
   setUser: (user: User) => void;
-  isLoading: boolean;
-  setIsLoading: (isLoading: boolean) => void;
   registerUser: (user: Omit<User, "id">) => Promise<string>;
   login: (user: Omit<User, "id">) => Promise<void>;
   logout: () => void;
@@ -18,7 +16,6 @@ export const AuthContext = createContext<AuthProvider>({} as AuthProvider);
 
 export const AuthProvider = ({ children }: { children: ReactNode }) => {
   const [user, setUser] = useState<User | null>(null);
-  const [isLoading, setIsLoading] = useState<boolean>(false);
 
   const registerUser = (user: Omit<User, "id">) => {
     return Requests.postUser(user).then(() => toast.success("User registered"));
@@ -54,8 +51,6 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
       value={{
         user,
         setUser,
-        isLoading,
-        setIsLoading,
         registerUser,
         login,
         logout,

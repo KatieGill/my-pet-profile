@@ -1,7 +1,7 @@
 import "./user-profile.css";
 import { Link, useNavigate } from "react-router-dom";
 import { useAuthContext, useUserDataContext } from "../../Providers/UseContext";
-import { Pets } from "./components/Pets";
+import { PetCard } from "./components/PetCard";
 import { HospitalCard } from "./components/HospitalCard";
 
 export const UserProfile = () => {
@@ -26,14 +26,14 @@ export const UserProfile = () => {
         </button>
       </nav>
       <h2>Your Pet Profiles</h2>
-
+      <div>Click on a pet to view their profile</div>
       <div className="container container-sm">
         <div className="btn cards-nav">
           <Link to="/add-pet">Add New Pet</Link>
         </div>
         <div className="cards-container">
           {userPets.length > 0 ? (
-            <Pets />
+            <PetCard />
           ) : (
             <div className="no-card-view">
               <p>You do not have any pet profiles yet!</p>
@@ -43,7 +43,6 @@ export const UserProfile = () => {
         </div>
       </div>
       <h2>Favorite Veterinary Hospitals</h2>
-
       <div className="container container-sm" id="hospital-favorites">
         <div className="btn cards-nav">
           <Link to="/vet-hospitals">Explore Veterinary Hospitals</Link>

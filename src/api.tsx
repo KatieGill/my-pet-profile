@@ -134,11 +134,12 @@ export const Requests = {
       });
   },
 
-  getAllUsernames: () => {
+  /*getAllUsernames: () => {
     return fetch(`${baseUrl}/users`)
       .then((response) => response.json())
+      .then((data) => z.array(userSchema).parse(data))
       .then((data) => data.map((user) => user.username));
-  },
+  },*/
 
   getPets: (userId: number) => {
     return fetch(`${baseUrl}/pets`)
@@ -197,39 +198,35 @@ export const Requests = {
   },
 
   getUserHospitalFavorites: (userId: number) => {
-    return (
-      fetch(`${baseUrl}/hospital-favorites`)
-        .then((response) => {
-          if (!response.ok) {
-            throw new Error("Unable to fetch all hospital favorites");
-          } else {
-            return response.json();
-          }
-        })
-        //.then((data) => z.array(hospitalFavoriteSchema).parse(data))
-        .then((favorites) =>
-          favorites.filter((favorites) => favorites.userId === userId)
-        )
-        .then((data) => z.array(hospitalFavoriteSchema).parse(data))
-        .then((hospitalFavorites) => hospitalFavorites)
-    );
+    return fetch(`${baseUrl}/hospital-favorites`)
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error("Unable to fetch all hospital favorites");
+        } else {
+          return response.json();
+        }
+      })
+      .then((data) => z.array(hospitalFavoriteSchema).parse(data))
+      .then((favorites) =>
+        favorites.filter((favorites) => favorites.userId === userId)
+      )
+      .then((data) => z.array(hospitalFavoriteSchema).parse(data))
+      .then((hospitalFavorites) => hospitalFavorites);
   },
 
   getUserHospitalNotes: (userId: number) => {
-    return (
-      fetch(`${baseUrl}/hospital-notes`)
-        .then((response) => {
-          if (!response.ok) {
-            throw new Error("Unable to fetch all hospital notes");
-          } else {
-            return response.json();
-          }
-        })
-        //.then((data) => z.array(hospitalNoteSchema).parse(data))
-        .then((notes) => notes.filter((note) => note.userId === userId))
-        .then((data) => z.array(hospitalNoteSchema).parse(data))
-        .then((userNotes) => userNotes)
-    );
+    return fetch(`${baseUrl}/hospital-notes`)
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error("Unable to fetch all hospital notes");
+        } else {
+          return response.json();
+        }
+      })
+      .then((data) => z.array(hospitalNoteSchema).parse(data))
+      .then((notes) => notes.filter((note) => note.userId === userId))
+      .then((data) => z.array(hospitalNoteSchema).parse(data))
+      .then((userNotes) => userNotes);
   },
 
   patchHospitalNote: (hospitalNote: HospitalNote) => {

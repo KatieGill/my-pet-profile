@@ -18,7 +18,8 @@ import {
   isImageSelected,
   isDobValid,
 } from "../../../utils/validations";
-import { ApproximateAge } from "./ApproximateAge";
+import { ApproximateAgeInput } from "./ApproximateAgeInput";
+import toast from "react-hot-toast";
 
 export const PetForm = ({
   isEdit,
@@ -48,26 +49,14 @@ export const PetForm = ({
     useState<boolean>(false);
   const [showApproximateAgeInput, setShowApproximateAgeInput] =
     useState<boolean>(isEdit);
-
+  const navigate = useNavigate();
   const petNameIsValid = isInputValid(nameInput);
   const imageIsSelected = isImageSelected(imageInput);
   const dobIsValid = isDobValid(dobInput);
-
   const shouldShowPetNameError = !petNameIsValid && shouldShowErrorMessage;
   const shouldShowImageError = !imageIsSelected && shouldShowErrorMessage;
   const shouldShowDobError = !dobIsValid && shouldShowErrorMessage;
 
-  const resetState = () => {
-    setNameInput("");
-    setSpeciesInput("dog");
-    setBreedInput("Mixed / Other");
-    setImageInput("");
-    setDobInput("" as unknown as Date);
-    setShouldShouldErrorMessage(false);
-    setShowApproximateAgeInput(false);
-  };
-
-  const navigate = useNavigate();
   return (
     <>
       <form
@@ -87,22 +76,23 @@ export const PetForm = ({
                   breed: breedInput,
                   image: imageInput,
                   dob: dobInput,
-                }).then(() => {
-                  resetState();
-                  navigate("/pet-profile", {
-                    state: {
-                      pet: {
-                        id: petId,
-                        userId: user.id,
-                        name: nameInput,
-                        species: speciesInput,
-                        breed: breedInput,
-                        image: imageInput,
-                        dob: dobInput,
+                })
+                  .then(() => {
+                    navigate("/pet-profile", {
+                      state: {
+                        pet: {
+                          id: petId,
+                          userId: user.id,
+                          name: nameInput,
+                          species: speciesInput,
+                          breed: breedInput,
+                          image: imageInput,
+                          dob: dobInput,
+                        },
                       },
-                    },
-                  });
-                });
+                    });
+                  })
+                  .catch(() => toast.error("Unable to edit pet"));
               } else {
                 postPet({
                   userId: user.id,
@@ -112,11 +102,8 @@ export const PetForm = ({
                   image: imageInput,
                   dob: dobInput,
                 })
-                  .then(() => {
-                    resetState();
-                    navigate(-1);
-                  })
-                  .catch((e: Error) => console.log(e.message));
+                  .then(() => navigate(-1))
+                  .catch(() => toast.error("Unable to add pet"));
               }
             }
           }
@@ -125,7 +112,6 @@ export const PetForm = ({
         <div className="form-field-container pet-form-label">
           <label htmlFor="pet-name">Pet Name:</label>
         </div>
-
         <div className="form-field-container pet-form-name-input">
           <input
             type="text"
@@ -137,10 +123,10 @@ export const PetForm = ({
           />
         </div>
         <ErrorMessage message={petNameError} show={shouldShowPetNameError} />
+
         <div className="form-field-container pet-form-label">
           <label htmlFor="species">Select a Species:</label>
         </div>
-
         <div className="form-field-container pet-form-input">
           <select
             name="species"
@@ -158,7 +144,6 @@ export const PetForm = ({
         <div className="form-field-container pet-form-label">
           <label htmlFor="breed">Select a Breed:</label>
         </div>
-
         <div className="form-field-container pet-form-input">
           <select
             name="breed"
@@ -181,7 +166,6 @@ export const PetForm = ({
         <div className="form-field-container pet-form-label">
           <label htmlFor="image">Profile Image</label>
         </div>
-
         <div className="form-field-container pet-form-input">
           <select
             name="image"
@@ -202,6 +186,7 @@ export const PetForm = ({
           </select>
         </div>
         <ErrorMessage message={imageError} show={shouldShowImageError} />
+
         <div className="form-field-container image-preview">
           {imageInput === "" ? (
             <div>Select an image to preview</div>
@@ -209,6 +194,7 @@ export const PetForm = ({
             <img src={imageInput} alt="pet profile image" />
           )}
         </div>
+
         {showApproximateAgeInput ? (
           ""
         ) : (
@@ -216,13 +202,12 @@ export const PetForm = ({
             <div className="form-field-container pet-form-label">
               <label htmlFor="dob">Birthday:</label>
             </div>
-
             <div className="form-field-container pet-form-input">
               <input
                 type="date"
                 name="dob"
                 onChange={(e) => {
-                  setDobInput(e.target.value as unknown as Date);
+                  setDobInput(new Date(`${e.target.value} GMT-0500`));
                 }}
               />
             </div>
@@ -230,7 +215,7 @@ export const PetForm = ({
         )}
 
         {showApproximateAgeInput ? (
-          <ApproximateAge
+          <ApproximateAgeInput
             setDobInput={setDobInput}
             dobInput={dobInput}
             setShowApproximateAgeInput={setShowApproximateAgeInput}
@@ -250,6 +235,7 @@ export const PetForm = ({
           </div>
         )}
         <ErrorMessage message={dobError} show={shouldShowDobError} />
+
         <div className="form-field-container pet-form-submit">
           <input type="submit" className="btn btn-submit" />
           <button

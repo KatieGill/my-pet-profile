@@ -16,12 +16,6 @@ export const LoginForm = () => {
   );
   const navigate = useNavigate();
 
-  const resetState = () => {
-    setUsernameInput("");
-    setPasswordInput("");
-    setShouldShowErrorMessage(false);
-  };
-
   return (
     <div className="form-container">
       <div className="btn form-home-btn">
@@ -32,15 +26,11 @@ export const LoginForm = () => {
         className="form-grid"
         onSubmit={(e) => {
           e.preventDefault();
-
           login({
             username: usernameInput,
             password: passwordInput,
           })
-            .then(() => {
-              resetState();
-              navigate("/user-profile");
-            })
+            .then(() => navigate("/user-profile"))
             .catch((error: Error) => {
               setErrorMessage(error.message);
               setShouldShowErrorMessage(true);

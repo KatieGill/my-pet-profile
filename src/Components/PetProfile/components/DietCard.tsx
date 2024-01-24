@@ -2,7 +2,7 @@ import { Link } from "react-router-dom";
 import { useUserDataContext } from "../../../Providers/UseContext";
 import { Diet } from "../../../Types/types";
 
-export const Diets = ({ dietArray }: { dietArray: Diet[] }) => {
+export const DietCard = ({ dietArray }: { dietArray: Diet[] }) => {
   const { deleteDiet } = useUserDataContext();
   return (
     <>
