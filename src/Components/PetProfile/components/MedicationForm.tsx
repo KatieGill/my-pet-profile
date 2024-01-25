@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { ErrorMessage } from "../../../ErrorMessage";
 import { useUserDataContext } from "../../../Providers/UseContext";
@@ -32,8 +32,9 @@ export const MedicationForm = ({
   const [noteInput, setNoteInput] = useState<string | undefined>(note);
   const [shouldShowErrorMessage, setShouldShowErrorMessage] =
     useState<boolean>(false);
-
+  const [screenWidth, setScreenWidth] = useState<number | undefined>(undefined);
   const { postMedication, putMedication } = useUserDataContext();
+  const navigate = useNavigate();
 
   const nameIsValid = isInputValid(nameInput);
   const amountIsValid = isInputValid(amountInput);
@@ -42,17 +43,18 @@ export const MedicationForm = ({
   const shouldShowNameError = !nameIsValid && shouldShowErrorMessage;
   const shouldShowAmountError = !amountIsValid && shouldShowErrorMessage;
   const shouldShowFrequencyError = !frequencyIsValid && shouldShowErrorMessage;
-
-  const resetState = () => {
-    setNameInput("");
-    setAmountInput("");
-    setFrequencyInput("");
-    setNoteInput(undefined);
-    setShouldShowErrorMessage(false);
+  const shouldShowPlaceholder = screenWidth >= 370;
+  const shouldShowInfoIcon = screenWidth < 370;
+  const updateScreenWidth = () => {
+    setScreenWidth(window.innerWidth);
   };
-  const navigate = useNavigate();
+  useEffect(() => {
+    window.addEventListener("resize", updateScreenWidth);
+  }, []);
+
   return (
     <form
+      id="medication-form"
       className="form-grid"
       onSubmit={(e) => {
         e.preventDefault();
@@ -67,8 +69,7 @@ export const MedicationForm = ({
               amount: amountInput,
               frequency: frequencyInput,
               note: noteInput,
-            }).then(resetState);
-            navigate(-1);
+            }).then(() => navigate(-1));
           } else {
             postMedication({
               petId: petId,
@@ -76,19 +77,30 @@ export const MedicationForm = ({
               amount: amountInput,
               frequency: frequencyInput,
               note: noteInput,
-            }).then(resetState);
-            navigate(-1);
+            }).then(() => navigate(-1));
           }
         }
       }}
     >
       <div className="form-field-container">
+        {shouldShowInfoIcon ? (
+          <i
+            className="fa-solid fa-circle-info"
+            title="Name and strength (i.e. Benadryl 25mg tablet)"
+          ></i>
+        ) : (
+          ""
+        )}
         <label htmlFor="med-name">Medication name:</label>
       </div>
       <div className="form-field-container form-input">
         <input
           value={nameInput}
-          placeholder="Name and strength (i.e. Benadryl 25mg tablet)"
+          placeholder={
+            shouldShowPlaceholder
+              ? "Name and strength (i.e. Benadryl 25mg tablet)"
+              : ""
+          }
           type="text"
           name="med-name"
           onChange={(e) => {
@@ -101,12 +113,24 @@ export const MedicationForm = ({
         show={shouldShowNameError}
       />
       <div className="form-field-container">
+        {shouldShowInfoIcon ? (
+          <i
+            className="fa-solid fa-circle-info"
+            title="Amount given at one time (i.e. 1/2 tablet)"
+          ></i>
+        ) : (
+          ""
+        )}
         <label htmlFor="med-amount">Amount:</label>
       </div>
       <div className="form-field-container form-input">
         <input
           value={amountInput}
-          placeholder="Amount given at one time (i.e. 1/2 tablet)"
+          placeholder={
+            shouldShowPlaceholder
+              ? "Amount given at one time (i.e. 1/2 tablet)"
+              : ""
+          }
           type="text"
           name="med-amount"
           onChange={(e) => {
@@ -119,12 +143,24 @@ export const MedicationForm = ({
         show={shouldShowAmountError}
       />
       <div className="form-field-container">
+        {shouldShowInfoIcon ? (
+          <i
+            className="fa-solid fa-circle-info"
+            title="How often it is given (i.e. every 12 hours)"
+          ></i>
+        ) : (
+          ""
+        )}
         <label htmlFor="med-frequency">Frequency:</label>
       </div>
       <div className="form-field-container form-input">
         <input
           value={frequencyInput}
-          placeholder="How often it is given (i.e. every 12 hours)"
+          placeholder={
+            shouldShowPlaceholder
+              ? "How often it is given (i.e. every 12 hours)"
+              : ""
+          }
           type="text"
           name="med-frequency"
           onChange={(e) => {
@@ -137,13 +173,25 @@ export const MedicationForm = ({
         show={shouldShowFrequencyError}
       />
       <div className="form-field-container">
+        {shouldShowInfoIcon ? (
+          <i
+            className="fa-solid fa-circle-info"
+            title="Make a note: what this for? What pharmacy is it filled at?"
+          ></i>
+        ) : (
+          ""
+        )}
         <label htmlFor="med-note">Note:</label>
       </div>
 
       <div className="form-field-container form-input">
         <input
           value={noteInput}
-          placeholder="Make a note: what this for? What pharmacy is it filled at?"
+          placeholder={
+            shouldShowPlaceholder
+              ? "Make a note: what this for? What pharmacy is it filled at?"
+              : ""
+          }
           type="text"
           name="med-note"
           onChange={(e) => {

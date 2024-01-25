@@ -8,6 +8,10 @@
   --bg-btn: #eebbc3;
 }
 
+*, ::after, ::before {
+  box-sizing: border-box;
+}
+
 html {  
   scroll-behavior: smooth;
 }
@@ -20,10 +24,8 @@ body {
   font-weight: 400;
   line-height: 1.5;
   text-align: center;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
+  overflow-x: hidden;
+  margin: 0;
 }
 
 .container {
@@ -42,8 +44,7 @@ body {
   padding-top: 20px;
   padding-bottom: 20px;
   border-radius: 5px;
-  margin-bottom: 20px;
-  margin-top: 20px;
+  margin: 20px auto;
 }
 
 .home-page {
@@ -110,7 +111,7 @@ p {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  margin: 10px 0;
+  margin: 10px;
 }
 
 .nav.btn {
@@ -197,4 +198,33 @@ img {
   margin-bottom: 50px;
 }
 
+@media screen and (max-width: 1280px) {
+  .container-sm {
+   max-width: 900px;
+  }
+}
+
+@media screen and (max-width: 915px) {
+  .container-sm {
+    max-width:810px;
+  }
+}
+
+@media screen and (max-width: 830px) {
+  .container-sm {
+    max-width: 500px;
+  }
+  h2 {
+    font-size: 2.5rem;
+  } 
+}
+
+@media screen and (max-width: 412px) {
+  .container-sm {
+    background-color: var(--bg-dark);
+  }
+  .cards-nav {
+    margin: auto;
+  }
+}
 

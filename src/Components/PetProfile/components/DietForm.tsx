@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { isInputValid } from "../../../utils/validations";
 import { useNavigate } from "react-router-dom";
 import { ErrorMessage } from "../../../ErrorMessage";
@@ -29,7 +29,9 @@ export const DietForm = ({
   const [frequencyInput, setFrequencyInput] = useState(frequency);
   const [shouldShowErrorMessage, setShouldShowErrorMessage] =
     useState<boolean>(false);
+  const [screenWidth, setScreenWidth] = useState<number | undefined>(undefined);
   const { postDiet, putDiet } = useUserDataContext();
+  const navigate = useNavigate();
   const nameIsValid = isInputValid(nameInput);
   const amountIsValid = isInputValid(amountInput);
   const frequencyIsValid = isInputValid(frequencyInput);
@@ -37,16 +39,18 @@ export const DietForm = ({
   const shouldShowNameError = !nameIsValid && shouldShowErrorMessage;
   const shouldShowAmountError = !amountIsValid && shouldShowErrorMessage;
   const shouldShowFrequencyError = !frequencyIsValid && shouldShowErrorMessage;
-
-  const resetState = () => {
-    setNameInput("");
-    setAmountInput("");
-    setFrequencyInput("");
-    setShouldShowErrorMessage(false);
+  const shouldShowPlaceholder = screenWidth >= 370;
+  const shouldShowInfoIcon = screenWidth < 370;
+  const updateScreenWidth = () => {
+    setScreenWidth(window.innerWidth);
   };
-  const navigate = useNavigate();
+  useEffect(() => {
+    window.addEventListener("resize", updateScreenWidth);
+  }, []);
+
   return (
     <form
+      id="diet-form"
       className="form-grid"
       onSubmit={(e) => {
         e.preventDefault();
@@ -60,27 +64,32 @@ export const DietForm = ({
               name: nameInput,
               amount: amountInput,
               frequency: frequencyInput,
-            }).then(resetState);
-            navigate(-1);
+            }).then(() => navigate(-1));
           } else {
             postDiet({
               name: nameInput,
               petId: petId,
               amount: amountInput,
               frequency: frequencyInput,
-            }).then(resetState);
-            navigate(-1);
+            }).then(() => navigate(-1));
           }
         }
       }}
     >
       <div className="form-field-container">
+        {shouldShowInfoIcon ? (
+          <i
+            className="fa-solid fa-circle-info"
+            title="Name and brand of food"
+          ></i>
+        ) : (
+          ""
+        )}
         <label htmlFor="diet-name">Diet name:</label>
       </div>
-
       <div className="form-field-container form-input">
         <input
-          placeholder="Name and brand of food"
+          placeholder={shouldShowPlaceholder ? "Name and brand of food" : ""}
           type="text"
           name="diet-name"
           value={nameInput}
@@ -90,13 +99,25 @@ export const DietForm = ({
         />
       </div>
       <ErrorMessage message={dietNameErrorMessage} show={shouldShowNameError} />
+
       <div className="form-field-container">
+        {shouldShowInfoIcon ? (
+          <i
+            className="fa-solid fa-circle-info"
+            title="How much your pet gets at each feeding"
+          ></i>
+        ) : (
+          ""
+        )}
         <label htmlFor="diet-amount">Amount fed:</label>
       </div>
-
       <div className="form-field-container form-input">
         <input
-          placeholder="How much your pet gets at each feeding"
+          placeholder={
+            shouldShowPlaceholder
+              ? "How much your pet gets at each feeding"
+              : ""
+          }
           type="text"
           name="diet-amount"
           value={amountInput}
@@ -110,12 +131,24 @@ export const DietForm = ({
         show={shouldShowAmountError}
       />
       <div className="form-field-container">
+        {shouldShowInfoIcon ? (
+          <i
+            className="fa-solid fa-circle-info"
+            title="How many times per day your pet gets fed"
+          ></i>
+        ) : (
+          ""
+        )}
         <label htmlFor="diet-frequency">Frequency Fed:</label>
       </div>
 
       <div className="form-field-container form-input">
         <input
-          placeholder="How many times per day your pet gets fed"
+          placeholder={
+            shouldShowPlaceholder
+              ? "How many times per day your pet gets fed"
+              : ""
+          }
           type="text"
           name="diet-frequency"
           value={frequencyInput}

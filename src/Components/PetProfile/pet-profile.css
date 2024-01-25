@@ -32,3 +32,10 @@
 .medication-info {
   padding: 20px;
 }
+
+@media screen and (max-width: 580px) {
+  .pet-info-container {
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+}
