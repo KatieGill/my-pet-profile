@@ -72,6 +72,10 @@ body {
   box-shadow: 10px 10px 10px 0px rgba(35,41,70,0.2);
 }
 
+.navigation-icon {
+  display: none;
+}
+
 a {
   text-decoration: none;
   color: var(--text-dark);
@@ -124,7 +128,7 @@ p {
 }
 
 .card {
-  width: 350px;
+  max-width: 350px;
   background-color: var(--bg-light);
   margin: 20px;
   border-radius: 5px;
@@ -219,6 +223,21 @@ img {
   } 
 }
 
+@media screen and (max-width: 640px) {
+  h1 {
+    font-size: 60px;
+  }
+  .btn {
+    font-size: 1.5rem;
+  }
+  .navigation-icon {
+    display: block
+  }
+  .navigation-title {
+    display: none;
+  }
+}
+
 @media screen and (max-width: 412px) {
   .container-sm {
     background-color: var(--bg-dark);
@@ -226,5 +245,14 @@ img {
   .cards-nav {
     margin: auto;
   }
+  .cards-nav.delete-pet {
+    margin: 0;
+    margin-left: auto;
+  }
 }
 
+@media screen and (max-width: 360px) {
+  h2 {
+    font-size: 2rem;
+  }
+}

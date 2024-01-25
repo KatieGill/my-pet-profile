@@ -22,7 +22,10 @@ export const UserProfile = () => {
             navigate("/");
           }}
         >
-          Logout
+          <span className="navigation-title">Logout</span>
+          <span className="navigation-icon">
+            <i className="fa-solid fa-right-from-bracket" title="logout"></i>
+          </span>
         </button>
       </nav>
       <h2>Your Pet Profiles</h2>

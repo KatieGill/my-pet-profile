@@ -29,11 +29,19 @@ export const PetProfile = () => {
         <div className="nav-buttons">
           <div className="btn">
             <Link to="/edit-pet" state={{ pet }}>
-              Edit Pet
+              <span className="navigation-title">Edit Pet</span>
+              <span className="navigation-icon">
+                <i className="fa-regular fa-pen-to-square" title="edit pet"></i>
+              </span>
             </Link>
           </div>
           <div className="btn">
-            <Link to="/user-profile">Home</Link>
+            <Link to="/user-profile">
+              <span className="navigation-title"> Home</span>
+              <span className="navigation-icon">
+                <i className="fa-solid fa-house" title="home"></i>
+              </span>
+            </Link>
           </div>
         </div>
       </nav>

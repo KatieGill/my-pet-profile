@@ -63,7 +63,7 @@ form i {
   display: grid;
   grid-gap: 10px;
   grid-template-columns: repeat(3, 1fr);
-  min-width: 350px;
+  min-width: 150px;
 }
 
 .pet-form-grid {
@@ -218,6 +218,42 @@ form i {
   }
 }
 
+@media screen and (max-width: 640px) {
+  #create-login-form .form-grid,
+  #login-form .form-grid {
+    font-size: 1.5rem;
+  }
+  #create-login-form .form-label,
+  #login-form .form-label {
+    grid-column: 1/4;
+    justify-content: left;
+  }
+  #create-login-form .form-input,
+  #login-form .form-input {
+    grid-column: 1/5;
+  }
+  .show-password-icon {
+    grid-column: 4/5;
+    grid-row: 3/4;
+    margin: 0;
+  }
+  .show-password-icon .icon-btn {
+    margin: 0;
+    padding: 0;
+  }
+  .form-home-btn {
+    background-color: transparent;
+    border: none;
+  }
+  .form-container {
+    padding: 20px;
+  }
+  #create-login-form .form-submit,
+  #login-form .form-submit {
+    grid-column: 2/4;
+  }
+}
+
 @media screen and (max-width: 588px) {
   #diet-form .form-field-container,
   #diet-form .form-input,
@@ -252,6 +288,33 @@ form i {
   .enter-birthday-button {
     grid-row: 10/11;
     grid-column: 5/9;
+  }
+  .btn {
+    font-size: 1rem;
+  }
+}
+
+@media screen and (max-width: 360px) {
+  #create-login-form .form-container,
+  #login-form .form-container {
+    display: flex;
+    flex-direction: column;
+  }
+  #create-login-form .form-field-container,
+  #login-form .form-field-container {
+    justify-content: left;
+  }
+  #create-login-form .form-submit,
+  #login-form .form-submit {
+    grid-column: 1/5;
+    justify-content: center;
+  }
+  #create-login-form .form-submit input,
+  #login-form .form-submit input {
+    font-size: 1rem;
+  }
+  .btn {
+    font-size: 1rem;
   }
 }
 

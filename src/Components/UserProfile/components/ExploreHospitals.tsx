@@ -28,7 +28,10 @@ export const ExploreHospitals = () => {
             navigate(-1);
           }}
         >
-          Home
+          <span className="home-btn-title"> Home</span>
+          <span className="home-btn-icon">
+            <i className="fa-solid fa-house" title="home"></i>
+          </span>
         </button>
       </nav>
       <h2>Explore Local Veterinary Hospitals</h2>

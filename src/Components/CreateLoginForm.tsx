@@ -54,10 +54,16 @@ export const CreateLoginForm = () => {
   return (
     <div className="form-container">
       <div className="btn form-home-btn">
-        <Link to="/">Home</Link>
+        <Link to="/" className="navigation-title">
+          Home
+        </Link>
+        <Link to="/" className="navigation-icon">
+          <i className="fa-solid fa-house" title="home"></i>
+        </Link>
       </div>
       <h2>Welcome New User!</h2>
       <form
+        id="create-login-form"
         className="form-grid"
         onSubmit={(e) => {
           e.preventDefault();
