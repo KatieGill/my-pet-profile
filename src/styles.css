@@ -68,8 +68,13 @@ body {
 }
 
 .btn:hover {
+  cursor: pointer;
   font-weight: 600;
   box-shadow: 10px 10px 10px 0px rgba(35,41,70,0.2);
+}
+
+.btn-icon:hover {
+  cursor: pointer;
 }
 
 .navigation-icon {
@@ -83,10 +88,6 @@ a {
 
 .btn a {
   color: var(--text-dark);
-}
-
-.btn:hover {
-  cursor: pointer;
 }
 
 h1 {
@@ -165,9 +166,13 @@ p {
   transition: opacity 0s ease 0s;
 }
 
+.icon-btn {
+  margin: 15px;
+}
+
 .note-buttons .icon-btn {
-  padding: 0;
   margin: 0;
+  padding: 0;
 }
 
 .icon-btn:hover {
@@ -179,6 +184,11 @@ p {
 .icon-btn a:hover,
 .add-note span:hover {
   cursor: pointer;
+}
+
+.show-password-icon .icon-btn:hover {
+  transform: none;
+  opacity: 1;
 }
 
 img {
@@ -226,9 +236,6 @@ img {
 @media screen and (max-width: 640px) {
   h1 {
     font-size: 60px;
-  }
-  .btn {
-    font-size: 1.5rem;
   }
   .navigation-icon {
     display: block

@@ -134,14 +134,7 @@ export const Requests = {
       });
   },
 
-  /*getAllUsernames: () => {
-    return fetch(`${baseUrl}/users`)
-      .then((response) => response.json())
-      .then((data) => z.array(userSchema).parse(data))
-      .then((data) => data.map((user) => user.username));
-  },*/
-
-  getPets: (userId: number) => {
+  getPets: (userId: string) => {
     return fetch(`${baseUrl}/pets`)
       .then((response) => {
         if (!response.ok) {
@@ -155,7 +148,7 @@ export const Requests = {
       .then((userPets) => userPets);
   },
 
-  getDiets: (petId: number) => {
+  getDiets: (petId: string) => {
     return fetch(`${baseUrl}/diets`)
       .then((response) => {
         if (!response.ok) {
@@ -169,7 +162,7 @@ export const Requests = {
       .then((petDiets) => petDiets);
   },
 
-  getMedications: (petId: number) => {
+  getMedications: (petId: string) => {
     return fetch(`${baseUrl}/medications`)
       .then((response) => {
         if (!response.ok) {
@@ -197,7 +190,7 @@ export const Requests = {
       .then((data) => z.array(hospitalSchema).parse(data));
   },
 
-  getUserHospitalFavorites: (userId: number) => {
+  getUserHospitalFavorites: (userId: string) => {
     return fetch(`${baseUrl}/hospital-favorites`)
       .then((response) => {
         if (!response.ok) {
@@ -214,7 +207,7 @@ export const Requests = {
       .then((hospitalFavorites) => hospitalFavorites);
   },
 
-  getUserHospitalNotes: (userId: number) => {
+  getUserHospitalNotes: (userId: string) => {
     return fetch(`${baseUrl}/hospital-notes`)
       .then((response) => {
         if (!response.ok) {
@@ -311,7 +304,7 @@ export const Requests = {
       .then((data) => petSchema.parse(data));
   },
 
-  deleteDiet: (dietId: number) => {
+  deleteDiet: (dietId: string) => {
     return fetch(`${baseUrl}/diets/${dietId}`, {
       method: "DELETE",
     }).then((response) => {
@@ -321,7 +314,7 @@ export const Requests = {
     });
   },
 
-  deleteMedication: (medicationId: number) => {
+  deleteMedication: (medicationId: string) => {
     return fetch(`${baseUrl}/medications/${medicationId}`, {
       method: "DELETE",
     }).then((response) => {
@@ -331,7 +324,7 @@ export const Requests = {
     });
   },
 
-  deleteHospitalFavorite: (hospitalFavoriteId: number) => {
+  deleteHospitalFavorite: (hospitalFavoriteId: string) => {
     return fetch(`${baseUrl}/hospital-favorites/${hospitalFavoriteId}`, {
       method: "DELETE",
     }).then((response) => {
@@ -341,7 +334,7 @@ export const Requests = {
     });
   },
 
-  deleteHospitalNote: (hospitalNoteId: number) => {
+  deleteHospitalNote: (hospitalNoteId: string) => {
     return fetch(`${baseUrl}/hospital-notes/${hospitalNoteId}`, {
       method: "DELETE",
     }).then((response) => {
@@ -351,7 +344,7 @@ export const Requests = {
     });
   },
 
-  deletePet: (petId: number) => {
+  deletePet: (petId: string) => {
     return fetch(`${baseUrl}/pets/${petId}`, {
       method: "DELETE",
     }).then((response) => {

@@ -31,10 +31,10 @@ export const ApproximateAgeInput = ({
       birthDate = birthDate + 31;
     }
     if (birthDate < 10) {
-      birthDate = birthDate.toString().padStart(2, "0");
+      birthDate = +birthDate.toString().padStart(2, "0");
     }
     if (birthMonth < 10) {
-      birthMonth = birthMonth.toString().padStart(2, "0");
+      birthMonth = +birthMonth.toString().padStart(2, "0");
     }
     const birthday = `${birthYear}-${birthMonth}-${birthDate}`;
     setDobInput(birthday as unknown as Date);
@@ -54,7 +54,7 @@ export const ApproximateAgeInput = ({
           min="0"
           max="30"
           onChange={(e) => {
-            setYearsInput(e.target.value as unknown as number);
+            setYearsInput(+e.target.value);
           }}
         />
       </div>
@@ -69,7 +69,7 @@ export const ApproximateAgeInput = ({
           min="0"
           max="12"
           onChange={(e) => {
-            setMonthsInput(e.target.value as unknown as number);
+            setMonthsInput(+e.target.value);
           }}
         />
       </div>
@@ -84,7 +84,7 @@ export const ApproximateAgeInput = ({
           min="0"
           max="31"
           onChange={(e) => {
-            setDaysInput(e.target.value as unknown as number);
+            setDaysInput(+e.target.value);
           }}
         />
       </div>

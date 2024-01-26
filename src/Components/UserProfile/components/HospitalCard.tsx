@@ -26,7 +26,7 @@ export const HospitalCard = ({
   const { user } = useAuthContext();
   const [userFavorites, setUserFavorites] = useState<HospitalFavorite[]>([]);
 
-  const getUserFavorites = async (userId: number) => {
+  const getUserFavorites = async (userId: string) => {
     const favorites = await Requests.getUserHospitalFavorites(userId);
     setUserFavorites(favorites);
   };
@@ -43,6 +43,9 @@ export const HospitalCard = ({
         const location = getSearchLocation(hospital.address);
         const note = hospitalNotes.find(
           (note) => note.hospitalId === hospital.id
+        );
+        const favorite = userFavorites.find(
+          (favorite) => favorite.hospitalId === hospital.id
         );
         return (
           <div className="hospital-card card" key={hospital.id}>
@@ -96,7 +99,7 @@ export const HospitalCard = ({
                   <>
                     <div className="hospital-note">{note.note}</div>
                     <div className="note-buttons">
-                      <div className="btn icon-btn">
+                      <div className="icon-btn">
                         <Link
                           to="/edit-hospital-note"
                           state={{ hospitalNote: note, hospital: hospital }}
@@ -108,7 +111,7 @@ export const HospitalCard = ({
                         </Link>
                       </div>
                       <button
-                        className="btn icon-btn"
+                        className="icon-btn"
                         onClick={() => {
                           deleteHospitalNote(note);
                         }}
@@ -135,49 +138,32 @@ export const HospitalCard = ({
               ""
             )}
             <div className="favorite-btn-container">
-              {isFavoriteList ? (
-                <button
-                  className="btn icon-btn"
-                  onClick={() => {
-                    const favorite = userFavorites.find(
-                      (favorite) => favorite.hospitalId === hospital.id
+              <button
+                className="icon-btn"
+                onClick={() => {
+                  if (favorite) {
+                    deleteHospitalFavorite(favorite).then(() =>
+                      getUserFavorites(favorite.userId)
                     );
-                    if (favorite) {
-                      deleteHospitalFavorite(favorite);
-                      getUserFavorites(favorite.userId);
-                    }
-                  }}
-                >
-                  <i
-                    className="fa-solid fa-heart-crack"
-                    title="remove from favorites list"
-                  ></i>
-                </button>
-              ) : (
-                <button
-                  className="btn icon-btn"
-                  onClick={() => {
+                  } else {
                     if (user) {
-                      if (
-                        hospitalFavorites.find(
-                          (favorite) => favorite.name === hospital.name
-                        )
-                      ) {
-                        toast.error(
-                          "This hospital is already in your favorites list"
-                        );
-                      } else {
-                        postHospitalFavorite(user.id, hospital.id);
-                      }
+                      postHospitalFavorite(user.id, hospital.id).then(() =>
+                        getUserFavorites(user.id)
+                      );
                     }
-                  }}
-                >
-                  <i
-                    className="fa-solid fa-heart"
-                    title="add to favorites list"
-                  ></i>
-                </button>
-              )}
+                  }
+                }}
+              >
+                <i
+                  title={
+                    favorite
+                      ? "remove from favorites list"
+                      : "add to favorites list"
+                  }
+                  className="fa-solid fa-heart"
+                  style={{ color: favorite ? "#f55162" : "#232946" }}
+                ></i>
+              </button>
             </div>
           </div>
         );

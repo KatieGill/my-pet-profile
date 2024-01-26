@@ -28,8 +28,8 @@ export const ExploreHospitals = () => {
             navigate(-1);
           }}
         >
-          <span className="home-btn-title"> Home</span>
-          <span className="home-btn-icon">
+          <span className="navigation-title"> Home</span>
+          <span className="navigation-icon">
             <i className="fa-solid fa-house" title="home"></i>
           </span>
         </button>

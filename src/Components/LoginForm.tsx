@@ -38,8 +38,15 @@ export const LoginForm = () => {
           })
             .then(() => navigate("/user-profile"))
             .catch((error: Error) => {
-              setErrorMessage(error.message);
-              setShouldShowErrorMessage(true);
+              if (
+                error.message === "Username not found" ||
+                error.message === "Password incorrect"
+              ) {
+                setErrorMessage(error.message);
+                setShouldShowErrorMessage(true);
+              } else {
+                console.log(error.message);
+              }
             });
         }}
       >
@@ -75,8 +82,8 @@ export const LoginForm = () => {
           />
         </div>
         <div className="form-field-container show-password-icon">
-          <button
-            className="btn icon-btn"
+          <div
+            className="icon-btn"
             onClick={(e) => {
               e.preventDefault();
               showPassword === "text"
@@ -89,7 +96,7 @@ export const LoginForm = () => {
             ) : (
               <i title="hide password" className="fa-solid fa-eye-slash"></i>
             )}
-          </button>
+          </div>
         </div>
         <ErrorMessage message={errorMessage} show={shouldShowErrorMessage} />
         <div className="form-field-container form-submit">

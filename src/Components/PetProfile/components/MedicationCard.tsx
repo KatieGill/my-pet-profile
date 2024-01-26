@@ -31,7 +31,7 @@ export const MedicationCard = ({
               )}
             </div>
             <div className="card-btns">
-              <div className="btn icon-btn">
+              <div className="icon-btn">
                 <Link to="/edit-medication" state={{ medication }}>
                   <i
                     className="fa-regular fa-pen-to-square"
@@ -40,7 +40,7 @@ export const MedicationCard = ({
                 </Link>
               </div>
               <button
-                className="btn icon-btn"
+                className="icon-btn"
                 onClick={() => {
                   deleteMedication(medication);
                 }}

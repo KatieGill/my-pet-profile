@@ -50,6 +50,11 @@
   justify-content: right;
 }
 
+.favorite-btn-container .icon-btn {
+  margin-right: 15px;
+  margin-bottom: 15px;
+}
+
 .no-card-view {
   color: var(--text-dark);
   padding: 100px;

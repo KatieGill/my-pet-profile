@@ -54,11 +54,11 @@ export const CreateLoginForm = () => {
   return (
     <div className="form-container">
       <div className="btn form-home-btn">
-        <Link to="/" className="navigation-title">
-          Home
-        </Link>
-        <Link to="/" className="navigation-icon">
-          <i className="fa-solid fa-house" title="home"></i>
+        <Link to="/">
+          <span className="navigation-title">Home</span>
+          <span className="navigation-icon">
+            <i className="fa-solid fa-house" title="home"></i>
+          </span>
         </Link>
       </div>
       <h2>Welcome New User!</h2>
@@ -111,8 +111,8 @@ export const CreateLoginForm = () => {
           />
         </div>
         <div className="form-field-container show-password-icon">
-          <button
-            className="btn icon-btn"
+          <div
+            className="icon-btn"
             onClick={(e) => {
               e.preventDefault();
               showPassword === "text"
@@ -125,7 +125,7 @@ export const CreateLoginForm = () => {
             ) : (
               <i title="hide password" className="fa-solid fa-eye-slash"></i>
             )}
-          </button>
+          </div>
         </div>
         <div className="form-field-container form-label">
           <label htmlFor="confirm-password">Confirm password:</label>

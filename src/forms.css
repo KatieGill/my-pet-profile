@@ -212,9 +212,9 @@ form i {
   }
 }
 
-@media screen and (max-width: 784px) {
+@media screen and (max-width: 880px) {
   .form-container {
-    margin: auto;
+    margin: 25px auto;
   }
 }
 
@@ -245,12 +245,21 @@ form i {
     background-color: transparent;
     border: none;
   }
+  .form-home-btn:hover {
+    box-shadow: none;
+  }
+  .navigation-icon i {
+    font-size: 1.5rem;
+  }
   .form-container {
     padding: 20px;
   }
   #create-login-form .form-submit,
   #login-form .form-submit {
     grid-column: 2/4;
+  }
+  textarea {
+    width: 500px;
   }
 }
 
@@ -292,6 +301,12 @@ form i {
   .btn {
     font-size: 1rem;
   }
+  textarea {
+    width: 325px;
+  }
+  h3 {
+    font-size: 1.5rem;
+  }
 }
 
 @media screen and (max-width: 360px) {
@@ -315,6 +330,9 @@ form i {
   }
   .btn {
     font-size: 1rem;
+  }
+  textarea {
+    width: 250px;
   }
 }
 

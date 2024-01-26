@@ -36,7 +36,7 @@ export const PetForm = ({
   breed: Breed;
   image: string;
   dob: Date;
-  petId: number | null;
+  petId: string | null;
 }) => {
   const { user } = useAuthContext();
   const { postPet, putPet } = useUserDataContext();
@@ -68,31 +68,33 @@ export const PetForm = ({
           } else {
             if (user) {
               if (isEdit) {
-                putPet({
-                  id: petId,
-                  userId: user.id,
-                  name: nameInput,
-                  species: speciesInput,
-                  breed: breedInput,
-                  image: imageInput,
-                  dob: dobInput,
-                })
-                  .then(() => {
-                    navigate("/pet-profile", {
-                      state: {
-                        pet: {
-                          id: petId,
-                          userId: user.id,
-                          name: nameInput,
-                          species: speciesInput,
-                          breed: breedInput,
-                          image: imageInput,
-                          dob: dobInput,
-                        },
-                      },
-                    });
+                if (petId) {
+                  putPet({
+                    id: petId,
+                    userId: user.id,
+                    name: nameInput,
+                    species: speciesInput,
+                    breed: breedInput,
+                    image: imageInput,
+                    dob: dobInput,
                   })
-                  .catch(() => toast.error("Unable to edit pet"));
+                    .then(() => {
+                      navigate("/pet-profile", {
+                        state: {
+                          pet: {
+                            id: petId,
+                            userId: user.id,
+                            name: nameInput,
+                            species: speciesInput,
+                            breed: breedInput,
+                            image: imageInput,
+                            dob: dobInput,
+                          },
+                        },
+                      });
+                    })
+                    .catch(() => toast.error("Unable to edit pet"));
+                }
               } else {
                 postPet({
                   userId: user.id,

@@ -12,7 +12,7 @@ import { useAuthContext } from "./UseContext";
 import toast from "react-hot-toast";
 
 type UserDataProvider = {
-  getUserPets: (userId: number) => void;
+  getUserPets: (userId: string) => Promise<void>;
   userPets: Pet[];
   setUserPets: (userPets: Pet[]) => void;
   currentPet: Pet | undefined;
@@ -25,18 +25,18 @@ type UserDataProvider = {
   setHospitalFavorites: (favoriteHospitals: Hospital[]) => void;
   hospitalNotes: HospitalNote[];
   setHospitalNotes: (hospitalNotes: HospitalNote[]) => void;
-  getUserHospitalFavorites: (useId: number) => Promise<void>;
-  getPetDiets: (petId: number) => Promise<void>;
-  getPetMedications: (petId: number) => Promise<void>;
+  getUserHospitalFavorites: (useId: string) => Promise<void>;
+  getPetDiets: (petId: string) => Promise<void>;
+  getPetMedications: (petId: string) => Promise<void>;
   postPet: (pet: Omit<Pet, "id">) => Promise<string>;
   postDiet: (diet: Omit<Diet, "id">) => Promise<string>;
   postMedication: (medication: Omit<Medication, "id">) => Promise<string>;
-  postHospitalFavorite: (userId: number, hospitalId: number) => Promise<string>;
+  postHospitalFavorite: (userId: string, hospitalId: string) => Promise<string>;
   postHospitalNote: (hospitalNote: Omit<HospitalNote, "id">) => Promise<string>;
   patchHospitalNote: (hospitalNote: HospitalNote) => Promise<string>;
   putDiet: (diet: Diet) => Promise<string>;
   putMedication: (medication: Medication) => Promise<string>;
-  putPet: (pet: Pet) => Promise<string>;
+  putPet: (pet: Pet) => Promise<void>;
   deleteDiet: (diet: Diet) => Promise<string>;
   deleteMedication: (medication: Medication) => Promise<string>;
   deleteHospitalFavorite: (
@@ -58,12 +58,12 @@ export const UserDataProvider = ({ children }: { children: ReactNode }) => {
   const [hospitalNotes, setHospitalNotes] = useState<HospitalNote[]>([]);
   const { user } = useAuthContext();
 
-  const getUserPets = async (userId: number) => {
+  const getUserPets = async (userId: string) => {
     const userPets = await Requests.getPets(userId);
     setUserPets(userPets);
   };
 
-  const getUserHospitalFavorites = async (userId: number) => {
+  const getUserHospitalFavorites = async (userId: string) => {
     const userHospitalFavorites = await Requests.getUserHospitalFavorites(
       userId
     );
@@ -78,17 +78,17 @@ export const UserDataProvider = ({ children }: { children: ReactNode }) => {
     setHospitalFavorites(hospitalFavorites);
   };
 
-  const getPetDiets = async (petId: number) => {
+  const getPetDiets = async (petId: string) => {
     const petDiets = await Requests.getDiets(petId);
     setPetDiets(petDiets);
   };
 
-  const getPetMedications = async (petId: number) => {
+  const getPetMedications = async (petId: string) => {
     const petMedications = await Requests.getMedications(petId);
     setPetMedications(petMedications);
   };
 
-  const getUserHospitalNotes = async (userId: number) => {
+  const getUserHospitalNotes = async (userId: string) => {
     const hospitalNotes = await Requests.getUserHospitalNotes(userId);
     setHospitalNotes(hospitalNotes);
   };
@@ -111,7 +111,7 @@ export const UserDataProvider = ({ children }: { children: ReactNode }) => {
       .then(() => toast.success("Added medication to your pet's profile"));
   };
 
-  const postHospitalFavorite = (userId: number, hospitalId: number) => {
+  const postHospitalFavorite = (userId: string, hospitalId: string) => {
     return Requests.postHospitalFavorite({
       userId: userId,
       hospitalId: hospitalId,
