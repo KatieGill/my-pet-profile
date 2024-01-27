@@ -1,5 +1,6 @@
 import { useLocation, useNavigate } from "react-router-dom";
 import { useUserDataContext } from "../../../Providers/UseContext";
+import toast from "react-hot-toast";
 
 export const ConfirmDelete = () => {
   const { deletePet } = useUserDataContext();
@@ -22,9 +23,14 @@ export const ConfirmDelete = () => {
         <button
           className="btn"
           onClick={() => {
-            deletePet(pet).then(() => {
-              navigate("/user-profile");
-            });
+            deletePet(pet)
+              .then(() => {
+                navigate("/user-profile");
+              })
+              .catch((e) => {
+                toast.error("Unable to delete pet");
+                console.error(e);
+              });
           }}
         >
           YES

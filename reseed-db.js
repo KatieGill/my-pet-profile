@@ -227,7 +227,7 @@ const db = {
       "name": "Purina One canned",
       "petId": 13,
       "amount": "1/2 can ",
-      "frequency": "once dail",
+      "frequency": "once daily",
       "id": 21
     },
     {

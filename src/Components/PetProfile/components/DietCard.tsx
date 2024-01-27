@@ -21,7 +21,7 @@ export const DietCard = ({ dietArray }: { dietArray: Diet[] }) => {
               </div>
             </div>
             <div className="card-btns">
-              <div className="btn icon-btn">
+              <div className="icon-btn">
                 <Link to="/edit-diet" state={{ diet }}>
                   <i
                     className="fa-regular fa-pen-to-square"
@@ -30,7 +30,7 @@ export const DietCard = ({ dietArray }: { dietArray: Diet[] }) => {
                 </Link>
               </div>
               <button
-                className="btn icon-btn"
+                className="icon-btn"
                 onClick={() => {
                   deleteDiet(diet);
                 }}

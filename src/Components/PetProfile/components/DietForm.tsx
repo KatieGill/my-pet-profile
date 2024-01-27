@@ -8,6 +8,7 @@ import {
   dietFrequencyErrorMessage,
 } from "../../../utils/errorMessages";
 import { useUserDataContext } from "../../../Providers/UseContext";
+import toast from "react-hot-toast";
 
 export const DietForm = ({
   isEdit,
@@ -21,8 +22,8 @@ export const DietForm = ({
   name: string;
   amount: string;
   frequency: string;
-  petId: number;
-  dietId: number | null;
+  petId: string;
+  dietId: string | null;
 }) => {
   const [nameInput, setNameInput] = useState(name);
   const [amountInput, setAmountInput] = useState(amount);
@@ -39,12 +40,15 @@ export const DietForm = ({
   const shouldShowNameError = !nameIsValid && shouldShowErrorMessage;
   const shouldShowAmountError = !amountIsValid && shouldShowErrorMessage;
   const shouldShowFrequencyError = !frequencyIsValid && shouldShowErrorMessage;
-  const shouldShowPlaceholder = screenWidth >= 370;
-  const shouldShowInfoIcon = screenWidth < 370;
+  const shouldShowPlaceholder = screenWidth ? screenWidth >= 370 : undefined;
+  const shouldShowInfoIcon = screenWidth ? screenWidth < 370 : undefined;
+
   const updateScreenWidth = () => {
     setScreenWidth(window.innerWidth);
   };
+
   useEffect(() => {
+    updateScreenWidth();
     window.addEventListener("resize", updateScreenWidth);
   }, []);
 
@@ -58,20 +62,32 @@ export const DietForm = ({
           setShouldShowErrorMessage(true);
         } else {
           if (isEdit) {
-            putDiet({
-              id: dietId,
-              petId: petId,
-              name: nameInput,
-              amount: amountInput,
-              frequency: frequencyInput,
-            }).then(() => navigate(-1));
+            if (dietId) {
+              putDiet({
+                id: dietId,
+                petId: petId,
+                name: nameInput,
+                amount: amountInput,
+                frequency: frequencyInput,
+              })
+                .then(() => navigate(-1))
+                .catch((e: Error) => {
+                  toast.error("Unable to edit diet");
+                  console.error(e);
+                });
+            }
           } else {
             postDiet({
               name: nameInput,
               petId: petId,
               amount: amountInput,
               frequency: frequencyInput,
-            }).then(() => navigate(-1));
+            })
+              .then(() => navigate(-1))
+              .catch((e: Error) => {
+                toast.error("Unable to create diet");
+                console.error(e);
+              });
           }
         }
       }}

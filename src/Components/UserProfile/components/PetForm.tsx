@@ -93,7 +93,10 @@ export const PetForm = ({
                         },
                       });
                     })
-                    .catch(() => toast.error("Unable to edit pet"));
+                    .catch((e: Error) => {
+                      toast.error("Unable to edit pet");
+                      console.error(e);
+                    });
                 }
               } else {
                 postPet({
@@ -105,7 +108,10 @@ export const PetForm = ({
                   dob: dobInput,
                 })
                   .then(() => navigate(-1))
-                  .catch(() => toast.error("Unable to add pet"));
+                  .catch((e: Error) => {
+                    toast.error("Unable to add pet");
+                    console.error(e);
+                  });
               }
             }
           }

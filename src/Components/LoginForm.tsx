@@ -3,6 +3,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { useAuthContext } from "../Providers/UseContext";
 import { useState } from "react";
 import { ErrorMessage } from "../ErrorMessage";
+import toast from "react-hot-toast";
 
 export const LoginForm = () => {
   const { login } = useAuthContext();
@@ -37,15 +38,16 @@ export const LoginForm = () => {
             password: passwordInput,
           })
             .then(() => navigate("/user-profile"))
-            .catch((error: Error) => {
+            .catch((e: Error) => {
               if (
-                error.message === "Username not found" ||
-                error.message === "Password incorrect"
+                e.message === "Username not found" ||
+                e.message === "Password incorrect"
               ) {
-                setErrorMessage(error.message);
+                setErrorMessage(e.message);
                 setShouldShowErrorMessage(true);
               } else {
-                console.log(error.message);
+                toast.error("Unable to login");
+                console.error(e);
               }
             });
         }}

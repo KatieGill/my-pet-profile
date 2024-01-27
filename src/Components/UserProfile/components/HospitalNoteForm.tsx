@@ -17,8 +17,8 @@ export const HospitalNoteForm = ({
   note,
 }: {
   isEdit: boolean;
-  noteId: number | null;
-  hospitalId: number;
+  noteId: string | null;
+  hospitalId: string;
   hospitalName: string;
   note: string;
 }) => {
@@ -42,17 +42,18 @@ export const HospitalNoteForm = ({
           } else {
             if (user) {
               if (isEdit) {
-                patchHospitalNote({
-                  id: noteId,
-                  userId: user.id,
-                  hospitalId: hospitalId,
-                  note: noteInput,
-                })
-                  .then(() => {
-                    setNoteInput("");
-                    navigate(-1);
+                if (noteId)
+                  patchHospitalNote({
+                    id: noteId,
+                    userId: user.id,
+                    hospitalId: hospitalId,
+                    note: noteInput,
                   })
-                  .catch(() => toast.error("Unable to edit note"));
+                    .then(() => {
+                      setNoteInput("");
+                      navigate(-1);
+                    })
+                    .catch(() => toast.error("Unable to edit note"));
               } else {
                 postHospitalNote({
                   userId: user.id,
@@ -78,8 +79,8 @@ export const HospitalNoteForm = ({
             value={noteInput}
             name="note"
             id="note-input"
-            cols="80"
-            rows="20"
+            cols={80}
+            rows={20}
             onChange={(e) => {
               setNoteInput(e.target.value);
             }}

@@ -46,9 +46,8 @@ type UserDataProvider = {
   deletePet: (pet: Pet) => Promise<string>;
 };
 
-export const UserDataContext = createContext<UserDataProvider>(
-  {} as UserDataProvider
-);
+export const UserDataContext = createContext<UserDataProvider | null>(null);
+
 export const UserDataProvider = ({ children }: { children: ReactNode }) => {
   const [userPets, setUserPets] = useState<Pet[]>([]);
   const [currentPet, setCurrentPet] = useState<Pet | undefined>(undefined);

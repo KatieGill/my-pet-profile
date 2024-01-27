@@ -2,7 +2,6 @@ import React from "react";
 import ReactDOM from "react-dom/client";
 import App from "./App.tsx";
 import "./styles.css";
-import "./responsive.css";
 import { RouterProvider, createBrowserRouter } from "react-router-dom";
 import { CreateLoginForm } from "./Components/CreateLoginForm.tsx";
 import { LoginForm } from "./Components/LoginForm.tsx";
@@ -21,23 +20,125 @@ import { EditDiet } from "./Components/PetProfile/components/EditDiet.tsx";
 import { EditMedication } from "./Components/PetProfile/components/EditMedication.tsx";
 import { ConfirmDelete } from "./Components/PetProfile/components/ConfirmDelete.tsx";
 import { EditPet } from "./Components/PetProfile/components/EditPet.tsx";
+import { ProtectedRoute } from "./ProtectedRoute.tsx";
+import { ErrorElement } from "./ErrorElement.tsx";
 
 const router = createBrowserRouter([
-  { path: "/", element: <App /> },
-  { path: "/create-login", element: <CreateLoginForm /> },
-  { path: "/login", element: <LoginForm /> },
-  { path: "/user-profile", element: <UserProfile /> },
-  { path: "/add-pet", element: <AddPet /> },
-  { path: "/pet-profile", element: <PetProfile /> },
-  { path: "/add-diet", element: <AddDiet /> },
-  { path: "/add-medication", element: <AddMedication /> },
-  { path: "/vet-hospitals", element: <ExploreHospitals /> },
-  { path: "/add-hospital-note", element: <AddHospitalNote /> },
-  { path: "/edit-hospital-note", element: <EditHospitalNote /> },
-  { path: "/edit-diet", element: <EditDiet /> },
-  { path: "/edit-medication", element: <EditMedication /> },
-  { path: "/delete-pet-profile", element: <ConfirmDelete /> },
-  { path: "/edit-pet", element: <EditPet /> },
+  { path: "/", element: <App />, errorElement: <ErrorElement /> },
+  {
+    path: "/create-login",
+    element: <CreateLoginForm />,
+    errorElement: <ErrorElement />,
+  },
+  { path: "/login", element: <LoginForm />, errorElement: <ErrorElement /> },
+  {
+    path: "/user-profile",
+    element: (
+      <ProtectedRoute>
+        <UserProfile />
+      </ProtectedRoute>
+    ),
+    errorElement: <ErrorElement />,
+  },
+  {
+    path: "/add-pet",
+    element: (
+      <ProtectedRoute>
+        <AddPet />
+      </ProtectedRoute>
+    ),
+    errorElement: <ErrorElement />,
+  },
+  {
+    path: "/pet-profile",
+    element: (
+      <ProtectedRoute>
+        <PetProfile />
+      </ProtectedRoute>
+    ),
+    errorElement: <ErrorElement />,
+  },
+  {
+    path: "/add-diet",
+    element: (
+      <ProtectedRoute>
+        <AddDiet />
+      </ProtectedRoute>
+    ),
+    errorElement: <ErrorElement />,
+  },
+  {
+    path: "/add-medication",
+    element: (
+      <ProtectedRoute>
+        <AddMedication />
+      </ProtectedRoute>
+    ),
+    errorElement: <ErrorElement />,
+  },
+  {
+    path: "/vet-hospitals",
+    element: (
+      <ProtectedRoute>
+        <ExploreHospitals />
+      </ProtectedRoute>
+    ),
+    errorElement: <ErrorElement />,
+  },
+  {
+    path: "/add-hospital-note",
+    element: (
+      <ProtectedRoute>
+        <AddHospitalNote />
+      </ProtectedRoute>
+    ),
+    errorElement: <ErrorElement />,
+  },
+  {
+    path: "/edit-hospital-note",
+    element: (
+      <ProtectedRoute>
+        <EditHospitalNote />
+      </ProtectedRoute>
+    ),
+    errorElement: <ErrorElement />,
+  },
+  {
+    path: "/edit-diet",
+    element: (
+      <ProtectedRoute>
+        <EditDiet />
+      </ProtectedRoute>
+    ),
+    errorElement: <ErrorElement />,
+  },
+  {
+    path: "/edit-medication",
+    element: (
+      <ProtectedRoute>
+        <EditMedication />
+      </ProtectedRoute>
+    ),
+    errorElement: <ErrorElement />,
+  },
+  {
+    path: "/delete-pet-profile",
+    element: (
+      <ProtectedRoute>
+        <ConfirmDelete />
+      </ProtectedRoute>
+    ),
+    errorElement: <ErrorElement />,
+  },
+  {
+    path: "/edit-pet",
+    element: (
+      <ProtectedRoute>
+        <EditPet />
+      </ProtectedRoute>
+    ),
+    errorElement: <ErrorElement />,
+  },
 ]);
 
 ReactDOM.createRoot(document.getElementById("root")!).render(

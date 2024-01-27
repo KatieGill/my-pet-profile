@@ -75,7 +75,10 @@ export const CreateLoginForm = () => {
               password: passwordInput,
             })
               .then(() => navigate("/login"))
-              .catch(() => toast.error("Unable to register user"));
+              .catch((e: Error) => {
+                toast.error("Unable to register user");
+                console.error(e);
+              });
           }
         }}
       >

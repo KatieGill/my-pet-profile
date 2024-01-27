@@ -7,7 +7,6 @@ import { Hospital, HospitalFavorite } from "../../../Types/types";
 import { getSearchLocation } from "../../../utils/functions";
 import { useEffect, useState } from "react";
 import { Requests } from "../../../api";
-import toast from "react-hot-toast";
 
 export const HospitalCard = ({
   hospitalArray,
@@ -20,7 +19,6 @@ export const HospitalCard = ({
     hospitalNotes,
     deleteHospitalNote,
     deleteHospitalFavorite,
-    hospitalFavorites,
     postHospitalFavorite,
   } = useUserDataContext();
   const { user } = useAuthContext();

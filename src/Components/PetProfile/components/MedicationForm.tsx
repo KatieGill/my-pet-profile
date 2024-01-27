@@ -8,6 +8,7 @@ import {
   medicationFrequencyErrorMessage,
 } from "../../../utils/errorMessages";
 import { isInputValid } from "../../../utils/validations";
+import toast from "react-hot-toast";
 
 export const MedicationForm = ({
   isEdit,
@@ -23,8 +24,8 @@ export const MedicationForm = ({
   amount: string;
   frequency: string;
   note: string | undefined;
-  petId: number;
-  medId: number | null;
+  petId: string;
+  medId: string | null;
 }) => {
   const [nameInput, setNameInput] = useState<string>(name);
   const [amountInput, setAmountInput] = useState<string>(amount);
@@ -43,12 +44,13 @@ export const MedicationForm = ({
   const shouldShowNameError = !nameIsValid && shouldShowErrorMessage;
   const shouldShowAmountError = !amountIsValid && shouldShowErrorMessage;
   const shouldShowFrequencyError = !frequencyIsValid && shouldShowErrorMessage;
-  const shouldShowPlaceholder = screenWidth >= 370;
-  const shouldShowInfoIcon = screenWidth < 370;
+  const shouldShowPlaceholder = screenWidth ? screenWidth >= 370 : undefined;
+  const shouldShowInfoIcon = screenWidth ? screenWidth < 370 : undefined;
   const updateScreenWidth = () => {
     setScreenWidth(window.innerWidth);
   };
   useEffect(() => {
+    updateScreenWidth();
     window.addEventListener("resize", updateScreenWidth);
   }, []);
 
@@ -62,14 +64,20 @@ export const MedicationForm = ({
           setShouldShowErrorMessage(true);
         } else {
           if (isEdit) {
-            putMedication({
-              id: medId,
-              petId: petId,
-              name: nameInput,
-              amount: amountInput,
-              frequency: frequencyInput,
-              note: noteInput,
-            }).then(() => navigate(-1));
+            if (medId)
+              putMedication({
+                id: medId,
+                petId: petId,
+                name: nameInput,
+                amount: amountInput,
+                frequency: frequencyInput,
+                note: noteInput,
+              })
+                .then(() => navigate(-1))
+                .catch((e) => {
+                  toast.error("Unable to edit medication");
+                  console.error(e);
+                });
           } else {
             postMedication({
               petId: petId,
@@ -77,7 +85,12 @@ export const MedicationForm = ({
               amount: amountInput,
               frequency: frequencyInput,
               note: noteInput,
-            }).then(() => navigate(-1));
+            })
+              .then(() => navigate(-1))
+              .catch((e) => {
+                toast.error("Unable to create medication");
+                console.error(e);
+              });
           }
         }
       }}
