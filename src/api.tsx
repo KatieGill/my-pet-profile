@@ -13,13 +13,43 @@ import {
   HospitalFavorite,
   hospitalFavoriteSchema,
   hospitalSchema,
+  authenticatedUserDataSchema,
+  userInformationSchema,
 } from "./Types/types";
 
 const baseUrl = "http://localhost:3000";
 
 export const Requests = {
+  login: (user: Omit<User, "id">) => {
+    return fetch(`${baseUrl}/auth/login`, {
+      body: JSON.stringify(user),
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+    })
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error("Unable to login");
+        } else {
+          return response.json();
+        }
+      })
+      .then((data) => authenticatedUserDataSchema.parse(data));
+  },
+  getLoggedInUserData: (username: string) => {
+    return fetch(`${baseUrl}/user/${username}`)
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error("Unable to get user data");
+        } else {
+          return response.json();
+        }
+      })
+      .then((data) => {
+        return userInformationSchema.parse(data.userInformation);
+      });
+  },
   postUser: (user: Omit<User, "id">) => {
-    return fetch(`${baseUrl}/users`, {
+    return fetch(`${baseUrl}/user`, {
       body: JSON.stringify(user),
       method: "POST",
       headers: { "Content-Type": "application/json" },
@@ -83,7 +113,7 @@ export const Requests = {
   },
 
   postHospitalNote: (hospitalNote: Omit<HospitalNote, "id">) => {
-    return fetch(`${baseUrl}/hospital-notes`, {
+    return fetch(`${baseUrl}/hospital-note`, {
       body: JSON.stringify(hospitalNote),
       method: "POST",
       headers: { "Content-Type": "application/json" },
@@ -98,8 +128,10 @@ export const Requests = {
       .then((data) => hospitalNoteSchema.parse(data));
   },
 
-  postHospitalFavorite: (hospitalFavorite: Omit<HospitalFavorite, "id">) => {
-    return fetch(`${baseUrl}/hospital-favorites`, {
+  postHospitalFavorite: (
+    hospitalFavorite: Omit<HospitalFavorite, "id" | "hospital">
+  ) => {
+    return fetch(`${baseUrl}/hospital-favorite`, {
       body: JSON.stringify(hospitalFavorite),
       method: "POST",
       headers: { "Content-Type": "application/json" },
@@ -179,7 +211,7 @@ export const Requests = {
   },
 
   getHospitals: () => {
-    return fetch(`${baseUrl}/hospitals`)
+    return fetch(`${baseUrl}/hospital`)
       .then((response) => {
         if (!response.ok) {
           throw new Error("Unable to fetch all hospitals");
@@ -187,11 +219,11 @@ export const Requests = {
           return response.json();
         }
       })
-      .then((data) => z.array(hospitalSchema).parse(data));
+      .then((data) => z.array(hospitalSchema).parse(data.allHospitals));
   },
 
-  getUserHospitalFavorites: (userId: string) => {
-    return fetch(`${baseUrl}/hospital-favorites`)
+  getUserHospitalFavorites: (userId: number) => {
+    return fetch(`${baseUrl}/hospital-favorite/${userId}`)
       .then((response) => {
         if (!response.ok) {
           throw new Error("Unable to fetch all hospital favorites");
@@ -207,8 +239,8 @@ export const Requests = {
       .then((hospitalFavorites) => hospitalFavorites);
   },
 
-  getUserHospitalNotes: (userId: string) => {
-    return fetch(`${baseUrl}/hospital-notes`)
+  getUserHospitalNotes: (userId: number) => {
+    return fetch(`${baseUrl}/hospital-note/${userId}`)
       .then((response) => {
         if (!response.ok) {
           throw new Error("Unable to fetch all hospital notes");
@@ -222,9 +254,9 @@ export const Requests = {
       .then((userNotes) => userNotes);
   },
 
-  patchHospitalNote: (hospitalNote: HospitalNote) => {
-    return fetch(`${baseUrl}/hospital-notes/${hospitalNote.id}`, {
-      body: JSON.stringify({ note: hospitalNote.note }),
+  patchHospitalNote: (noteId: number, note: string) => {
+    return fetch(`${baseUrl}/hospital-note/${noteId}`, {
+      body: JSON.stringify({ note: note }),
       method: "PATCH",
       headers: { "Content-Type": "application/json" },
     })
@@ -324,8 +356,8 @@ export const Requests = {
     });
   },
 
-  deleteHospitalFavorite: (hospitalFavoriteId: string) => {
-    return fetch(`${baseUrl}/hospital-favorites/${hospitalFavoriteId}`, {
+  deleteHospitalFavorite: (hospitalFavoriteId: number) => {
+    return fetch(`${baseUrl}/hospital-favorite/${hospitalFavoriteId}`, {
       method: "DELETE",
     }).then((response) => {
       if (!response.ok) {
@@ -334,8 +366,8 @@ export const Requests = {
     });
   },
 
-  deleteHospitalNote: (hospitalNoteId: string) => {
-    return fetch(`${baseUrl}/hospital-notes/${hospitalNoteId}`, {
+  deleteHospitalNote: (hospitalNoteId: number) => {
+    return fetch(`${baseUrl}/hospital-note/${hospitalNoteId}`, {
       method: "DELETE",
     }).then((response) => {
       if (!response.ok) {

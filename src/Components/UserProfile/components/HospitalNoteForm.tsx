@@ -17,8 +17,8 @@ export const HospitalNoteForm = ({
   note,
 }: {
   isEdit: boolean;
-  noteId: string | null;
-  hospitalId: string;
+  noteId: number | null;
+  hospitalId: number;
   hospitalName: string;
   note: string;
 }) => {

@@ -8,7 +8,9 @@ export const UserProfile = () => {
   const { userPets, hospitalFavorites } = useUserDataContext();
   const { logout } = useAuthContext();
   const navigate = useNavigate();
-
+  const hospitalFavoritesArray = hospitalFavorites.map(
+    (favorite) => favorite.hospital
+  );
   return (
     <>
       <nav className="nav">
@@ -53,7 +55,7 @@ export const UserProfile = () => {
         <div className="cards-container">
           {hospitalFavorites?.length > 0 ? (
             <HospitalCard
-              hospitalArray={hospitalFavorites}
+              hospitalArray={hospitalFavoritesArray}
               isFavoriteList={true}
             />
           ) : (

@@ -21,8 +21,8 @@ type UserDataProvider = {
   setPetDiets: (userDiets: Diet[]) => void;
   petMedications: Medication[];
   setPetMedications: (medications: Medication[]) => void;
-  hospitalFavorites: Hospital[];
-  setHospitalFavorites: (favoriteHospitals: Hospital[]) => void;
+  hospitalFavorites: HospitalFavorite[];
+  setHospitalFavorites: (favoriteHospitals: HospitalFavorite[]) => void;
   hospitalNotes: HospitalNote[];
   setHospitalNotes: (hospitalNotes: HospitalNote[]) => void;
   getUserHospitalFavorites: (useId: string) => Promise<void>;
@@ -31,7 +31,7 @@ type UserDataProvider = {
   postPet: (pet: Omit<Pet, "id">) => Promise<string>;
   postDiet: (diet: Omit<Diet, "id">) => Promise<string>;
   postMedication: (medication: Omit<Medication, "id">) => Promise<string>;
-  postHospitalFavorite: (userId: string, hospitalId: string) => Promise<string>;
+  postHospitalFavorite: (userId: number, hospitalId: number) => Promise<string>;
   postHospitalNote: (hospitalNote: Omit<HospitalNote, "id">) => Promise<string>;
   patchHospitalNote: (hospitalNote: HospitalNote) => Promise<string>;
   putDiet: (diet: Diet) => Promise<string>;
@@ -53,7 +53,9 @@ export const UserDataProvider = ({ children }: { children: ReactNode }) => {
   const [currentPet, setCurrentPet] = useState<Pet | undefined>(undefined);
   const [petDiets, setPetDiets] = useState<Diet[]>([]);
   const [petMedications, setPetMedications] = useState<Medication[]>([]);
-  const [hospitalFavorites, setHospitalFavorites] = useState<Hospital[]>([]);
+  const [hospitalFavorites, setHospitalFavorites] = useState<
+    HospitalFavorite[]
+  >([]);
   const [hospitalNotes, setHospitalNotes] = useState<HospitalNote[]>([]);
   const { user } = useAuthContext();
 
@@ -110,24 +112,27 @@ export const UserDataProvider = ({ children }: { children: ReactNode }) => {
       .then(() => toast.success("Added medication to your pet's profile"));
   };
 
-  const postHospitalFavorite = (userId: string, hospitalId: string) => {
+  const postHospitalFavorite = (userId: number, hospitalId: number) => {
     return Requests.postHospitalFavorite({
       userId: userId,
       hospitalId: hospitalId,
     })
-      .then(() => getUserHospitalFavorites(userId))
+      .then(() => Requests.getUserHospitalFavorites(userId))
+      .then((hospitalFavorites) => setHospitalFavorites(hospitalFavorites))
       .then(() => toast.success("Added hospital to your favorites list"));
   };
 
   const postHospitalNote = (hospitalNote: Omit<HospitalNote, "id">) => {
     return Requests.postHospitalNote(hospitalNote)
-      .then(() => getUserHospitalNotes(hospitalNote.userId))
+      .then(() => Requests.getUserHospitalNotes(hospitalNote.userId))
+      .then((hospitalNotes) => setHospitalNotes(hospitalNotes))
       .then(() => toast.success("Added note to selected hospital"));
   };
 
   const patchHospitalNote = (hospitalNote: HospitalNote) => {
-    return Requests.patchHospitalNote(hospitalNote)
-      .then(() => getUserHospitalNotes(hospitalNote.userId))
+    return Requests.patchHospitalNote(hospitalNote.id, hospitalNote.note)
+      .then(() => Requests.getUserHospitalNotes(hospitalNote.userId))
+      .then((hospitalNotes) => setHospitalNotes(hospitalNotes))
       .then(() => toast.success("Updated hospital note"));
   };
 
@@ -164,14 +169,20 @@ export const UserDataProvider = ({ children }: { children: ReactNode }) => {
 
   const deleteHospitalFavorite = (hospitalFavorite: HospitalFavorite) => {
     return Requests.deleteHospitalFavorite(hospitalFavorite.id)
-      .then(() => getUserHospitalFavorites(hospitalFavorite.userId))
+      .then(() => Requests.getUserHospitalFavorites(hospitalFavorite.userId))
+      .then((hospitalFavorites) => setHospitalFavorites(hospitalFavorites))
       .then(() => toast.success("Removed hospital from your favorites list"));
   };
 
   const deleteHospitalNote = (hospitalNote: HospitalNote) => {
     return Requests.deleteHospitalNote(hospitalNote.id)
-      .then(() => getUserHospitalNotes(hospitalNote.userId))
-      .then(() => toast.success("Deleted hospital note"));
+      .then(() => Requests.getUserHospitalNotes(hospitalNote.userId))
+      .then((hospitalNotes) => setHospitalNotes(hospitalNotes))
+      .then(() => toast.success("Deleted hospital note"))
+      .catch((e) => {
+        console.error(e);
+        toast.error("Unable to delete note");
+      });
   };
 
   const deletePet = (pet: Pet) => {
@@ -182,9 +193,9 @@ export const UserDataProvider = ({ children }: { children: ReactNode }) => {
 
   useEffect(() => {
     if (user) {
-      getUserPets(user.id);
-      getUserHospitalFavorites(user.id);
-      getUserHospitalNotes(user.id);
+      setUserPets(user.pets);
+      setHospitalFavorites(user.hospitalFavorites);
+      setHospitalNotes(user.hospitalNotes);
     }
     if (currentPet) {
       getPetDiets(currentPet.id);

@@ -17,6 +17,7 @@ export const HospitalCard = ({
 }) => {
   const {
     hospitalNotes,
+    hospitalFavorites,
     deleteHospitalNote,
     deleteHospitalFavorite,
     postHospitalFavorite,
@@ -24,16 +25,16 @@ export const HospitalCard = ({
   const { user } = useAuthContext();
   const [userFavorites, setUserFavorites] = useState<HospitalFavorite[]>([]);
 
-  const getUserFavorites = async (userId: string) => {
+  /*const getUserFavorites = async (userId: number) => {
     const favorites = await Requests.getUserHospitalFavorites(userId);
     setUserFavorites(favorites);
-  };
+  };*/
 
   useEffect(() => {
     if (user) {
-      getUserFavorites(user.id);
+      setUserFavorites(hospitalFavorites);
     }
-  }, [user]);
+  }, [user, hospitalFavorites]);
 
   return (
     <>
@@ -140,14 +141,14 @@ export const HospitalCard = ({
                 className="icon-btn"
                 onClick={() => {
                   if (favorite) {
-                    deleteHospitalFavorite(favorite).then(() =>
+                    deleteHospitalFavorite(favorite); /*.then(() =>
                       getUserFavorites(favorite.userId)
-                    );
+                    );*/
                   } else {
                     if (user) {
-                      postHospitalFavorite(user.id, hospital.id).then(() =>
+                      postHospitalFavorite(user.id, hospital.id); /*.then(() =>
                         getUserFavorites(user.id)
-                      );
+                      );*/
                     }
                   }
                 }}
