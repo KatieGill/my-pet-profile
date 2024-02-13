@@ -24,8 +24,8 @@ export const MedicationForm = ({
   amount: string;
   frequency: string;
   note: string | undefined;
-  petId: string;
-  medId: string | null;
+  petId: number;
+  medId: number | null;
 }) => {
   const [nameInput, setNameInput] = useState<string>(name);
   const [amountInput, setAmountInput] = useState<string>(amount);

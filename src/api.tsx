@@ -5,7 +5,6 @@ import {
   Diet,
   dietSchema,
   petSchema,
-  userSchema,
   Medication,
   medicationSchema,
   HospitalNote,
@@ -13,7 +12,6 @@ import {
   HospitalFavorite,
   hospitalFavoriteSchema,
   hospitalSchema,
-  authenticatedUserDataSchema,
   userInformationSchema,
 } from "./Types/types";
 
@@ -25,29 +23,38 @@ export const Requests = {
       body: JSON.stringify(user),
       method: "POST",
       headers: { "Content-Type": "application/json" },
+      credentials: "include",
     })
       .then((response) => {
         if (!response.ok) {
-          throw new Error("Unable to login");
+          return response.json().then((error) => {
+            throw new Error(error.message);
+          });
         } else {
           return response.json();
         }
       })
-      .then((data) => authenticatedUserDataSchema.parse(data));
+      .then((data) => userInformationSchema.parse(data));
   },
-  getLoggedInUserData: (username: string) => {
-    return fetch(`${baseUrl}/user/${username}`)
+
+  getLoggedInUserData: (userId: number) => {
+    return fetch(`${baseUrl}/user/${userId}`, {
+      credentials: "include",
+    })
       .then((response) => {
         if (!response.ok) {
-          throw new Error("Unable to get user data");
+          return response.json().then((error) => {
+            throw new Error(error.message);
+          });
         } else {
           return response.json();
         }
       })
-      .then((data) => {
-        return userInformationSchema.parse(data.userInformation);
+      .then((userInformation) => {
+        return userInformationSchema.parse(userInformation);
       });
   },
+
   postUser: (user: Omit<User, "id">) => {
     return fetch(`${baseUrl}/user`, {
       body: JSON.stringify(user),
@@ -56,60 +63,68 @@ export const Requests = {
     })
       .then((response) => {
         if (!response.ok) {
-          throw new Error("Unable to create user");
+          return response.json().then((error) => {
+            throw new Error(error.message);
+          });
         } else {
           return response.json();
         }
       })
-      .then((data) => userSchema.parse(data));
+      .then((data) => userInformationSchema.parse(data));
   },
 
   postPet: (pet: Omit<Pet, "id">) => {
-    return fetch(`${baseUrl}/pets`, {
+    return fetch(`${baseUrl}/pet`, {
       body: JSON.stringify(pet),
       method: "POST",
       headers: { "Content-Type": "application/json" },
     })
       .then((response) => {
         if (!response.ok) {
-          throw new Error("Unable to create pet");
+          return response.json().then((error) => {
+            throw new Error(error.message);
+          });
         } else {
           return response.json();
         }
       })
-      .then((data) => petSchema.parse(data));
+      .then((pet) => petSchema.parse(pet));
   },
 
   postDiet: (diet: Omit<Diet, "id">) => {
-    return fetch(`${baseUrl}/diets`, {
+    return fetch(`${baseUrl}/diet`, {
       body: JSON.stringify(diet),
       method: "POST",
       headers: { "Content-Type": "application/json" },
     })
       .then((response) => {
         if (!response.ok) {
-          throw new Error("Unable to create diet");
+          return response.json().then((error) => {
+            throw new Error(error.message);
+          });
         } else {
           return response.json();
         }
       })
-      .then((data) => dietSchema.parse(data));
+      .then((diet) => dietSchema.parse(diet));
   },
 
   postMedication: (medication: Omit<Medication, "id">) => {
-    return fetch(`${baseUrl}/medications`, {
+    return fetch(`${baseUrl}/medication`, {
       body: JSON.stringify(medication),
       method: "POST",
       headers: { "Content-Type": "application/json" },
     })
       .then((response) => {
         if (!response.ok) {
-          throw new Error("Unable to create medication");
+          return response.json().then((error) => {
+            throw new Error(error.message);
+          });
         } else {
           return response.json();
         }
       })
-      .then((data) => medicationSchema.parse(data));
+      .then((medication) => medicationSchema.parse(medication));
   },
 
   postHospitalNote: (hospitalNote: Omit<HospitalNote, "id">) => {
@@ -120,12 +135,14 @@ export const Requests = {
     })
       .then((response) => {
         if (!response.ok) {
-          throw new Error("Unable to create hospital note");
+          return response.json().then((error) => {
+            throw new Error(error.message);
+          });
         } else {
           return response.json();
         }
       })
-      .then((data) => hospitalNoteSchema.parse(data));
+      .then((hospitalNote) => hospitalNoteSchema.parse(hospitalNote));
   },
 
   postHospitalFavorite: (
@@ -138,120 +155,104 @@ export const Requests = {
     })
       .then((response) => {
         if (!response.ok) {
-          throw new Error("Unable to create hospital favorite");
+          return response.json().then((error) => {
+            throw new Error(error.message);
+          });
         } else {
           return response.json();
         }
       })
-      .then((data) => hospitalFavoriteSchema.parse(data));
+      .then((hospitalFavorite) =>
+        hospitalFavoriteSchema.parse(hospitalFavorite)
+      );
   },
 
-  getUser: (username: string) => {
-    return fetch(`${baseUrl}/users`)
-      .then((response) => {
-        if (!response) {
-          throw new Error("Unable to fetch all users");
-        } else {
-          return response.json();
-        }
-      })
-      .then((data) => z.array(userSchema).parse(data))
-      .then((users) => users.find((user) => user.username === username))
-      .then((user) => {
-        if (!user) {
-          throw new Error("Username not found");
-        } else {
-          return user;
-        }
-      });
-  },
-
-  getPets: (userId: string) => {
-    return fetch(`${baseUrl}/pets`)
+  getPets: (userId: number) => {
+    return fetch(`${baseUrl}/pet/${userId}`)
       .then((response) => {
         if (!response.ok) {
-          throw new Error("Unable to fetch all pets");
+          return response.json().then((error) => {
+            throw new Error(error.message);
+          });
         } else {
           return response.json();
         }
       })
-      .then((data) => z.array(petSchema).parse(data))
-      .then((pets) => pets.filter((pet) => pet.userId === userId))
-      .then((userPets) => userPets);
+      .then((pets) => z.array(petSchema).parse(pets));
   },
 
-  getDiets: (petId: string) => {
-    return fetch(`${baseUrl}/diets`)
+  getDiets: (petId: number) => {
+    return fetch(`${baseUrl}/diet/${petId}`)
       .then((response) => {
         if (!response.ok) {
-          throw new Error("Unable to fetch all diets");
+          return response.json().then((error) => {
+            throw new Error(error.message);
+          });
         } else {
           return response.json();
         }
       })
-      .then((data) => z.array(dietSchema).parse(data))
-      .then((diets) => diets.filter((diet) => diet.petId === petId))
-      .then((petDiets) => petDiets);
+      .then((diets) => z.array(dietSchema).parse(diets));
   },
 
-  getMedications: (petId: string) => {
-    return fetch(`${baseUrl}/medications`)
+  getMedications: (petId: number) => {
+    return fetch(`${baseUrl}/medication/${petId}`)
       .then((response) => {
         if (!response.ok) {
-          throw new Error("Unable to fetch all diets");
+          return response.json().then((error) => {
+            throw new Error(error.message);
+          });
         } else {
           return response.json();
         }
       })
-      .then((data) => z.array(medicationSchema).parse(data))
-      .then((medications) =>
-        medications.filter((medication) => medication.petId === petId)
-      )
-      .then((petMedications) => petMedications);
+      .then((medications) => z.array(medicationSchema).parse(medications));
   },
 
   getHospitals: () => {
     return fetch(`${baseUrl}/hospital`)
       .then((response) => {
         if (!response.ok) {
-          throw new Error("Unable to fetch all hospitals");
+          return response.json().then((error) => {
+            throw new Error(error.message);
+          });
         } else {
           return response.json();
         }
       })
-      .then((data) => z.array(hospitalSchema).parse(data.allHospitals));
+      .then((allHospitals) => z.array(hospitalSchema).parse(allHospitals));
   },
 
   getUserHospitalFavorites: (userId: number) => {
     return fetch(`${baseUrl}/hospital-favorite/${userId}`)
       .then((response) => {
         if (!response.ok) {
-          throw new Error("Unable to fetch all hospital favorites");
+          return response.json().then((error) => {
+            throw new Error(error.message);
+          });
         } else {
           return response.json();
         }
       })
-      .then((data) => z.array(hospitalFavoriteSchema).parse(data))
-      .then((favorites) =>
-        favorites.filter((favorites) => favorites.userId === userId)
-      )
-      .then((data) => z.array(hospitalFavoriteSchema).parse(data))
-      .then((hospitalFavorites) => hospitalFavorites);
+      .then((hospitalFavorites) =>
+        z.array(hospitalFavoriteSchema).parse(hospitalFavorites)
+      );
   },
 
   getUserHospitalNotes: (userId: number) => {
     return fetch(`${baseUrl}/hospital-note/${userId}`)
       .then((response) => {
         if (!response.ok) {
-          throw new Error("Unable to fetch all hospital notes");
+          return response.json().then((error) => {
+            throw new Error(error.message);
+          });
         } else {
           return response.json();
         }
       })
-      .then((data) => z.array(hospitalNoteSchema).parse(data))
-      .then((notes) => notes.filter((note) => note.userId === userId))
-      .then((data) => z.array(hospitalNoteSchema).parse(data))
-      .then((userNotes) => userNotes);
+      .then((hospitalNotes) =>
+        z.array(hospitalNoteSchema).parse(hospitalNotes)
+      );
   },
 
   patchHospitalNote: (noteId: number, note: string) => {
@@ -262,16 +263,56 @@ export const Requests = {
     })
       .then((response) => {
         if (!response.ok) {
-          throw new Error("Unable to edit note");
+          response.json().then((error) => {
+            throw new Error(error.message);
+          });
         } else {
           return response.json();
         }
       })
-      .then((data) => hospitalNoteSchema.parse(data));
+      .then((hospitalNote) => hospitalNoteSchema.parse(hospitalNote));
+  },
+
+  patchUsername: (username: string, userId: number) => {
+    return fetch(`${baseUrl}/user/update-username/${userId}`, {
+      body: JSON.stringify({ username: username }),
+      method: "PATCH",
+      headers: { "Content-Type": "application/json" },
+      credentials: "include",
+    })
+      .then((response) => {
+        if (!response.ok) {
+          return response.json().then((error) => {
+            throw new Error(error.message);
+          });
+        } else {
+          return response.json();
+        }
+      })
+      .then((data) => userInformationSchema.parse(data));
+  },
+
+  patchPassword: (password: string, userId: number) => {
+    return fetch(`${baseUrl}/user/update-password/${userId}`, {
+      body: JSON.stringify({ password: password }),
+      method: "PATCH",
+      headers: { "Content-Type": "application/json" },
+      credentials: "include",
+    })
+      .then((response) => {
+        if (!response.ok) {
+          return response.json().then((error) => {
+            throw new Error(error.message);
+          });
+        } else {
+          return response.json();
+        }
+      })
+      .then((data) => userInformationSchema.parse(data));
   },
 
   putDiet: (diet: Diet) => {
-    return fetch(`${baseUrl}/diets/${diet.id}`, {
+    return fetch(`${baseUrl}/diet/${diet.id}`, {
       body: JSON.stringify({
         petId: diet.petId,
         name: diet.name,
@@ -283,16 +324,18 @@ export const Requests = {
     })
       .then((response) => {
         if (!response.ok) {
-          throw new Error("Unable to update diet");
+          return response.json().then((error) => {
+            throw new Error(error.message);
+          });
         } else {
           return response.json();
         }
       })
-      .then((data) => dietSchema.parse(data));
+      .then((diet) => dietSchema.parse(diet));
   },
 
   putMedication: (medication: Medication) => {
-    return fetch(`${baseUrl}/medications/${medication.id}`, {
+    return fetch(`${baseUrl}/medication/${medication.id}`, {
       body: JSON.stringify({
         petId: medication.petId,
         name: medication.name,
@@ -305,16 +348,18 @@ export const Requests = {
     })
       .then((response) => {
         if (!response.ok) {
-          throw new Error("Unable to update medication");
+          return response.json().then((error) => {
+            throw new Error(error.message);
+          });
         } else {
           return response.json();
         }
       })
-      .then((data) => medicationSchema.parse(data));
+      .then((medication) => medicationSchema.parse(medication));
   },
 
   putPet: (pet: Pet) => {
-    return fetch(`${baseUrl}/pets/${pet.id}`, {
+    return fetch(`${baseUrl}/pet/${pet.id}`, {
       body: JSON.stringify({
         userId: pet.userId,
         name: pet.name,
@@ -328,30 +373,40 @@ export const Requests = {
     })
       .then((response) => {
         if (!response.ok) {
-          throw new Error("Unable to update pet");
+          return response.json().then((error) => {
+            throw new Error(error.message);
+          });
         } else {
           return response.json();
         }
       })
-      .then((data) => petSchema.parse(data));
+      .then((pet) => petSchema.parse(pet));
   },
 
-  deleteDiet: (dietId: string) => {
-    return fetch(`${baseUrl}/diets/${dietId}`, {
+  deleteDiet: (dietId: number) => {
+    return fetch(`${baseUrl}/diet/${dietId}`, {
       method: "DELETE",
     }).then((response) => {
       if (!response.ok) {
-        throw new Error("Unable to delete diet");
+        return response.json().then((error) => {
+          throw new Error(error.message);
+        });
+      } else {
+        return response.json();
       }
     });
   },
 
-  deleteMedication: (medicationId: string) => {
-    return fetch(`${baseUrl}/medications/${medicationId}`, {
+  deleteMedication: (medicationId: number) => {
+    return fetch(`${baseUrl}/medication/${medicationId}`, {
       method: "DELETE",
     }).then((response) => {
       if (!response.ok) {
-        throw new Error("Unable to delete medication");
+        return response.json().then((error) => {
+          throw new Error(error.message);
+        });
+      } else {
+        return response.json();
       }
     });
   },
@@ -361,7 +416,11 @@ export const Requests = {
       method: "DELETE",
     }).then((response) => {
       if (!response.ok) {
-        throw new Error("Unable to remove favorite");
+        return response.json().then((error) => {
+          throw new Error(error.message);
+        });
+      } else {
+        return response.json();
       }
     });
   },
@@ -371,17 +430,40 @@ export const Requests = {
       method: "DELETE",
     }).then((response) => {
       if (!response.ok) {
-        throw new Error("Unable to delete note");
+        return response.json().then((error) => {
+          throw new Error(error.message);
+        });
+      } else {
+        return response.json();
       }
     });
   },
 
-  deletePet: (petId: string) => {
-    return fetch(`${baseUrl}/pets/${petId}`, {
+  deletePet: (petId: number) => {
+    return fetch(`${baseUrl}/pet/${petId}`, {
       method: "DELETE",
     }).then((response) => {
       if (!response.ok) {
-        throw new Error("Unable to delete pet");
+        return response.json().then((error) => {
+          throw new Error(error.message);
+        });
+      } else {
+        return response.json();
+      }
+    });
+  },
+
+  deleteUser: (userId: number) => {
+    return fetch(`${baseUrl}/user/${userId}`, {
+      method: "DELETE",
+      credentials: "include",
+    }).then((response) => {
+      if (!response.ok) {
+        return response.json().then((error) => {
+          throw new Error(error.message);
+        });
+      } else {
+        return response.json();
       }
     });
   },

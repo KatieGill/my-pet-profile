@@ -1,13 +1,10 @@
 import { useState } from "react";
-import { calculateBirthday } from "../../../utils/functions";
 
 export const ApproximateAgeInput = ({
   setDobInput,
-  dobInput,
   setShowApproximateAgeInput,
 }: {
   setDobInput: (dobInput: Date) => void;
-  dobInput: Date;
   setShowApproximateAgeInput: (boolean: boolean) => void;
 }) => {
   const [yearsInput, setYearsInput] = useState<number>(0);
@@ -39,8 +36,6 @@ export const ApproximateAgeInput = ({
     const birthday = `${birthYear}-${birthMonth}-${birthDate}`;
     setDobInput(birthday as unknown as Date);
   };
-
-  const birthday = calculateBirthday(dobInput);
 
   return (
     <>
@@ -92,19 +87,19 @@ export const ApproximateAgeInput = ({
       <div className="form-field-container age-label">
         <label htmlFor="age-days">days</label>
       </div>
-      {dobInput ? (
-        <div className="form-field-container calculated-birthday-display">
-          Birthday: {birthday}
-        </div>
-      ) : (
-        ""
-      )}
+
+      <div className="form-field-container calculated-birthday-display">
+        Enter your pet's approximate age in years, months or days. Then click
+        'calculate birthday'.
+      </div>
+
       <div className="form-field-container calculate-birthday-btn">
         <button
           className="btn"
           onClick={(e) => {
             e.preventDefault();
             getBirthday();
+            setShowApproximateAgeInput(false);
           }}
         >
           Calculate birthday

@@ -29,8 +29,7 @@ export const LoginForm = () => {
       </div>
       <h2>Login</h2>
       <form
-        id="login-form"
-        className="form-grid"
+        className="form-grid password-form"
         onSubmit={(e) => {
           e.preventDefault();
           login({

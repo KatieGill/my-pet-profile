@@ -53,7 +53,10 @@ export const HospitalNoteForm = ({
                       setNoteInput("");
                       navigate(-1);
                     })
-                    .catch(() => toast.error("Unable to edit note"));
+                    .catch((e) => {
+                      console.error(e);
+                      toast.error("Unable to edit note");
+                    });
               } else {
                 postHospitalNote({
                   userId: user.id,
@@ -64,7 +67,10 @@ export const HospitalNoteForm = ({
                     setNoteInput("");
                     navigate(-1);
                   })
-                  .catch(() => toast.error("Unable to create note"));
+                  .catch((e) => {
+                    console.error(e);
+                    toast.error("Unable to create note");
+                  });
               }
             }
           }

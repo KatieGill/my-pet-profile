@@ -7,6 +7,11 @@ export const userSchema = z.object({
   password: z.string(),
 });
 
+export const userInformationSchema = z.object({
+  id: z.number(),
+  username: z.string(),
+});
+
 export const petSchema = z.object({
   id: z.number(),
   userId: z.number(),
@@ -66,19 +71,4 @@ export type HospitalNote = z.infer<typeof hospitalNoteSchema>;
 export type HospitalFavorite = z.infer<typeof hospitalFavoriteSchema>;
 export type Species = z.infer<typeof speciesSchema>;
 export type Breed = z.infer<typeof breedSchema>;
-
-export const userInformationSchema = z.object({
-  id: z.number(),
-  username: z.string(),
-  pets: z.array(petSchema),
-  hospitalFavorites: z.array(hospitalFavoriteSchema),
-  hospitalNotes: z.array(hospitalNoteSchema),
-});
-
-export const authenticatedUserDataSchema = z.object({
-  token: z.string(),
-  userInformation: userInformationSchema,
-});
-
-export type AuthenticatedUserData = z.infer<typeof authenticatedUserDataSchema>;
 export type UserInformation = z.infer<typeof userInformationSchema>;

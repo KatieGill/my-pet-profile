@@ -160,11 +160,11 @@ form i {
 }
 
 .enter-birthday-button {
-  grid-column: 4/6;
+  grid-column: 5/7;
 }
 
 .calculated-birthday-display {
-  grid-column: 3/6;
+  grid-column: 3/7;
 }
 
 .enter-birthday-button,
@@ -173,7 +173,7 @@ form i {
 }
 
 .calculate-birthday-btn {
-  grid-column: 2/4;
+  grid-column: 3/5;
   justify-content: right;
 }
 
@@ -187,7 +187,7 @@ form i {
   }
   .image-preview {
     grid-column: 3/7;
-    grid-row: 9/13;
+    grid-row: 10/14;
   }
   .show-approximate-age {
     grid-column: 2/9;
@@ -205,7 +205,8 @@ form i {
     grid-row: 6/7;
   }
   .calculated-birthday-display {
-    grid-column: 5/9;
+    grid-column: 1/9;
+    grid-row: 9/10;
   }
   .pet-form-submit {
     justify-content: space-evenly;
@@ -219,17 +220,14 @@ form i {
 }
 
 @media screen and (max-width: 640px) {
-  #create-login-form .form-grid,
-  #login-form .form-grid {
+  .password-form .form-grid {
     font-size: 1.5rem;
   }
-  #create-login-form .form-label,
-  #login-form .form-label {
+  .password-form .form-label {
     grid-column: 1/4;
     justify-content: left;
   }
-  #create-login-form .form-input,
-  #login-form .form-input {
+  .password-form .form-input {
     grid-column: 1/5;
   }
   .show-password-icon {
@@ -254,8 +252,7 @@ form i {
   .form-container {
     padding: 20px;
   }
-  #create-login-form .form-submit,
-  #login-form .form-submit {
+  .password-form .form-submit .form-submit {
     grid-column: 2/4;
   }
   textarea {
@@ -285,7 +282,10 @@ form i {
     justify-content: left;
   }
   .image-preview {
-    grid-row: 15/19;
+    grid-row: 14/18;
+  }
+  .calculated-birthday-display {
+    grid-row: 13/14;
   }
   .age-input {
     grid-column: 2/4;
@@ -310,22 +310,18 @@ form i {
 }
 
 @media screen and (max-width: 360px) {
-  #create-login-form .form-container,
-  #login-form .form-container {
+  .password-form .form-container {
     display: flex;
     flex-direction: column;
   }
-  #create-login-form .form-field-container,
-  #login-form .form-field-container {
+  .password-form .form-field-container {
     justify-content: left;
   }
-  #create-login-form .form-submit,
-  #login-form .form-submit {
+  .password-form .form-submit {
     grid-column: 1/5;
     justify-content: center;
   }
-  #create-login-form .form-submit input,
-  #login-form .form-submit input {
+  .password-form .form-submit input {
     font-size: 1rem;
   }
   .btn {

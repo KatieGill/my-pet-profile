@@ -22,8 +22,8 @@ export const DietForm = ({
   name: string;
   amount: string;
   frequency: string;
-  petId: string;
-  dietId: string | null;
+  petId: number;
+  dietId: number | null;
 }) => {
   const [nameInput, setNameInput] = useState(name);
   const [amountInput, setAmountInput] = useState(amount);

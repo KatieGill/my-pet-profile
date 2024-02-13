@@ -2,8 +2,7 @@
 
 - Run `npm i` to install all dependencies
 - Run `npm run dev` to run the project
-- Run `npm run serve` to run the server
-- Run `npm run seed` to seed the server
+
 
 # React + TypeScript + Vite
 

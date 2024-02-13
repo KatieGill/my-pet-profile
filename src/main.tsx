@@ -22,6 +22,7 @@ import { ConfirmDelete } from "./Components/PetProfile/components/ConfirmDelete.
 import { EditPet } from "./Components/PetProfile/components/EditPet.tsx";
 import { ProtectedRoute } from "./ProtectedRoute.tsx";
 import { ErrorElement } from "./ErrorElement.tsx";
+import { EditUser } from "./Components/UserProfile/components/EditUser.tsx";
 
 const router = createBrowserRouter([
   { path: "/", element: <App />, errorElement: <ErrorElement /> },
@@ -122,7 +123,7 @@ const router = createBrowserRouter([
     errorElement: <ErrorElement />,
   },
   {
-    path: "/delete-pet-profile",
+    path: "/delete-profile",
     element: (
       <ProtectedRoute>
         <ConfirmDelete />
@@ -138,6 +139,14 @@ const router = createBrowserRouter([
       </ProtectedRoute>
     ),
     errorElement: <ErrorElement />,
+  },
+  {
+    path: "/edit-user",
+    element: (
+      <ProtectedRoute>
+        <EditUser />
+      </ProtectedRoute>
+    ),
   },
 ]);
 

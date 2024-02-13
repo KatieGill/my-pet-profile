@@ -7,12 +7,13 @@ import { Hospital, HospitalFavorite } from "../../../Types/types";
 import { getSearchLocation } from "../../../utils/functions";
 import { useEffect, useState } from "react";
 import { Requests } from "../../../api";
+import toast from "react-hot-toast";
 
 export const HospitalCard = ({
   hospitalArray,
   isFavoriteList,
 }: {
-  hospitalArray: Hospital[];
+  hospitalArray: (Hospital | undefined)[];
   isFavoriteList: boolean;
 }) => {
   const {
@@ -112,7 +113,10 @@ export const HospitalCard = ({
                       <button
                         className="icon-btn"
                         onClick={() => {
-                          deleteHospitalNote(note);
+                          deleteHospitalNote(note).catch((e) => {
+                            console.error(e);
+                            toast.error("Unable to delete hospital note");
+                          });
                         }}
                       >
                         <i
@@ -141,14 +145,18 @@ export const HospitalCard = ({
                 className="icon-btn"
                 onClick={() => {
                   if (favorite) {
-                    deleteHospitalFavorite(favorite); /*.then(() =>
-                      getUserFavorites(favorite.userId)
-                    );*/
+                    deleteHospitalFavorite(favorite).catch((e) => {
+                      console.error(e);
+                      toast.error(
+                        "Unable to delete hospital from favorites list"
+                      );
+                    });
                   } else {
                     if (user) {
-                      postHospitalFavorite(user.id, hospital.id); /*.then(() =>
-                        getUserFavorites(user.id)
-                      );*/
+                      postHospitalFavorite(user.id, hospital.id).catch((e) => {
+                        console.error(e);
+                        toast.error("Unable to add hospital to favorites list");
+                      });
                     }
                   }
                 }}

@@ -17,18 +17,34 @@ export const UserProfile = () => {
         <div className="logo-small">
           <img src="/assets/logo.png" alt="logo" />
         </div>
-        <button
-          className="btn"
-          onClick={() => {
-            logout();
-            navigate("/");
-          }}
-        >
-          <span className="navigation-title">Logout</span>
-          <span className="navigation-icon">
-            <i className="fa-solid fa-right-from-bracket" title="logout"></i>
-          </span>
-        </button>
+        <div>
+          <button
+            className="btn"
+            onClick={() => {
+              navigate("/edit-user");
+            }}
+          >
+            <span className="navigation-title">Edit Profile</span>
+            <span className="navigation-icon">
+              <i
+                className="fa-regular fa-pen-to-square"
+                title="edit profile"
+              ></i>
+            </span>
+          </button>
+          <button
+            className="btn"
+            onClick={() => {
+              logout();
+              navigate("/");
+            }}
+          >
+            <span className="navigation-title">Logout</span>
+            <span className="navigation-icon">
+              <i className="fa-solid fa-right-from-bracket" title="logout"></i>
+            </span>
+          </button>
+        </div>
       </nav>
       <h2>Your Pet Profiles</h2>
       <div>Click on a pet to view their profile</div>

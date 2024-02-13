@@ -12,7 +12,7 @@ export const EditPet = () => {
     <>
       <div className="form-container">
         <div className="btn cards-nav delete-pet">
-          <Link to="/delete-pet-profile" state={{ pet }}>
+          <Link to="/delete-profile" state={{ pet }}>
             <span className="navigation-title"> Delete Pet Profile</span>
             <span className="navigation-icon">
               <i className="fa-solid fa-trash" title="delete pet profile"></i>

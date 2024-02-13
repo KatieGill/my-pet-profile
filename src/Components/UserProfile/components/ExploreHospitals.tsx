@@ -3,13 +3,18 @@ import { Requests } from "../../../api";
 import { Hospital } from "../../../Types/types";
 import { useNavigate } from "react-router-dom";
 import { HospitalCard } from "./HospitalCard";
+import toast from "react-hot-toast";
 
 export const ExploreHospitals = () => {
   const [allHospitals, setAllHospitals] = useState<Hospital[]>([]);
   const navigate = useNavigate();
-  const getAllHospitals = async () => {
-    const allHospitals = await Requests.getHospitals();
-    setAllHospitals(allHospitals);
+  const getAllHospitals = () => {
+    return Requests.getHospitals()
+      .then((allHospitals) => setAllHospitals(allHospitals))
+      .catch((e) => {
+        console.error(e);
+        toast.error("Unable to display hospitals");
+      });
   };
 
   useEffect(() => {

@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
 import { useUserDataContext } from "../../../Providers/UseContext";
 import { Diet } from "../../../Types/types";
+import toast from "react-hot-toast";
 
 export const DietCard = ({ dietArray }: { dietArray: Diet[] }) => {
   const { deleteDiet } = useUserDataContext();
@@ -32,7 +33,10 @@ export const DietCard = ({ dietArray }: { dietArray: Diet[] }) => {
               <button
                 className="icon-btn"
                 onClick={() => {
-                  deleteDiet(diet);
+                  deleteDiet(diet).catch((e) => {
+                    console.error(e);
+                    toast.error("Unable to delete diet");
+                  });
                 }}
               >
                 <i className="fa-solid fa-trash" title="delete diet"></i>

@@ -1,18 +1,16 @@
 import "../forms.css";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useAuthContext } from "../Providers/UseContext";
 import toast from "react-hot-toast";
 import { Link, useNavigate } from "react-router-dom";
 import {
   arePasswordsValid,
   isPasswordValid,
-  isUsernameAvailable,
   isUsernameValid,
 } from "../utils/validations";
 import { ErrorMessage } from "../ErrorMessage";
 import {
   usernameError,
-  usernameNotAvailableError,
   passwordsMatchError,
   passwordsLengthError,
 } from "../utils/errorMessages";
@@ -28,14 +26,9 @@ export const CreateLoginForm = () => {
   const [showPassword, setShowPassword] = useState<"text" | "password">(
     "password"
   );
+  const [usernameNotAvailableError, setUsernameNotAvailableError] =
+    useState<string>("");
   const navigate = useNavigate();
-
-  const usernameAvailable = async (usernameInput: string) => {
-    const available = await isUsernameAvailable(usernameInput);
-    setUsernameIsAvailable(available);
-  };
-
-  usernameAvailable(usernameInput);
 
   const passwordsAreValid = arePasswordsValid(
     passwordInput,
@@ -51,6 +44,13 @@ export const CreateLoginForm = () => {
   const shouldShowUsernameNotAvailableError =
     !usernameIsAvailable && shouldShowErrorMessage;
 
+  useEffect(() => {
+    const resetUsernameIsAvailable = () => {
+      if (usernameInput === "") setUsernameIsAvailable(true);
+    };
+    resetUsernameIsAvailable();
+  }, [usernameInput]);
+
   return (
     <div className="form-container">
       <div className="btn form-home-btn">
@@ -63,8 +63,7 @@ export const CreateLoginForm = () => {
       </div>
       <h2>Welcome New User!</h2>
       <form
-        id="create-login-form"
-        className="form-grid"
+        className="form-grid password-form"
         onSubmit={(e) => {
           e.preventDefault();
           if (!usernameIsValid || !passwordsAreValid || !usernameIsAvailable) {
@@ -76,8 +75,14 @@ export const CreateLoginForm = () => {
             })
               .then(() => navigate("/login"))
               .catch((e: Error) => {
-                toast.error("Unable to register user");
-                console.error(e);
+                if (e.message === "Username already exists") {
+                  setShouldShowErrorMessage(true);
+                  setUsernameIsAvailable(false);
+                  setUsernameNotAvailableError(e.message);
+                } else {
+                  toast.error("Unable to register user");
+                  console.error(e);
+                }
               });
           }
         }}

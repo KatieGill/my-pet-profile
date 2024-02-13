@@ -1,7 +1,5 @@
 export const passwordsMatchError = "Passwords do not match.";
 export const usernameError = "Username must be at least 2 characters long";
-export const usernameNotAvailableError =
-  "Username already exists. Login or choose a new username.";
 export const passwordsLengthError =
   "Password must be at least 5 characters long";
 export const dietNameErrorMessage = "Enter a diet name";

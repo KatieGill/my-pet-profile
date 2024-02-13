@@ -36,7 +36,7 @@ export const PetForm = ({
   breed: Breed;
   image: string;
   dob: Date;
-  petId: string | null;
+  petId: number | null;
 }) => {
   const { user } = useAuthContext();
   const { postPet, putPet } = useUserDataContext();
@@ -48,7 +48,8 @@ export const PetForm = ({
   const [shouldShowErrorMessage, setShouldShouldErrorMessage] =
     useState<boolean>(false);
   const [showApproximateAgeInput, setShowApproximateAgeInput] =
-    useState<boolean>(isEdit);
+    useState<boolean>(false);
+  const [dateInputType, setDateInputType] = useState<"text" | "date">("text");
   const navigate = useNavigate();
   const petNameIsValid = isInputValid(nameInput);
   const imageIsSelected = isImageSelected(imageInput);
@@ -56,6 +57,17 @@ export const PetForm = ({
   const shouldShowPetNameError = !petNameIsValid && shouldShowErrorMessage;
   const shouldShowImageError = !imageIsSelected && shouldShowErrorMessage;
   const shouldShowDobError = !dobIsValid && shouldShowErrorMessage;
+
+  const getBirthdayPlaceholder = (dob: Date) => {
+    if (dob === ("" as unknown as Date)) return "MM/DD/YYYY";
+    const date = new Date(dob);
+    const month = date.getMonth() + 1;
+    const day = date.getDate();
+    const year = date.getFullYear();
+    return `${month}/${day}/${year}`;
+  };
+
+  const birthdayPlaceholder = getBirthdayPlaceholder(dobInput);
 
   return (
     <>
@@ -109,7 +121,7 @@ export const PetForm = ({
                 })
                   .then(() => navigate(-1))
                   .catch((e: Error) => {
-                    toast.error("Unable to add pet");
+                    toast.error("Unable to create pet");
                     console.error(e);
                   });
               }
@@ -212,7 +224,10 @@ export const PetForm = ({
             </div>
             <div className="form-field-container pet-form-input">
               <input
-                type="date"
+                type={dateInputType}
+                placeholder={birthdayPlaceholder}
+                onFocus={() => setDateInputType("date")}
+                onBlur={() => setDateInputType("text")}
                 name="dob"
                 onChange={(e) => {
                   setDobInput(new Date(`${e.target.value} GMT-0500`));
@@ -225,7 +240,6 @@ export const PetForm = ({
         {showApproximateAgeInput ? (
           <ApproximateAgeInput
             setDobInput={setDobInput}
-            dobInput={dobInput}
             setShowApproximateAgeInput={setShowApproximateAgeInput}
           />
         ) : (

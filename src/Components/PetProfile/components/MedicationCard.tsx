@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
 import { useUserDataContext } from "../../../Providers/UseContext";
 import { Medication } from "../../../Types/types";
+import toast from "react-hot-toast";
 export const MedicationCard = ({
   medicationArray,
 }: {
@@ -42,7 +43,10 @@ export const MedicationCard = ({
               <button
                 className="icon-btn"
                 onClick={() => {
-                  deleteMedication(medication);
+                  deleteMedication(medication).catch((e) => {
+                    console.error(e);
+                    toast.error("Unable to delete medication");
+                  });
                 }}
               >
                 <i className="fa-solid fa-trash" title="delete medication"></i>
