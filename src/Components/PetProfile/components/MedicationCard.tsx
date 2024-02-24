@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import { useUserDataContext } from "../../../Providers/UseContext";
+import { usePetDataContext } from "../../../Providers/UseContext";
 import { Medication } from "../../../Types/types";
 import toast from "react-hot-toast";
 export const MedicationCard = ({
@@ -7,7 +7,7 @@ export const MedicationCard = ({
 }: {
   medicationArray: Medication[];
 }) => {
-  const { deleteMedication } = useUserDataContext();
+  const { deleteMedication } = usePetDataContext();
   return (
     <>
       {medicationArray.map((medication) => {
@@ -33,7 +33,7 @@ export const MedicationCard = ({
             </div>
             <div className="card-btns">
               <div className="icon-btn">
-                <Link to="/edit-medication" state={{ medication }}>
+                <Link to={`edit-medication/${medication.id}`}>
                   <i
                     className="fa-regular fa-pen-to-square"
                     title="edit medication"

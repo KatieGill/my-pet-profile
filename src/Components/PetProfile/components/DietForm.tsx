@@ -7,7 +7,7 @@ import {
   dietAmountErrorMessage,
   dietFrequencyErrorMessage,
 } from "../../../utils/errorMessages";
-import { useUserDataContext } from "../../../Providers/UseContext";
+import { usePetDataContext } from "../../../Providers/UseContext";
 import toast from "react-hot-toast";
 
 export const DietForm = ({
@@ -31,7 +31,7 @@ export const DietForm = ({
   const [shouldShowErrorMessage, setShouldShowErrorMessage] =
     useState<boolean>(false);
   const [screenWidth, setScreenWidth] = useState<number | undefined>(undefined);
-  const { postDiet, putDiet } = useUserDataContext();
+  const { postDiet, putDiet } = usePetDataContext();
   const navigate = useNavigate();
   const nameIsValid = isInputValid(nameInput);
   const amountIsValid = isInputValid(amountInput);
@@ -60,35 +60,35 @@ export const DietForm = ({
         e.preventDefault();
         if (!nameIsValid || !amountIsValid || !frequencyIsValid) {
           setShouldShowErrorMessage(true);
-        } else {
-          if (isEdit) {
-            if (dietId) {
-              putDiet({
-                id: dietId,
-                petId: petId,
-                name: nameInput,
-                amount: amountInput,
-                frequency: frequencyInput,
-              })
-                .then(() => navigate(-1))
-                .catch((e: Error) => {
-                  toast.error("Unable to edit diet");
-                  console.error(e);
-                });
-            }
-          } else {
-            postDiet({
-              name: nameInput,
-              petId: petId,
-              amount: amountInput,
-              frequency: frequencyInput,
-            })
-              .then(() => navigate(-1))
-              .catch((e: Error) => {
-                toast.error("Unable to create diet");
-                console.error(e);
-              });
-          }
+          return;
+        }
+        if (!isEdit) {
+          postDiet({
+            name: nameInput,
+            petId: petId,
+            amount: amountInput,
+            frequency: frequencyInput,
+          })
+            .then(() => navigate(-1))
+            .catch((e: Error) => {
+              toast.error("Unable to create diet");
+              console.error(e);
+            });
+          return;
+        }
+        if (dietId) {
+          putDiet({
+            id: dietId,
+            petId: petId,
+            name: nameInput,
+            amount: amountInput,
+            frequency: frequencyInput,
+          })
+            .then(() => navigate(-1))
+            .catch((e: Error) => {
+              toast.error("Unable to edit diet");
+              console.error(e);
+            });
         }
       }}
     >

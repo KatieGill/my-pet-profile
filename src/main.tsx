@@ -2,7 +2,12 @@ import React from "react";
 import ReactDOM from "react-dom/client";
 import App from "./App.tsx";
 import "./styles.css";
-import { RouterProvider, createBrowserRouter } from "react-router-dom";
+import {
+  Route,
+  RouterProvider,
+  createBrowserRouter,
+  createRoutesFromElements,
+} from "react-router-dom";
 import { CreateLoginForm } from "./Components/CreateLoginForm.tsx";
 import { LoginForm } from "./Components/LoginForm.tsx";
 import { Toaster } from "react-hot-toast";
@@ -18,144 +23,114 @@ import { AddHospitalNote } from "./Components/UserProfile/components/AddHospital
 import { EditHospitalNote } from "./Components/UserProfile/components/EditHospitalNote.tsx";
 import { EditDiet } from "./Components/PetProfile/components/EditDiet.tsx";
 import { EditMedication } from "./Components/PetProfile/components/EditMedication.tsx";
-import { ConfirmDelete } from "./Components/PetProfile/components/ConfirmDelete.tsx";
+import { ConfirmDeletePet } from "./Components/PetProfile/components/ConfirmDeletePet.tsx";
 import { EditPet } from "./Components/PetProfile/components/EditPet.tsx";
-import { ProtectedRoute } from "./ProtectedRoute.tsx";
-import { ErrorElement } from "./ErrorElement.tsx";
+import { ProtectedRouteUser } from "./Components/UserProfile/ProtectedRouteUser.tsx";
+import { PageNotFound } from "./PageNotFound.tsx";
 import { EditUser } from "./Components/UserProfile/components/EditUser.tsx";
+import { RootLayout } from "./Components/RootLayout.tsx";
+import { PetDataProvider } from "./Providers/PetDataProvider.tsx";
+import {
+  hospitalNoteLoader,
+  petDietLoader,
+  petMedicationLoader,
+  petProfileLoader,
+  petProtectedRouteLoader,
+  userProtectedRouteLoader,
+} from "./loaderFunctions.ts";
+import { ConfirmDeleteUser } from "./Components/UserProfile/components/ConfirmDeleteUser.tsx";
+import { ProtectedRoutePet } from "./Components/PetProfile/ProtectedRoutePet.tsx";
+import { UserDoesNotExist } from "./UserDoesNotExist.tsx";
+import { PetDoesNotExist } from "./PetDoesNotExist.tsx";
 
-const router = createBrowserRouter([
-  { path: "/", element: <App />, errorElement: <ErrorElement /> },
-  {
-    path: "/create-login",
-    element: <CreateLoginForm />,
-    errorElement: <ErrorElement />,
-  },
-  { path: "/login", element: <LoginForm />, errorElement: <ErrorElement /> },
-  {
-    path: "/user-profile",
-    element: (
-      <ProtectedRoute>
-        <UserProfile />
-      </ProtectedRoute>
-    ),
-    errorElement: <ErrorElement />,
-  },
-  {
-    path: "/add-pet",
-    element: (
-      <ProtectedRoute>
-        <AddPet />
-      </ProtectedRoute>
-    ),
-    errorElement: <ErrorElement />,
-  },
-  {
-    path: "/pet-profile",
-    element: (
-      <ProtectedRoute>
-        <PetProfile />
-      </ProtectedRoute>
-    ),
-    errorElement: <ErrorElement />,
-  },
-  {
-    path: "/add-diet",
-    element: (
-      <ProtectedRoute>
-        <AddDiet />
-      </ProtectedRoute>
-    ),
-    errorElement: <ErrorElement />,
-  },
-  {
-    path: "/add-medication",
-    element: (
-      <ProtectedRoute>
-        <AddMedication />
-      </ProtectedRoute>
-    ),
-    errorElement: <ErrorElement />,
-  },
-  {
-    path: "/vet-hospitals",
-    element: (
-      <ProtectedRoute>
-        <ExploreHospitals />
-      </ProtectedRoute>
-    ),
-    errorElement: <ErrorElement />,
-  },
-  {
-    path: "/add-hospital-note",
-    element: (
-      <ProtectedRoute>
-        <AddHospitalNote />
-      </ProtectedRoute>
-    ),
-    errorElement: <ErrorElement />,
-  },
-  {
-    path: "/edit-hospital-note",
-    element: (
-      <ProtectedRoute>
-        <EditHospitalNote />
-      </ProtectedRoute>
-    ),
-    errorElement: <ErrorElement />,
-  },
-  {
-    path: "/edit-diet",
-    element: (
-      <ProtectedRoute>
-        <EditDiet />
-      </ProtectedRoute>
-    ),
-    errorElement: <ErrorElement />,
-  },
-  {
-    path: "/edit-medication",
-    element: (
-      <ProtectedRoute>
-        <EditMedication />
-      </ProtectedRoute>
-    ),
-    errorElement: <ErrorElement />,
-  },
-  {
-    path: "/delete-profile",
-    element: (
-      <ProtectedRoute>
-        <ConfirmDelete />
-      </ProtectedRoute>
-    ),
-    errorElement: <ErrorElement />,
-  },
-  {
-    path: "/edit-pet",
-    element: (
-      <ProtectedRoute>
-        <EditPet />
-      </ProtectedRoute>
-    ),
-    errorElement: <ErrorElement />,
-  },
-  {
-    path: "/edit-user",
-    element: (
-      <ProtectedRoute>
-        <EditUser />
-      </ProtectedRoute>
-    ),
-  },
-]);
+const router = createBrowserRouter(
+  createRoutesFromElements(
+    <Route path="/" element={<RootLayout />}>
+      <Route index element={<App />} />
+      <Route path="/create-login" element={<CreateLoginForm />} />
+      <Route path="/login" element={<LoginForm />} />
+      <Route
+        path="/user-profile/:username"
+        element={
+          <ProtectedRouteUser>
+            <RootLayout />
+          </ProtectedRouteUser>
+        }
+        loader={userProtectedRouteLoader}
+        errorElement={<UserDoesNotExist />}
+      >
+        <Route index element={<UserProfile />} />
+        <Route path="edit-user" element={<RootLayout />}>
+          <Route index element={<EditUser />} />
+          <Route path="delete-user-profile" element={<ConfirmDeleteUser />} />
+        </Route>
+
+        <Route path="add-pet" element={<AddPet />} />
+        <Route path="vet-hospitals" element={<ExploreHospitals />} />
+        <Route path="add-hospital-note" element={<AddHospitalNote />} />
+        <Route
+          path="edit-hospital-note/:hospitalNoteId"
+          element={<EditHospitalNote />}
+          loader={hospitalNoteLoader}
+        />
+        <Route
+          path="pet-profile/:petId"
+          element={
+            <ProtectedRoutePet>
+              <RootLayout />
+            </ProtectedRoutePet>
+          }
+          loader={petProtectedRouteLoader}
+          errorElement={<PetDoesNotExist />}
+        >
+          <Route index element={<PetProfile />} loader={petProfileLoader} />
+          <Route
+            path="edit-pet"
+            element={<RootLayout />}
+            loader={petProfileLoader}
+          >
+            <Route index element={<EditPet />} loader={petProfileLoader} />
+            <Route
+              path="delete-pet-profile"
+              element={<ConfirmDeletePet />}
+              loader={petProfileLoader}
+            />
+          </Route>
+          <Route
+            path="add-diet"
+            element={<AddDiet />}
+            loader={petProfileLoader}
+          />
+          <Route
+            path="edit-diet/:dietId"
+            element={<EditDiet />}
+            loader={petDietLoader}
+          />
+          <Route
+            path="add-medication"
+            element={<AddMedication />}
+            loader={petProfileLoader}
+          />
+          <Route
+            path="edit-medication/:medicationId"
+            element={<EditMedication />}
+            loader={petMedicationLoader}
+          />
+        </Route>
+      </Route>
+      <Route path="*" element={<PageNotFound />} />
+    </Route>
+  )
+);
 
 ReactDOM.createRoot(document.getElementById("root")!).render(
   <React.StrictMode>
     <Toaster />
     <AuthProvider>
       <UserDataProvider>
-        <RouterProvider router={router} />
+        <PetDataProvider>
+          <RouterProvider router={router} />
+        </PetDataProvider>
       </UserDataProvider>
     </AuthProvider>
   </React.StrictMode>

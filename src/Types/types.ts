@@ -39,6 +39,18 @@ export const medicationSchema = z.object({
   note: z.string().optional(),
 });
 
+export const petInformationSchema = z.object({
+  id: z.number(),
+  userId: z.number(),
+  name: z.string(),
+  species: speciesSchema,
+  breed: breedSchema,
+  image: z.string(),
+  dob: z.coerce.date(),
+  diets: z.array(dietSchema),
+  medications: z.array(medicationSchema),
+});
+
 export const hospitalSchema = z.object({
   id: z.number(),
   name: z.string(),
@@ -62,6 +74,14 @@ export const hospitalFavoriteSchema = z.object({
   hospital: hospitalSchema.optional(),
 });
 
+export const hospitalNoteInfoSchema = z.object({
+  hospital: hospitalSchema.partial(),
+  id: z.number(),
+  userId: z.number(),
+  hospitalId: z.number(),
+  note: z.string(),
+});
+
 export type User = z.infer<typeof userSchema>;
 export type Pet = z.infer<typeof petSchema>;
 export type Diet = z.infer<typeof dietSchema>;
@@ -72,3 +92,7 @@ export type HospitalFavorite = z.infer<typeof hospitalFavoriteSchema>;
 export type Species = z.infer<typeof speciesSchema>;
 export type Breed = z.infer<typeof breedSchema>;
 export type UserInformation = z.infer<typeof userInformationSchema>;
+export type PetInformation = z.infer<typeof petInformationSchema>;
+export type HospitalNoteInfo = z.infer<typeof hospitalNoteInfoSchema>;
+
+export type AuthState = "loading" | "unauthenticated" | "authenticated";

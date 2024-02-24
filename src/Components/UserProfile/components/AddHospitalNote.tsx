@@ -1,10 +1,9 @@
 import { useLocation } from "react-router-dom";
-import { Hospital } from "../../../Types/types";
 import { HospitalNoteForm } from "./HospitalNoteForm";
 
 export const AddHospitalNote = () => {
   const location = useLocation();
-  const { id, name } = location.state.hospital as Hospital;
+  const { id, name } = location.state;
 
   return (
     <>

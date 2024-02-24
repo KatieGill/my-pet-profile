@@ -19,7 +19,7 @@ export const HospitalNoteForm = ({
   isEdit: boolean;
   noteId: number | null;
   hospitalId: number;
-  hospitalName: string;
+  hospitalName: string | undefined;
   note: string;
 }) => {
   const [noteInput, setNoteInput] = useState<string>(note);
@@ -39,40 +39,40 @@ export const HospitalNoteForm = ({
           e.preventDefault();
           if (!noteIsValid) {
             setShouldShowErrorMessage(true);
-          } else {
-            if (user) {
-              if (isEdit) {
-                if (noteId)
-                  patchHospitalNote({
-                    id: noteId,
-                    userId: user.id,
-                    hospitalId: hospitalId,
-                    note: noteInput,
-                  })
-                    .then(() => {
-                      setNoteInput("");
-                      navigate(-1);
-                    })
-                    .catch((e) => {
-                      console.error(e);
-                      toast.error("Unable to edit note");
-                    });
-              } else {
-                postHospitalNote({
-                  userId: user.id,
-                  hospitalId: hospitalId,
-                  note: noteInput,
+            return;
+          }
+          if (user) {
+            if (!isEdit) {
+              postHospitalNote({
+                userId: user.id,
+                hospitalId: hospitalId,
+                note: noteInput,
+              })
+                .then(() => {
+                  setNoteInput("");
+                  navigate(-1);
                 })
-                  .then(() => {
-                    setNoteInput("");
-                    navigate(-1);
-                  })
-                  .catch((e) => {
-                    console.error(e);
-                    toast.error("Unable to create note");
-                  });
-              }
+                .catch((e) => {
+                  console.error(e);
+                  toast.error("Unable to create note");
+                });
+              return;
             }
+            if (noteId)
+              patchHospitalNote({
+                id: noteId,
+                userId: user.id,
+                hospitalId: hospitalId,
+                note: noteInput,
+              })
+                .then(() => {
+                  setNoteInput("");
+                  navigate(-1);
+                })
+                .catch((e) => {
+                  console.error(e);
+                  toast.error("Unable to edit note");
+                });
           }
         }}
       >

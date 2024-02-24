@@ -1,10 +1,13 @@
+import { useNavigate } from "react-router-dom";
 import { HomePage } from "./Components/HomePage";
-import { UserProfile } from "./Components/UserProfile/UserProfile";
 import { useAuthContext } from "./Providers/UseContext";
 
 function App() {
   const { user } = useAuthContext();
-  return <>{user ? <UserProfile /> : <HomePage />}</>;
+  const navigate = useNavigate();
+  return (
+    <>{user ? navigate(`/user-profile/${user.username}`) : <HomePage />}</>
+  );
 }
 
 export default App;

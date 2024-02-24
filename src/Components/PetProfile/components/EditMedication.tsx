@@ -1,11 +1,10 @@
-import { useLocation } from "react-router-dom";
+import { useLoaderData } from "react-router-dom";
 import { Medication } from "../../../Types/types";
 import { MedicationForm } from "./MedicationForm";
 
 export const EditMedication = () => {
-  const location = useLocation();
-  const { medication } = location.state;
-  const { id, petId, name, amount, frequency, note } = medication as Medication;
+  const { id, petId, name, amount, frequency, note } =
+    useLoaderData() as Medication;
 
   return (
     <div className="form-container">

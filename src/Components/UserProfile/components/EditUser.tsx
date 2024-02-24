@@ -75,7 +75,7 @@ export const EditUser = () => {
             </span>
           </button>
           <div className="btn">
-            <Link to="/delete-profile" state={{ user }}>
+            <Link to="delete-user-profile">
               <span className="navigation-title"> Delete User Profile</span>
               <span className="navigation-icon">
                 <i

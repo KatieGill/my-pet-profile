@@ -9,31 +9,33 @@ import {
 } from "../Types/types";
 import { useAuthContext } from "./UseContext";
 import toast from "react-hot-toast";
+import { petDietLoader } from "../Components/PetProfile/components/EditDiet";
+import { petProfileLoader } from "../Components/PetProfile/PetProfile";
 
 type UserDataProvider = {
   userPets: Pet[];
   setUserPets: (userPets: Pet[]) => void;
-  currentPet: Pet | undefined;
-  setCurrentPet: (pet: Pet) => void;
-  petDiets: Diet[];
-  setPetDiets: (userDiets: Diet[]) => void;
-  petMedications: Medication[];
-  setPetMedications: (medications: Medication[]) => void;
+  // currentPet: Pet | undefined;
+  // setCurrentPet: (pet: Pet) => void;
+  // petDiets: Diet[];
+  // setPetDiets: (userDiets: Diet[]) => void;
+  // petMedications: Medication[];
+  // setPetMedications: (medications: Medication[]) => void;
   hospitalFavorites: HospitalFavorite[];
   setHospitalFavorites: (favoriteHospitals: HospitalFavorite[]) => void;
   hospitalNotes: HospitalNote[];
   setHospitalNotes: (hospitalNotes: HospitalNote[]) => void;
   postPet: (pet: Omit<Pet, "id">) => Promise<string>;
-  postDiet: (diet: Omit<Diet, "id">) => Promise<string>;
-  postMedication: (medication: Omit<Medication, "id">) => Promise<string>;
+  // postDiet: (diet: Omit<Diet, "id">) => Promise<string>;
+  // postMedication: (medication: Omit<Medication, "id">) => Promise<string>;
   postHospitalFavorite: (userId: number, hospitalId: number) => Promise<string>;
   postHospitalNote: (hospitalNote: Omit<HospitalNote, "id">) => Promise<string>;
   patchHospitalNote: (hospitalNote: HospitalNote) => Promise<string>;
-  putDiet: (diet: Diet) => Promise<string>;
-  putMedication: (medication: Medication) => Promise<string>;
+  // putDiet: (diet: Diet) => Promise<string>;
+  // putMedication: (medication: Medication) => Promise<string>;
   putPet: (pet: Pet) => Promise<string>;
-  deleteDiet: (diet: Diet) => Promise<string>;
-  deleteMedication: (medication: Medication) => Promise<string>;
+  // deleteDiet: (diet: Diet) => Promise<string>;
+  // deleteMedication: (medication: Medication) => Promise<string>;
   deleteHospitalFavorite: (
     hospitalFavorite: HospitalFavorite
   ) => Promise<string>;
@@ -45,9 +47,6 @@ export const UserDataContext = createContext<UserDataProvider | null>(null);
 
 export const UserDataProvider = ({ children }: { children: ReactNode }) => {
   const [userPets, setUserPets] = useState<Pet[]>([]);
-  const [currentPet, setCurrentPet] = useState<Pet | undefined>(undefined);
-  const [petDiets, setPetDiets] = useState<Diet[]>([]);
-  const [petMedications, setPetMedications] = useState<Medication[]>([]);
   const [hospitalFavorites, setHospitalFavorites] = useState<
     HospitalFavorite[]
   >([]);
@@ -58,18 +57,6 @@ export const UserDataProvider = ({ children }: { children: ReactNode }) => {
     return Requests.postPet(pet)
       .then(() => getPets(pet.userId))
       .then(() => toast.success(`Created ${pet.name}'s profile!`));
-  };
-
-  const postDiet = (diet: Omit<Diet, "id">) => {
-    return Requests.postDiet(diet)
-      .then(() => getPetDiets(diet.petId))
-      .then(() => toast.success("Added diet to your pet's profile"));
-  };
-
-  const postMedication = (medication: Omit<Medication, "id">) => {
-    return Requests.postMedication(medication)
-      .then(() => getPetMedications(medication.petId))
-      .then(() => toast.success("Added medication to your pet's profile"));
   };
 
   const postHospitalFavorite = (userId: number, hospitalId: number) => {
@@ -93,34 +80,10 @@ export const UserDataProvider = ({ children }: { children: ReactNode }) => {
       .then(() => toast.success("Updated hospital note"));
   };
 
-  const putDiet = (diet: Diet) => {
-    return Requests.putDiet(diet)
-      .then(() => getPetDiets(diet.petId))
-      .then(() => toast.success("Updated diet"));
-  };
-
-  const putMedication = (medication: Medication) => {
-    return Requests.putMedication(medication)
-      .then(() => getPetMedications(medication.petId))
-      .then(() => toast.success("Updated medication"));
-  };
-
   const putPet = (pet: Pet) => {
     return Requests.putPet(pet)
       .then(() => getPets(pet.userId))
       .then(() => toast.success("Updated pet"));
-  };
-
-  const deleteDiet = (diet: Diet) => {
-    return Requests.deleteDiet(diet.id)
-      .then(() => getPetDiets(diet.petId))
-      .then(() => toast.success("Deleted diet from your pet's profile"));
-  };
-
-  const deleteMedication = (medication: Medication) => {
-    return Requests.deleteMedication(medication.id)
-      .then(() => getPetMedications(medication.petId))
-      .then(() => toast.success("Deleted medication from your pet's profile"));
   };
 
   const deleteHospitalFavorite = (hospitalFavorite: HospitalFavorite) => {
@@ -168,24 +131,6 @@ export const UserDataProvider = ({ children }: { children: ReactNode }) => {
       });
   };
 
-  const getPetDiets = (petId: number) => {
-    return Requests.getDiets(petId)
-      .then((diets) => setPetDiets(diets))
-      .catch((e) => {
-        console.error(e);
-        toast.error("Unable to display pet diets");
-      });
-  };
-
-  const getPetMedications = (petId: number) => {
-    return Requests.getMedications(petId)
-      .then((medications) => setPetMedications(medications))
-      .catch((e) => {
-        console.error(e);
-        toast.error("Unable to display pet medications");
-      });
-  };
-
   useEffect(() => {
     setIsLoading(true);
     if (user) {
@@ -193,12 +138,9 @@ export const UserDataProvider = ({ children }: { children: ReactNode }) => {
       getUserHospitalFavorites(user.id);
       getHospitalNotes(user.id);
     }
-    if (currentPet) {
-      getPetDiets(currentPet.id);
-      getPetMedications(currentPet.id);
-    }
+
     setIsLoading(false);
-  }, [user, currentPet, setIsLoading]);
+  }, [user, setIsLoading]);
 
   return (
     <>
@@ -206,27 +148,15 @@ export const UserDataProvider = ({ children }: { children: ReactNode }) => {
         value={{
           userPets,
           setUserPets,
-          currentPet,
-          setCurrentPet,
-          petDiets,
-          setPetDiets,
-          petMedications,
-          setPetMedications,
           hospitalFavorites,
           setHospitalFavorites,
           hospitalNotes,
           setHospitalNotes,
           postPet,
-          postDiet,
-          postMedication,
           postHospitalFavorite,
           postHospitalNote,
           patchHospitalNote,
-          putDiet,
-          putMedication,
           putPet,
-          deleteDiet,
-          deleteMedication,
           deleteHospitalFavorite,
           deleteHospitalNote,
           deletePet,

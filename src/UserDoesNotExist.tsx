@@ -1,16 +1,21 @@
-import { useRouteError } from "react-router-dom";
+import { Link } from "react-router-dom";
+import { useAuthContext } from "./Providers/UseContext";
 
-export const ErrorElement = () => {
-  const error = useRouteError() as Error;
+export const UserDoesNotExist = () => {
+  const { user } = useAuthContext();
   return (
     <>
       <div className="container error-element">
-        <h3>Uh Oh...Something went wrong!</h3>
+        <h3>Requested user does not exist</h3>
 
         <div className="error-icon">
           <img src="/assets/error-element-icon.png" alt="error icon" />
         </div>
-        <p>{`${error.name} ${error.message}`}</p>
+        <div className="btn">
+          <Link to={user ? `/user-profile/${user.username}` : "/"}>
+            Return to Home Page
+          </Link>
+        </div>
         <div className="image-credits">
           <div>
             <span>Icon made by: </span>

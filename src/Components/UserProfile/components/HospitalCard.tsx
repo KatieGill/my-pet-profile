@@ -6,7 +6,6 @@ import {
 import { Hospital, HospitalFavorite } from "../../../Types/types";
 import { getSearchLocation } from "../../../utils/functions";
 import { useEffect, useState } from "react";
-import { Requests } from "../../../api";
 import toast from "react-hot-toast";
 
 export const HospitalCard = ({
@@ -26,11 +25,6 @@ export const HospitalCard = ({
   const { user } = useAuthContext();
   const [userFavorites, setUserFavorites] = useState<HospitalFavorite[]>([]);
 
-  /*const getUserFavorites = async (userId: number) => {
-    const favorites = await Requests.getUserHospitalFavorites(userId);
-    setUserFavorites(favorites);
-  };*/
-
   useEffect(() => {
     if (user) {
       setUserFavorites(hospitalFavorites);
@@ -39,7 +33,8 @@ export const HospitalCard = ({
 
   return (
     <>
-      {hospitalArray.map((hospital: Hospital) => {
+      {hospitalArray.map((hospital: Hospital | undefined) => {
+        if (!hospital) return;
         const location = getSearchLocation(hospital.address);
         const note = hospitalNotes.find(
           (note) => note.hospitalId === hospital.id
@@ -100,10 +95,7 @@ export const HospitalCard = ({
                     <div className="hospital-note">{note.note}</div>
                     <div className="note-buttons">
                       <div className="icon-btn">
-                        <Link
-                          to="/edit-hospital-note"
-                          state={{ hospitalNote: note, hospital: hospital }}
-                        >
+                        <Link to={`edit-hospital-note/${note.id}`}>
                           <i
                             className="fa-regular fa-pen-to-square"
                             title="edit note"
@@ -129,8 +121,8 @@ export const HospitalCard = ({
                 ) : (
                   <div className="add-note">
                     <Link
-                      to="/add-hospital-note"
-                      state={{ hospital: hospital }}
+                      to="add-hospital-note"
+                      state={{ id: hospital.id, name: hospital.name }}
                     >
                       <span>Create a note</span>
                     </Link>

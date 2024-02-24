@@ -1,7 +1,7 @@
 import { createContext, useEffect, useState } from "react";
 import { ReactNode } from "react";
 import { Requests } from "../api";
-import { User, UserInformation } from "../Types/types";
+import { AuthState, User, UserInformation } from "../Types/types";
 import toast from "react-hot-toast";
 
 type AuthProvider = {

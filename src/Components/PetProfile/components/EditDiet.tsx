@@ -1,11 +1,9 @@
-import { useLocation } from "react-router-dom";
+import { useLoaderData } from "react-router-dom";
 import { DietForm } from "./DietForm";
 import { Diet } from "../../../Types/types";
 
 export const EditDiet = () => {
-  const location = useLocation();
-  const { diet } = location.state;
-  const { id, name, petId, amount, frequency } = diet as Diet;
+  const { id, name, petId, amount, frequency } = useLoaderData() as Diet;
 
   return (
     <div className="form-container pet-data-form">

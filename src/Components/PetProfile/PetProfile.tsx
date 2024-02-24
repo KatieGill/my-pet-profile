@@ -1,24 +1,26 @@
 import "./pet-profile.css";
-import { useLocation } from "react-router";
-import { Pet } from "../../Types/types";
-import { Link } from "react-router-dom";
+import { PetInformation } from "../../Types/types";
+import { Link, useLoaderData } from "react-router-dom";
 import { DietCard } from "./components/DietCard";
 import { MedicationCard } from "./components/MedicationCard";
-import { useEffect } from "react";
-import { useUserDataContext } from "../../Providers/UseContext";
 import { calculateAge, calculateBirthday } from "../../utils/functions";
+import { useEffect } from "react";
+import { useAuthContext, usePetDataContext } from "../../Providers/UseContext";
 
 export const PetProfile = () => {
-  const location = useLocation();
-  const { pet } = location.state;
-  const { id, name, breed, image, dob } = pet as Pet;
-  const { setCurrentPet, petDiets, petMedications } = useUserDataContext();
+  const { name, breed, image, dob, diets, medications } =
+    useLoaderData() as PetInformation;
+  const { petDiets, setPetDiets, petMedications, setPetMedications } =
+    usePetDataContext();
+  const { user } = useAuthContext();
+
   const age = calculateAge(dob);
   const birthday = calculateBirthday(dob);
 
   useEffect(() => {
-    setCurrentPet(pet);
-  }, [pet, setCurrentPet]);
+    setPetDiets(diets);
+    setPetMedications(medications);
+  }, [diets, medications, setPetDiets, setPetMedications]);
 
   return (
     <>
@@ -28,7 +30,7 @@ export const PetProfile = () => {
         </div>
         <div className="nav-buttons">
           <div className="btn">
-            <Link to="/edit-pet" state={{ pet }}>
+            <Link to="edit-pet">
               <span className="navigation-title">Edit Pet</span>
               <span className="navigation-icon">
                 <i className="fa-regular fa-pen-to-square" title="edit pet"></i>
@@ -36,7 +38,7 @@ export const PetProfile = () => {
             </Link>
           </div>
           <div className="btn">
-            <Link to="/user-profile">
+            <Link to={`/user-profile/${user?.username}`}>
               <span className="navigation-title"> Home</span>
               <span className="navigation-icon">
                 <i className="fa-solid fa-house" title="home"></i>
@@ -64,9 +66,7 @@ export const PetProfile = () => {
 
       <div className="diet-container container container-sm">
         <div className="btn cards-nav">
-          <Link to="/add-diet" state={{ petId: id, petName: name }}>
-            Add new diet
-          </Link>
+          <Link to="add-diet">Add new diet</Link>
         </div>
         <h3>{`${name}'s Diet:`}</h3>
         <div className="cards-container">
@@ -80,9 +80,7 @@ export const PetProfile = () => {
 
       <div className="meds-container container container-sm">
         <div className="btn cards-nav">
-          <Link to="/add-medication" state={{ petId: id, petName: name }}>
-            Add new medication
-          </Link>
+          <Link to="add-medication">Add new medication</Link>
         </div>
         <h3>{`${name}'s Medications:`}</h3>
         <div className="cards-container">

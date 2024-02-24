@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { ErrorMessage } from "../../../ErrorMessage";
-import { useUserDataContext } from "../../../Providers/UseContext";
+import { usePetDataContext } from "../../../Providers/UseContext";
 import {
   medicationNameErrorMessage,
   medicationAmountErrorMessage,
@@ -34,7 +34,7 @@ export const MedicationForm = ({
   const [shouldShowErrorMessage, setShouldShowErrorMessage] =
     useState<boolean>(false);
   const [screenWidth, setScreenWidth] = useState<number | undefined>(undefined);
-  const { postMedication, putMedication } = useUserDataContext();
+  const { postMedication, putMedication } = usePetDataContext();
   const navigate = useNavigate();
 
   const nameIsValid = isInputValid(nameInput);
@@ -62,37 +62,37 @@ export const MedicationForm = ({
         e.preventDefault();
         if (!nameIsValid || !amountIsValid || !frequencyIsValid) {
           setShouldShowErrorMessage(true);
-        } else {
-          if (isEdit) {
-            if (medId)
-              putMedication({
-                id: medId,
-                petId: petId,
-                name: nameInput,
-                amount: amountInput,
-                frequency: frequencyInput,
-                note: noteInput,
-              })
-                .then(() => navigate(-1))
-                .catch((e) => {
-                  toast.error("Unable to edit medication");
-                  console.error(e);
-                });
-          } else {
-            postMedication({
-              petId: petId,
-              name: nameInput,
-              amount: amountInput,
-              frequency: frequencyInput,
-              note: noteInput,
-            })
-              .then(() => navigate(-1))
-              .catch((e) => {
-                toast.error("Unable to create medication");
-                console.error(e);
-              });
-          }
+          return;
         }
+        if (!isEdit) {
+          postMedication({
+            petId: petId,
+            name: nameInput,
+            amount: amountInput,
+            frequency: frequencyInput,
+            note: noteInput,
+          })
+            .then(() => navigate(-1))
+            .catch((e) => {
+              toast.error("Unable to create medication");
+              console.error(e);
+            });
+          return;
+        }
+        if (medId)
+          putMedication({
+            id: medId,
+            petId: petId,
+            name: nameInput,
+            amount: amountInput,
+            frequency: frequencyInput,
+            note: noteInput,
+          })
+            .then(() => navigate(-1))
+            .catch((e) => {
+              toast.error("Unable to edit medication");
+              console.error(e);
+            });
       }}
     >
       <div className="form-field-container">

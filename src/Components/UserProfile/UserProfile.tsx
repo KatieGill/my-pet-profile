@@ -17,21 +17,19 @@ export const UserProfile = () => {
         <div className="logo-small">
           <img src="/assets/logo.png" alt="logo" />
         </div>
-        <div>
-          <button
-            className="btn"
-            onClick={() => {
-              navigate("/edit-user");
-            }}
-          >
-            <span className="navigation-title">Edit Profile</span>
-            <span className="navigation-icon">
-              <i
-                className="fa-regular fa-pen-to-square"
-                title="edit profile"
-              ></i>
-            </span>
-          </button>
+        <div className="nav-buttons">
+          <div className="btn">
+            <Link to="edit-user">
+              <span className="navigation-title">Edit Profile</span>
+              <span className="navigation-icon">
+                <i
+                  className="fa-regular fa-pen-to-square"
+                  title="edit profile"
+                ></i>
+              </span>
+            </Link>
+          </div>
+
           <button
             className="btn"
             onClick={() => {
@@ -50,7 +48,7 @@ export const UserProfile = () => {
       <div>Click on a pet to view their profile</div>
       <div className="container container-sm">
         <div className="btn cards-nav">
-          <Link to="/add-pet">Add New Pet</Link>
+          <Link to="add-pet">Add New Pet</Link>
         </div>
         <div className="cards-container">
           {userPets.length > 0 ? (
@@ -66,7 +64,7 @@ export const UserProfile = () => {
       <h2>Favorite Veterinary Hospitals</h2>
       <div className="container container-sm" id="hospital-favorites">
         <div className="btn cards-nav">
-          <Link to="/vet-hospitals">Explore Veterinary Hospitals</Link>
+          <Link to="vet-hospitals">Explore Veterinary Hospitals</Link>
         </div>
         <div className="cards-container">
           {hospitalFavorites?.length > 0 ? (

@@ -13,6 +13,8 @@ import {
   hospitalFavoriteSchema,
   hospitalSchema,
   userInformationSchema,
+  petInformationSchema,
+  hospitalNoteInfoSchema,
 } from "./Types/types";
 
 const baseUrl = "http://localhost:3000";
@@ -168,7 +170,7 @@ export const Requests = {
   },
 
   getPets: (userId: number) => {
-    return fetch(`${baseUrl}/pet/${userId}`)
+    return fetch(`${baseUrl}/pet/user-pets/${userId}`)
       .then((response) => {
         if (!response.ok) {
           return response.json().then((error) => {
@@ -181,8 +183,24 @@ export const Requests = {
       .then((pets) => z.array(petSchema).parse(pets));
   },
 
+  getCurrentPetInfo: (petId: number) => {
+    return fetch(`${baseUrl}/pet/${petId}`)
+      .then((response) => {
+        if (!response.ok) {
+          return response.json().then((error) => {
+            throw new Error(error.message);
+          });
+        } else {
+          return response.json();
+        }
+      })
+      .then((petInfo) => {
+        return petInformationSchema.parse(petInfo);
+      });
+  },
+
   getDiets: (petId: number) => {
-    return fetch(`${baseUrl}/diet/${petId}`)
+    return fetch(`${baseUrl}/diets/${petId}`)
       .then((response) => {
         if (!response.ok) {
           return response.json().then((error) => {
@@ -195,8 +213,22 @@ export const Requests = {
       .then((diets) => z.array(dietSchema).parse(diets));
   },
 
+  getCurrentDiet: (dietId: number) => {
+    return fetch(`${baseUrl}/diet/${dietId}`)
+      .then((response) => {
+        if (!response.ok) {
+          return response.json().then((error) => {
+            throw new Error(error.message);
+          });
+        } else {
+          return response.json();
+        }
+      })
+      .then((diet) => dietSchema.parse(diet));
+  },
+
   getMedications: (petId: number) => {
-    return fetch(`${baseUrl}/medication/${petId}`)
+    return fetch(`${baseUrl}/medications/${petId}`)
       .then((response) => {
         if (!response.ok) {
           return response.json().then((error) => {
@@ -207,6 +239,20 @@ export const Requests = {
         }
       })
       .then((medications) => z.array(medicationSchema).parse(medications));
+  },
+
+  getCurrentMedication: (medicationId: number) => {
+    return fetch(`${baseUrl}/medication/${medicationId}`)
+      .then((response) => {
+        if (!response.ok) {
+          return response.json().then((error) => {
+            throw new Error(error.message);
+          });
+        } else {
+          return response.json();
+        }
+      })
+      .then((medication) => medicationSchema.parse(medication));
   },
 
   getHospitals: () => {
@@ -240,7 +286,7 @@ export const Requests = {
   },
 
   getUserHospitalNotes: (userId: number) => {
-    return fetch(`${baseUrl}/hospital-note/${userId}`)
+    return fetch(`${baseUrl}/hospital-notes/${userId}`)
       .then((response) => {
         if (!response.ok) {
           return response.json().then((error) => {
@@ -253,6 +299,34 @@ export const Requests = {
       .then((hospitalNotes) =>
         z.array(hospitalNoteSchema).parse(hospitalNotes)
       );
+  },
+
+  getCurrentHospitalNote: (hospitalNoteId: number) => {
+    return fetch(`${baseUrl}/hospital-note/${hospitalNoteId}`)
+      .then((response) => {
+        if (!response.ok) {
+          return response.json().then((error) => {
+            throw new Error(error.message);
+          });
+        } else {
+          return response.json();
+        }
+      })
+      .then((hospitalNote) => hospitalNoteInfoSchema.parse(hospitalNote));
+  },
+
+  getUserByUsername: (username: string) => {
+    return fetch(`${baseUrl}/user/find-user/${username}`)
+      .then((response) => {
+        if (!response.ok) {
+          return response.json().then((error) => {
+            throw new Error(error.message);
+          });
+        } else {
+          return response.json();
+        }
+      })
+      .then((userInformation) => userInformationSchema.parse(userInformation));
   },
 
   patchHospitalNote: (noteId: number, note: string) => {

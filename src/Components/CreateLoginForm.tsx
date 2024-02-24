@@ -68,23 +68,23 @@ export const CreateLoginForm = () => {
           e.preventDefault();
           if (!usernameIsValid || !passwordsAreValid || !usernameIsAvailable) {
             setShouldShowErrorMessage(true);
-          } else {
-            registerUser({
-              username: usernameInput,
-              password: passwordInput,
-            })
-              .then(() => navigate("/login"))
-              .catch((e: Error) => {
-                if (e.message === "Username already exists") {
-                  setShouldShowErrorMessage(true);
-                  setUsernameIsAvailable(false);
-                  setUsernameNotAvailableError(e.message);
-                } else {
-                  toast.error("Unable to register user");
-                  console.error(e);
-                }
-              });
+            return;
           }
+          registerUser({
+            username: usernameInput,
+            password: passwordInput,
+          })
+            .then(() => navigate("/login"))
+            .catch((e: Error) => {
+              if (e.message === "Username already exists") {
+                setShouldShowErrorMessage(true);
+                setUsernameIsAvailable(false);
+                setUsernameNotAvailableError(e.message);
+              } else {
+                toast.error("Unable to register user");
+                console.error(e);
+              }
+            });
         }}
       >
         <div className="form-field-container form-label">

@@ -1,10 +1,10 @@
 import { Link } from "react-router-dom";
-import { useUserDataContext } from "../../../Providers/UseContext";
+import { usePetDataContext } from "../../../Providers/UseContext";
 import { Diet } from "../../../Types/types";
 import toast from "react-hot-toast";
 
 export const DietCard = ({ dietArray }: { dietArray: Diet[] }) => {
-  const { deleteDiet } = useUserDataContext();
+  const { deleteDiet } = usePetDataContext();
   return (
     <>
       {dietArray.map((diet) => {
@@ -23,7 +23,7 @@ export const DietCard = ({ dietArray }: { dietArray: Diet[] }) => {
             </div>
             <div className="card-btns">
               <div className="icon-btn">
-                <Link to="/edit-diet" state={{ diet }}>
+                <Link to={`edit-diet/${diet.id}`}>
                   <i
                     className="fa-regular fa-pen-to-square"
                     title="edit diet"

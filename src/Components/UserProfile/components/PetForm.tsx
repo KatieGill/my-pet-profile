@@ -79,38 +79,7 @@ export const PetForm = ({
             setShouldShouldErrorMessage(true);
           } else {
             if (user) {
-              if (isEdit) {
-                if (petId) {
-                  putPet({
-                    id: petId,
-                    userId: user.id,
-                    name: nameInput,
-                    species: speciesInput,
-                    breed: breedInput,
-                    image: imageInput,
-                    dob: dobInput,
-                  })
-                    .then(() => {
-                      navigate("/pet-profile", {
-                        state: {
-                          pet: {
-                            id: petId,
-                            userId: user.id,
-                            name: nameInput,
-                            species: speciesInput,
-                            breed: breedInput,
-                            image: imageInput,
-                            dob: dobInput,
-                          },
-                        },
-                      });
-                    })
-                    .catch((e: Error) => {
-                      toast.error("Unable to edit pet");
-                      console.error(e);
-                    });
-                }
-              } else {
+              if (!isEdit) {
                 postPet({
                   userId: user.id,
                   name: nameInput,
@@ -122,6 +91,25 @@ export const PetForm = ({
                   .then(() => navigate(-1))
                   .catch((e: Error) => {
                     toast.error("Unable to create pet");
+                    console.error(e);
+                  });
+                return;
+              }
+              if (petId) {
+                putPet({
+                  id: petId,
+                  userId: user.id,
+                  name: nameInput,
+                  species: speciesInput,
+                  breed: breedInput,
+                  image: imageInput,
+                  dob: dobInput,
+                })
+                  .then(() => {
+                    navigate(-1);
+                  })
+                  .catch((e: Error) => {
+                    toast.error("Unable to edit pet");
                     console.error(e);
                   });
               }

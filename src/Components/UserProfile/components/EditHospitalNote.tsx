@@ -1,9 +1,10 @@
-import { useLocation } from "react-router-dom";
+import { useLoaderData } from "react-router-dom";
 import { HospitalNoteForm } from "./HospitalNoteForm";
+import { HospitalNoteInfo } from "../../../Types/types";
 
 export const EditHospitalNote = () => {
-  const location = useLocation();
-  const { hospitalNote, hospital } = location.state;
+  const { id, hospitalId, note, hospital } =
+    useLoaderData() as HospitalNoteInfo;
 
   return (
     <>
@@ -11,10 +12,10 @@ export const EditHospitalNote = () => {
         <h3>Edit the selected veterinary hospital note</h3>
         <HospitalNoteForm
           isEdit={true}
-          noteId={hospitalNote.id}
-          hospitalId={hospital.id}
+          noteId={id}
+          hospitalId={hospitalId}
           hospitalName={hospital.name}
-          note={hospitalNote.note}
+          note={note}
         />
       </div>
     </>

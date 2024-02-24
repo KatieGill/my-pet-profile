@@ -36,7 +36,7 @@ export const LoginForm = () => {
             username: usernameInput,
             password: passwordInput,
           })
-            .then(() => navigate("/user-profile"))
+            .then(() => navigate(`/user-profile/${usernameInput}`))
             .catch((e: Error) => {
               if (
                 e.message === "Username not found" ||
