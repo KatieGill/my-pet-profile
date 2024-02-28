@@ -1,5 +1,8 @@
 import { useLoaderData, useNavigate } from "react-router-dom";
-import { useUserDataContext } from "../../../Providers/UseContext";
+import {
+  useAuthContext,
+  useUserDataContext,
+} from "../../../Providers/UseContext";
 import toast from "react-hot-toast";
 import { PetInformation } from "../../../Types/types";
 
@@ -8,6 +11,7 @@ export const ConfirmDeletePet = () => {
   const navigate = useNavigate();
   const { id, userId, name, species, breed, image, dob } =
     useLoaderData() as PetInformation;
+  const { user } = useAuthContext();
 
   return (
     <>
@@ -26,7 +30,7 @@ export const ConfirmDeletePet = () => {
           onClick={() => {
             deletePet({ id, userId, name, species, breed, dob, image })
               .then(() => {
-                navigate("/user-profile");
+                navigate(`/user-profile/${user?.username}`);
               })
               .catch((e) => {
                 toast.error("Unable to delete pet");
