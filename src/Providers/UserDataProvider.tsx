@@ -107,7 +107,7 @@ export const UserDataProvider = ({ children }: { children: ReactNode }) => {
       .then((pets) => setUserPets(pets))
       .catch((e) => {
         console.error(e);
-        toast.error("Unable to display pets");
+        toast.error(e.message);
       });
   };
 
