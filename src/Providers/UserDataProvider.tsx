@@ -1,41 +1,21 @@
 import { ReactNode, createContext, useEffect, useState } from "react";
 import { Requests } from "../api";
-import {
-  Diet,
-  HospitalFavorite,
-  HospitalNote,
-  Medication,
-  Pet,
-} from "../Types/types";
+import { HospitalFavorite, HospitalNote, Pet } from "../Types/types";
 import { useAuthContext } from "./UseContext";
 import toast from "react-hot-toast";
-import { petDietLoader } from "../Components/PetProfile/components/EditDiet";
-import { petProfileLoader } from "../Components/PetProfile/PetProfile";
 
 type UserDataProvider = {
   userPets: Pet[];
   setUserPets: (userPets: Pet[]) => void;
-  // currentPet: Pet | undefined;
-  // setCurrentPet: (pet: Pet) => void;
-  // petDiets: Diet[];
-  // setPetDiets: (userDiets: Diet[]) => void;
-  // petMedications: Medication[];
-  // setPetMedications: (medications: Medication[]) => void;
   hospitalFavorites: HospitalFavorite[];
   setHospitalFavorites: (favoriteHospitals: HospitalFavorite[]) => void;
   hospitalNotes: HospitalNote[];
   setHospitalNotes: (hospitalNotes: HospitalNote[]) => void;
   postPet: (pet: Omit<Pet, "id">) => Promise<string>;
-  // postDiet: (diet: Omit<Diet, "id">) => Promise<string>;
-  // postMedication: (medication: Omit<Medication, "id">) => Promise<string>;
   postHospitalFavorite: (userId: number, hospitalId: number) => Promise<string>;
   postHospitalNote: (hospitalNote: Omit<HospitalNote, "id">) => Promise<string>;
   patchHospitalNote: (hospitalNote: HospitalNote) => Promise<string>;
-  // putDiet: (diet: Diet) => Promise<string>;
-  // putMedication: (medication: Medication) => Promise<string>;
   putPet: (pet: Pet) => Promise<string>;
-  // deleteDiet: (diet: Diet) => Promise<string>;
-  // deleteMedication: (medication: Medication) => Promise<string>;
   deleteHospitalFavorite: (
     hospitalFavorite: HospitalFavorite
   ) => Promise<string>;
