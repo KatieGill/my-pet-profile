@@ -34,7 +34,9 @@ export const ApproximateAgeInput = ({
       birthMonth = +birthMonth.toString().padStart(2, "0");
     }
     const birthday = `${birthYear}-${birthMonth}-${birthDate}`;
-    setDobInput(birthday as unknown as Date);
+
+    setDobInput(new Date(`${birthday} GMT-0500`));
+    //setDobInput(birthday as unknown as Date);
   };
 
   return (

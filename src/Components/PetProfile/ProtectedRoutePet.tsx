@@ -24,7 +24,6 @@ export const ProtectedRoutePet = ({ children }: { children: ReactNode }) => {
       else return "authenticated";
     };
     const pet = findPet(petId);
-    console.log(pet);
     const authState = calculateAuthState(pet, isLoading);
     setAuthState(authState);
   }, [isLoading, petId, setAuthState, userPets]);
