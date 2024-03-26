@@ -1,36 +1,5 @@
-## MY PET PROFILE SETUP
+# MY PET PROFILE
+My Pet Profile is an app for pet owners to keep all of their pets' information in once place. A user can create a profile for each pet and input diet and medication information. A user can also view contact information for veterinary hospitals, add selected hospitals to a favorites list, and create notes for each hospital. 
 
-- Run `npm i` to install all dependencies
-- Run `npm run dev` to run the project
+This React app was created as a learning project for Developes Web Academy. This project allowed me to deepen my knowledge with React, React Router, and TypeScript. The app initially utilized json-server so I could implement API requests, but it now has it's own dedicated backend. 
 
-
-# React + TypeScript + Vite
-
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
-
-Currently, two official plugins are available:
-
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
-
-## Expanding the ESLint configuration
-
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
-
-- Configure the top-level `parserOptions` property like this:
-
-```js
-export default {
-  // other rules...
-  parserOptions: {
-    ecmaVersion: "latest",
-    sourceType: "module",
-    project: ["./tsconfig.json", "./tsconfig.node.json"],
-    tsconfigRootDir: __dirname,
-  },
-};
-```
-
-- Replace `plugin:@typescript-eslint/recommended` to `plugin:@typescript-eslint/recommended-type-checked` or `plugin:@typescript-eslint/strict-type-checked`
-- Optionally add `plugin:@typescript-eslint/stylistic-type-checked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and add `plugin:react/recommended` & `plugin:react/jsx-runtime` to the `extends` list
