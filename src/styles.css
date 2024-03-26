@@ -8,17 +8,19 @@
   --bg-btn: #eebbc3;
 }
 
-*, ::after, ::before {
+*,
+::after,
+::before {
   box-sizing: border-box;
 }
 
-html {  
+html {
   scroll-behavior: smooth;
 }
 
 body {
   background-color: var(--bg-dark);
-  font-family: 'Inter', sans-serif;
+  font-family: "Inter", sans-serif;
   font-size: 1rem;
   color: var(--text-light);
   font-weight: 400;
@@ -61,7 +63,7 @@ body {
   width: fit-content;
   border-radius: 5px;
   color: var(--text-dark);
-  font-family: 'Inter', sans-serif;
+  font-family: "Inter", sans-serif;
   font-size: 1rem;
   font-weight: 400;
   line-height: 1.5;
@@ -71,7 +73,7 @@ body {
 .btn:hover {
   cursor: pointer;
   font-weight: 600;
-  box-shadow: 10px 10px 10px 0px rgba(35,41,70,0.2);
+  box-shadow: 10px 10px 10px 0px rgba(35, 41, 70, 0.2);
 }
 
 .btn-icon:hover {
@@ -103,8 +105,10 @@ h3 {
   font-size: 2rem;
 }
 
-h1, h2, h3 {
-  font-family: 'Lilita One', sans-serif;
+h1,
+h2,
+h3 {
+  font-family: "Lilita One", sans-serif;
   font-weight: 500;
   margin-bottom: 20px;
 }
@@ -139,7 +143,7 @@ p {
   align-items: center;
   justify-content: space-around;
   color: var(--text-dark);
-  box-shadow: 10px 10px 10px 0px rgba(35,41,70,0.2);
+  box-shadow: 10px 10px 10px 0px rgba(35, 41, 70, 0.2);
 }
 
 .cards-container {
@@ -178,7 +182,7 @@ p {
 
 .icon-btn:hover {
   opacity: 0.6;
-  transform: translateY(-2px)
+  transform: translateY(-2px);
 }
 
 .icon-btn:hover,
@@ -211,21 +215,30 @@ img {
   font-size: 12px;
   margin-top: 30px;
   margin-bottom: 50px;
+  position: static;
+  bottom: 0;
 }
 
 .error-icon {
   width: fit-content;
 }
 
+.demo-login {
+  background: white;
+  padding: 10px;
+  border-radius: 5px;
+  margin-top: 20px;
+}
+
 @media screen and (max-width: 1280px) {
   .container-sm {
-   max-width: 900px;
+    max-width: 900px;
   }
 }
 
 @media screen and (max-width: 915px) {
   .container-sm {
-    max-width:810px;
+    max-width: 810px;
   }
 }
 
@@ -235,7 +248,7 @@ img {
   }
   h2 {
     font-size: 2.5rem;
-  } 
+  }
 }
 
 @media screen and (max-width: 640px) {
@@ -243,7 +256,7 @@ img {
     font-size: 60px;
   }
   .navigation-icon {
-    display: block
+    display: block;
   }
   .navigation-title {
     display: none;

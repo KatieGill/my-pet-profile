@@ -1,4 +1,5 @@
 import { Link } from "react-router-dom";
+import { DemoLogin } from "./DemoLogin";
 
 export const HomePage = () => {
   return (
@@ -13,6 +14,7 @@ export const HomePage = () => {
       <div className="btn">
         <Link to="create-login">Create User Account</Link>
       </div>
+      <DemoLogin />
       <div className="image-credits">
         <a
           href="https://www.flaticon.com/free-icons/pet"

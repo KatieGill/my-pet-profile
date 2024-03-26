@@ -4,6 +4,7 @@ import { useAuthContext } from "../Providers/UseContext";
 import { useState } from "react";
 import { ErrorMessage } from "../ErrorMessage";
 import toast from "react-hot-toast";
+import { DemoLogin } from "./DemoLogin";
 
 export const LoginForm = () => {
   const { login } = useAuthContext();
@@ -104,6 +105,7 @@ export const LoginForm = () => {
           <input className="btn btn-submit" type="submit"></input>
         </div>
       </form>
+      <DemoLogin />
     </div>
   );
 };

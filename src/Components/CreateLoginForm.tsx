@@ -14,6 +14,7 @@ import {
   passwordsMatchError,
   passwordsLengthError,
 } from "../utils/errorMessages";
+import { DemoLogin } from "./DemoLogin";
 
 export const CreateLoginForm = () => {
   const { registerUser } = useAuthContext();
@@ -160,6 +161,7 @@ export const CreateLoginForm = () => {
           <input type="submit" className="btn btn-submit"></input>
         </div>
       </form>
+      <DemoLogin />
     </div>
   );
 };
