@@ -5,47 +5,59 @@ import { PetCard } from "./components/PetCard";
 import { HospitalCard } from "./components/HospitalCard";
 
 export const UserProfile = () => {
-  const { userPets, hospitalFavorites } = useUserDataContext();
+  const { userPets, hospitalFavorites, showMenuItems, toggleHamburgerMenu } =
+    useUserDataContext();
   const { logout } = useAuthContext();
   const navigate = useNavigate();
   const hospitalFavoritesArray = hospitalFavorites.map(
     (favorite) => favorite.hospital
   );
+
   return (
     <>
       <nav className="nav">
-        <div className="logo-small">
-          <img src="/assets/logo.png" alt="logo" />
+        <div>
+          <h3>
+            My Pet Profile <i className="fa-solid fa-paw"></i>
+          </h3>
         </div>
         <div className="nav-buttons">
-          <div className="btn">
-            <Link to="edit-user">
-              <span className="navigation-title">Edit Profile</span>
-              <span className="navigation-icon">
-                <i
-                  className="fa-regular fa-pen-to-square"
-                  title="edit profile"
-                ></i>
-              </span>
-            </Link>
+          <button className="navigation-icon" onClick={toggleHamburgerMenu}>
+            {showMenuItems === "flex" ? (
+              <i className="fa-solid fa-xmark"></i>
+            ) : (
+              <i className="fa-solid fa-bars"></i>
+            )}
+          </button>
+          <div className="btn btn-nav">
+            <Link to="edit-user">Edit Profile</Link>
           </div>
 
           <button
-            className="btn"
+            className="btn btn-nav"
             onClick={() => {
               logout();
               navigate("/");
             }}
           >
-            <span className="navigation-title">Logout</span>
-            <span className="navigation-icon">
-              <i className="fa-solid fa-right-from-bracket" title="logout"></i>
-            </span>
+            Logout
           </button>
         </div>
       </nav>
+      <div className="hamburger-menu" style={{ display: showMenuItems }}>
+        <Link to="edit-user" onClick={toggleHamburgerMenu}>
+          Edit Profile
+        </Link>
+        <button
+          onClick={() => {
+            logout();
+            navigate("/");
+          }}
+        >
+          Logout
+        </button>
+      </div>
       <h2>Your Pet Profiles</h2>
-      <div>Click on a pet to view their profile</div>
       <div className="container container-sm">
         <div className="btn cards-nav">
           <Link to="add-pet">Add New Pet</Link>

@@ -119,7 +119,7 @@ export const HospitalCard = ({
                     </div>
                   </>
                 ) : (
-                  <div className="add-note">
+                  <div className="btn">
                     <Link
                       to="add-hospital-note"
                       state={{ id: hospital.id, name: hospital.name }}

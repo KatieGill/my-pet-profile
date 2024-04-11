@@ -11,6 +11,8 @@ type UserDataProvider = {
   setHospitalFavorites: (favoriteHospitals: HospitalFavorite[]) => void;
   hospitalNotes: HospitalNote[];
   setHospitalNotes: (hospitalNotes: HospitalNote[]) => void;
+  showMenuItems: "none" | "flex";
+  setShowMenuItems: (display: "none" | "flex") => void;
   postPet: (pet: Omit<Pet, "id">) => Promise<string>;
   postHospitalFavorite: (userId: number, hospitalId: number) => Promise<string>;
   postHospitalNote: (hospitalNote: Omit<HospitalNote, "id">) => Promise<string>;
@@ -21,6 +23,7 @@ type UserDataProvider = {
   ) => Promise<string>;
   deleteHospitalNote: (hospitalNote: HospitalNote) => Promise<string>;
   deletePet: (pet: Pet) => Promise<string>;
+  toggleHamburgerMenu: () => void;
 };
 
 export const UserDataContext = createContext<UserDataProvider | null>(null);
@@ -32,6 +35,7 @@ export const UserDataProvider = ({ children }: { children: ReactNode }) => {
   >([]);
   const [hospitalNotes, setHospitalNotes] = useState<HospitalNote[]>([]);
   const { user, setIsLoading } = useAuthContext();
+  const [showMenuItems, setShowMenuItems] = useState<"none" | "flex">("none");
 
   const postPet = (pet: Omit<Pet, "id">) => {
     return Requests.postPet(pet)
@@ -111,6 +115,12 @@ export const UserDataProvider = ({ children }: { children: ReactNode }) => {
       });
   };
 
+  const toggleHamburgerMenu = () => {
+    showMenuItems === "flex"
+      ? setShowMenuItems("none")
+      : setShowMenuItems("flex");
+  };
+
   useEffect(() => {
     setIsLoading(true);
     if (user) {
@@ -132,6 +142,8 @@ export const UserDataProvider = ({ children }: { children: ReactNode }) => {
           setHospitalFavorites,
           hospitalNotes,
           setHospitalNotes,
+          showMenuItems,
+          setShowMenuItems,
           postPet,
           postHospitalFavorite,
           postHospitalNote,
@@ -140,6 +152,7 @@ export const UserDataProvider = ({ children }: { children: ReactNode }) => {
           deleteHospitalFavorite,
           deleteHospitalNote,
           deletePet,
+          toggleHamburgerMenu,
         }}
       >
         {children}

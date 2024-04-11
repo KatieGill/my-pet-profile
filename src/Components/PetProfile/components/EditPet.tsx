@@ -10,14 +10,6 @@ export const EditPet = () => {
   return (
     <>
       <div className="form-container">
-        <div className="btn cards-nav delete-pet">
-          <Link to="delete-pet-profile">
-            <span className="navigation-title"> Delete Pet Profile</span>
-            <span className="navigation-icon">
-              <i className="fa-solid fa-trash" title="delete pet profile"></i>
-            </span>
-          </Link>
-        </div>
         <h2>Edit Profile for {name}</h2>
         <PetForm
           isEdit={true}
@@ -28,6 +20,9 @@ export const EditPet = () => {
           dob={dob}
           petId={id}
         />
+      </div>
+      <div className="btn cards-nav delete-pet">
+        <Link to="delete-pet-profile">Delete Pet Profile</Link>
       </div>
       <ImageCredits />
     </>

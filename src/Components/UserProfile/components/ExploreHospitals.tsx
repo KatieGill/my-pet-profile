@@ -4,10 +4,12 @@ import { Hospital } from "../../../Types/types";
 import { useNavigate } from "react-router-dom";
 import { HospitalCard } from "./HospitalCard";
 import toast from "react-hot-toast";
+import { useUserDataContext } from "../../../Providers/UseContext";
 
 export const ExploreHospitals = () => {
   const [allHospitals, setAllHospitals] = useState<Hospital[]>([]);
   const navigate = useNavigate();
+  const { showMenuItems, toggleHamburgerMenu } = useUserDataContext();
   const getAllHospitals = () => {
     return Requests.getHospitals()
       .then((allHospitals) => setAllHospitals(allHospitals))
@@ -24,21 +26,41 @@ export const ExploreHospitals = () => {
   return (
     <>
       <nav className="nav">
-        <div className="logo-small">
-          <img src="/assets/logo.png" alt="logo" />
+        <div>
+          <h3>
+            My Pet Profile <i className="fa-solid fa-paw"></i>
+          </h3>
         </div>
+        <div className="nav-buttons">
+          <button className="navigation-icon" onClick={toggleHamburgerMenu}>
+            {showMenuItems === "flex" ? (
+              <i className="fa-solid fa-xmark"></i>
+            ) : (
+              <i className="fa-solid fa-bars"></i>
+            )}
+          </button>
+          <button
+            className="btn btn-nav"
+            onClick={(e) => {
+              e.preventDefault();
+              navigate(-1);
+            }}
+          >
+            Home
+          </button>
+        </div>
+      </nav>
+      <div className="hamburger-menu" style={{ display: showMenuItems }}>
         <button
-          className="btn"
-          onClick={() => {
+          onClick={(e) => {
+            toggleHamburgerMenu();
+            e.preventDefault();
             navigate(-1);
           }}
         >
-          <span className="navigation-title"> Home</span>
-          <span className="navigation-icon">
-            <i className="fa-solid fa-house" title="home"></i>
-          </span>
+          Home
         </button>
-      </nav>
+      </div>
       <h2>Explore Local Veterinary Hospitals</h2>
       <div>
         <p>

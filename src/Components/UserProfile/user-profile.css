@@ -1,6 +1,6 @@
 .pet-card h3,
 .hospital-card h3 {
-  margin-bottom: 10px
+  margin-bottom: 10px;
 }
 
 .pet-card img,
@@ -28,7 +28,7 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  background-color: var(--bg-white);
+  background-color: var(--bg-light);
   padding: 10px 20px;
   border-radius: 5px;
   margin: 10px;
@@ -71,8 +71,7 @@
   grid-column: 2/7;
 }
 
-.hospital-info-link a:hover,
-.add-note:hover {
+.hospital-info-link a:hover {
   font-weight: 600;
 }
 

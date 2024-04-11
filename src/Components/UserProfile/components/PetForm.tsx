@@ -203,51 +203,43 @@ export const PetForm = ({
           )}
         </div>
 
-        {showApproximateAgeInput ? (
-          ""
-        ) : (
-          <>
-            <div className="form-field-container pet-form-label">
-              <label htmlFor="dob">Birthday:</label>
-            </div>
-            <div className="form-field-container pet-form-input">
-              <input
-                type={dateInputType}
-                placeholder={birthdayPlaceholder}
-                onFocus={() => setDateInputType("date")}
-                onBlur={() => setDateInputType("text")}
-                name="dob"
-                onChange={(e) => {
-                  setDobInput(new Date(`${e.target.value} GMT-0500`));
-                }}
-              />
-            </div>
-          </>
-        )}
-
-        {showApproximateAgeInput ? (
-          <ApproximateAgeInput
-            setDobInput={setDobInput}
-            setShowApproximateAgeInput={setShowApproximateAgeInput}
+        <div className="form-field-container pet-form-label">
+          <label htmlFor="dob">Birthday:</label>
+        </div>
+        <div className="form-field-container pet-form-input">
+          <input
+            type={dateInputType}
+            placeholder={birthdayPlaceholder}
+            onFocus={() => setDateInputType("date")}
+            onBlur={() => setDateInputType("text")}
+            name="dob"
+            onChange={(e) => {
+              setDobInput(new Date(`${e.target.value} GMT-0500`));
+            }}
           />
-        ) : (
-          <div className="show-approximate-age">
-            <div>Unsure of your pet's birthday?</div>
-            <button
-              className="btn"
-              onClick={(e) => {
-                e.preventDefault();
-                setShowApproximateAgeInput(true);
-              }}
-            >
-              Enter approximate age
-            </button>
-          </div>
-        )}
+        </div>
+
+        <div className="show-approximate-age">
+          <div>Unsure of your pet's birthday?</div>
+          <button
+            className="btn"
+            onClick={(e) => {
+              e.preventDefault();
+              setShowApproximateAgeInput(true);
+            }}
+          >
+            Enter approximate age
+          </button>
+        </div>
+
         <ErrorMessage message={dobError} show={shouldShowDobError} />
 
         <div className="form-field-container pet-form-submit">
-          <input type="submit" className="btn btn-submit" />
+          <input
+            type="submit"
+            className="btn btn-submit"
+            disabled={showApproximateAgeInput}
+          />
           <button
             className="btn"
             onClick={(e) => {
@@ -258,6 +250,14 @@ export const PetForm = ({
             Cancel
           </button>
         </div>
+        {showApproximateAgeInput ? (
+          <ApproximateAgeInput
+            setDobInput={setDobInput}
+            setShowApproximateAgeInput={setShowApproximateAgeInput}
+          />
+        ) : (
+          ""
+        )}
       </form>
     </>
   );

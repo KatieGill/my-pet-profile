@@ -11,7 +11,7 @@ export const ConfirmDeleteUser = () => {
       <div className="container container-sm">
         <h2>Are you sure you want to permanently delete your profile?</h2>
         <button
-          className="btn"
+          className="btn btn-large"
           onClick={() => {
             navigate(-1);
           }}
@@ -19,7 +19,7 @@ export const ConfirmDeleteUser = () => {
           NO
         </button>
         <button
-          className="btn"
+          className="btn btn-large"
           onClick={() => {
             if (user)
               deleteUser(user.id)

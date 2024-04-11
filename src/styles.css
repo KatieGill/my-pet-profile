@@ -1,11 +1,10 @@
 :root {
   --bg-dark: #232946;
-  --bg-light: #b8c1ec;
-  --bg-white: #fffffe;
-  --text-header: #fffffe;
-  --text-light: #b8c1ec;
-  --text-dark: #121629;
-  --bg-btn: #eebbc3;
+  --bg-light: #f7f7f7;
+  --text-light: #f7f7f7;
+  --text-dark: #2f2f2f;
+  --bg-btn: #41b2da;
+  --color-primary: #41b2da;
 }
 
 *,
@@ -19,10 +18,10 @@ html {
 }
 
 body {
-  background-color: var(--bg-dark);
-  font-family: "Inter", sans-serif;
+  background-color: var(--bg-light);
+  font-family: "Nunito", sans-serif;
   font-size: 1rem;
-  color: var(--text-light);
+  color: var(--text-dark);
   font-weight: 400;
   line-height: 1.5;
   text-align: center;
@@ -56,27 +55,48 @@ body {
   align-items: center;
 }
 
+button {
+  border: none;
+  background: none;
+  font-family: "Nunito", sans-serif;
+  font-size: 1rem;
+  line-height: 1.5;
+  font-weight: 400;
+}
+
 .btn {
   border: 1px solid var(--bg-btn);
-  background-color: var(--bg-btn);
+  background-color: var(--bg-light);
   padding: 5px 10px;
   width: fit-content;
-  border-radius: 5px;
-  color: var(--text-dark);
-  font-family: "Inter", sans-serif;
+  border-radius: 22px;
+  color: var(--color-primary);
+  font-family: "Nunito", sans-serif;
   font-size: 1rem;
   font-weight: 400;
   line-height: 1.5;
   margin: 10px;
 }
 
+.btn-large {
+  font-size: 1.5rem;
+  width: 350px;
+  border: 2px solid var(--bg-btn);
+}
+
+.btn-nav {
+  background-color: var(--bg-btn);
+  color: var(--bg-light);
+}
+
 .btn:hover {
   cursor: pointer;
-  font-weight: 600;
+  font-weight: 500;
   box-shadow: 10px 10px 10px 0px rgba(35, 41, 70, 0.2);
 }
 
-.btn-icon:hover {
+.btn-icon:hover,
+button:hover {
   cursor: pointer;
 }
 
@@ -89,8 +109,16 @@ a {
   color: var(--text-dark);
 }
 
+i {
+  color: var(--color-primary);
+}
+
 .btn a {
-  color: var(--text-dark);
+  color: var(--color-primary);
+}
+
+.btn-nav a {
+  color: var(--bg-light);
 }
 
 h1 {
@@ -99,6 +127,7 @@ h1 {
 
 h2 {
   font-size: 3rem;
+  color: var(--color-primary);
 }
 
 h3 {
@@ -108,7 +137,6 @@ h3 {
 h1,
 h2,
 h3 {
-  font-family: "Lilita One", sans-serif;
   font-weight: 500;
   margin-bottom: 20px;
 }
@@ -133,6 +161,15 @@ p {
   align-items: center;
 }
 
+.hamburger-menu {
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  top: -38px;
+  align-items: flex-end;
+  margin-right: 10px;
+}
+
 .card {
   max-width: 350px;
   background-color: var(--bg-light);
@@ -143,7 +180,7 @@ p {
   align-items: center;
   justify-content: space-around;
   color: var(--text-dark);
-  box-shadow: 10px 10px 10px 0px rgba(35, 41, 70, 0.2);
+  box-shadow: 0px 0px 10px 4px rgba(35, 41, 70, 0.2);
 }
 
 .cards-container {
@@ -153,7 +190,7 @@ p {
 }
 
 .cards-nav {
-  margin-left: auto;
+  margin: auto;
 }
 
 .card-btns {
@@ -165,7 +202,7 @@ p {
 .icon-btn {
   border: none;
   background-color: transparent;
-  color: var(--text-dark);
+  color: var(--color-primary);
   font-size: 20px;
   opacity: 1;
   transition: opacity 0s ease 0s;
@@ -186,8 +223,7 @@ p {
 }
 
 .icon-btn:hover,
-.icon-btn a:hover,
-.add-note span:hover {
+.icon-btn a:hover {
   cursor: pointer;
 }
 
@@ -200,14 +236,18 @@ img {
   width: 100%;
 }
 
-.logo-main {
+.fa-paw {
+  color: var(--color-primary);
+}
+
+/* .logo-main {
   width: 256px;
   margin-bottom: 20px;
 }
 
 .logo-small {
   width: 64px;
-}
+} */
 
 .image-credits {
   display: flex;
@@ -227,7 +267,8 @@ img {
   background: white;
   padding: 10px;
   border-radius: 5px;
-  margin-top: 20px;
+  margin: 50px 125px;
+  box-shadow: 0px 5px 10px 0px rgba(35, 41, 70, 0.2);
 }
 
 @media screen and (max-width: 1280px) {
@@ -258,15 +299,16 @@ img {
   .navigation-icon {
     display: block;
   }
-  .navigation-title {
+  .btn-nav {
     display: none;
   }
+  .
 }
 
 @media screen and (max-width: 412px) {
-  .container-sm {
+  /* .container-sm {
     background-color: var(--bg-dark);
-  }
+  } */
   .cards-nav {
     margin: auto;
   }

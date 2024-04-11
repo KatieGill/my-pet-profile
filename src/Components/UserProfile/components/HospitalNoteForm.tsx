@@ -97,7 +97,7 @@ export const HospitalNoteForm = ({
           show={shouldShowNoteErrorMessage}
         />
         <div className="form-field-container">
-          <input type="submit" className="btn btn-submit" />
+          <input type="submit" className="btn" />
           <button
             className="btn"
             onClick={(e) => {

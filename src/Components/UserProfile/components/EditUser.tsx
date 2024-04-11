@@ -11,7 +11,10 @@ import {
   isPasswordValid,
   isUsernameValid,
 } from "../../../utils/validations";
-import { useAuthContext } from "../../../Providers/UseContext";
+import {
+  useAuthContext,
+  useUserDataContext,
+} from "../../../Providers/UseContext";
 import toast from "react-hot-toast";
 
 export const EditUser = () => {
@@ -31,6 +34,7 @@ export const EditUser = () => {
   );
   const navigate = useNavigate();
   const { patchUsername, patchPassword, user } = useAuthContext();
+  const { showMenuItems, toggleHamburgerMenu } = useUserDataContext();
 
   const passwordsAreValid = arePasswordsValid(
     newPasswordInput,
@@ -61,37 +65,48 @@ export const EditUser = () => {
   return (
     <>
       <div className="container">
-        <div className="nav">
+        <nav className="nav">
+          <div>
+            <h3>
+              My Pet Profile <i className="fa-solid fa-paw"></i>
+            </h3>
+          </div>
+          <div className="nav-buttons">
+            <button className="navigation-icon" onClick={toggleHamburgerMenu}>
+              {showMenuItems === "flex" ? (
+                <i className="fa-solid fa-xmark"></i>
+              ) : (
+                <i className="fa-solid fa-bars"></i>
+              )}
+            </button>
+            <button
+              className="btn btn-nav"
+              onClick={(e) => {
+                e.preventDefault();
+                navigate(-1);
+              }}
+            >
+              Home
+            </button>
+          </div>
+        </nav>
+        <div className="hamburger-menu" style={{ display: showMenuItems }}>
           <button
-            className="btn"
             onClick={(e) => {
+              toggleHamburgerMenu();
               e.preventDefault();
               navigate(-1);
             }}
           >
-            <span className="navigation-title"> Home</span>
-            <span className="navigation-icon">
-              <i className="fa-solid fa-house" title="home"></i>
-            </span>
+            Home
           </button>
-          <div className="btn">
-            <Link to="delete-user-profile">
-              <span className="navigation-title"> Delete User Profile</span>
-              <span className="navigation-icon">
-                <i
-                  className="fa-solid fa-trash"
-                  title="delete user profile"
-                ></i>
-              </span>
-            </Link>
-          </div>
         </div>
         <h3>Edit your user information</h3>
         <h4>Username: {user?.username}</h4>
         <div className="form-container">
           <h4>Update Username</h4>
           <form
-            className="form-grid "
+            className="form-grid username-form"
             onSubmit={(e) => {
               e.preventDefault();
               if (!usernameIsValid) {
@@ -118,7 +133,7 @@ export const EditUser = () => {
               }
             }}
           >
-            <div className="form-field-container form label">
+            <div className="form-field-container form-label">
               <label htmlFor="username">New username:</label>
             </div>
             <div className="form-field-container form-input">
@@ -140,7 +155,7 @@ export const EditUser = () => {
               show={shouldShowUsernameNotAvailableError}
             />
             <div className="form-field-container form-submit">
-              <input type="submit" className="btn" />
+              <input type="submit" className="btn btn-submit" />
             </div>
           </form>
         </div>
@@ -220,9 +235,14 @@ export const EditUser = () => {
             />
 
             <div className="form-field-container form-submit">
-              <input type="submit" className="btn" />
+              <input type="submit" className="btn btn-submit" />
             </div>
           </form>
+        </div>
+        <div className="delete-user">
+          <div className="btn">
+            <Link to="delete-user-profile">Delete User Profile</Link>
+          </div>
         </div>
       </div>
     </>

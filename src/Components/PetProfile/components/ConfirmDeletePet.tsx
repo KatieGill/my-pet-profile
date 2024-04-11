@@ -18,7 +18,7 @@ export const ConfirmDeletePet = () => {
       <div className="container container-sm">
         <h2>Are you sure you want to permanently delete your pet's profile?</h2>
         <button
-          className="btn"
+          className="btn btn-large"
           onClick={() => {
             navigate(-1);
           }}
@@ -26,7 +26,7 @@ export const ConfirmDeletePet = () => {
           NO
         </button>
         <button
-          className="btn"
+          className="btn btn-large"
           onClick={() => {
             deletePet({ id, userId, name, species, breed, dob, image })
               .then(() => {

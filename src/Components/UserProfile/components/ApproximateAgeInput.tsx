@@ -40,84 +40,72 @@ export const ApproximateAgeInput = ({
   };
 
   return (
-    <>
-      <div className="form-field-container pet-form-label age-title">
-        <span>Approximate Age:</span>
+    <div className="approximate-age-container">
+      <div className="approximate-age">
+        <div>
+          Enter your pet's approximate age in years, months or days. Then click{" "}
+          <strong>calculate birthday</strong>.
+        </div>
+        <div className="approximate-age-input">
+          <input
+            type="number"
+            name="age-years"
+            min="0"
+            max="30"
+            onChange={(e) => {
+              setYearsInput(+e.target.value);
+            }}
+          />
+          <label htmlFor="age-years">years</label>
+        </div>
+        <div className="approximate-age-input">
+          <input
+            type="number"
+            name="age-months"
+            min="0"
+            max="12"
+            onChange={(e) => {
+              setMonthsInput(+e.target.value);
+            }}
+          />
+          <label htmlFor="age-months">months</label>
+        </div>
+        <div className="approximate-age-input">
+          <input
+            type="number"
+            name="age-days"
+            min="0"
+            max="31"
+            onChange={(e) => {
+              setDaysInput(+e.target.value);
+            }}
+          />
+          <label htmlFor="age-days">days</label>
+        </div>
+        <div>
+          <button
+            className="btn"
+            onClick={(e) => {
+              e.preventDefault();
+              getBirthday();
+              setShowApproximateAgeInput(false);
+            }}
+          >
+            Calculate birthday
+          </button>
+        </div>
+        <div>
+          <button
+            className="btn"
+            onClick={(e) => {
+              e.preventDefault();
+              setShowApproximateAgeInput(false);
+            }}
+          >
+            Enter birthday manually
+          </button>
+        </div>
       </div>
-      <div className="form-field-container age-input">
-        <input
-          type="number"
-          name="age-years"
-          min="0"
-          max="30"
-          onChange={(e) => {
-            setYearsInput(+e.target.value);
-          }}
-        />
-      </div>
-
-      <div className="form-field-container age-label">
-        <label htmlFor="age-years">years</label>
-      </div>
-      <div className="form-field-container age-input">
-        <input
-          type="number"
-          name="age-months"
-          min="0"
-          max="12"
-          onChange={(e) => {
-            setMonthsInput(+e.target.value);
-          }}
-        />
-      </div>
-
-      <div className="form-field-container age-label">
-        <label htmlFor="age-months">months</label>
-      </div>
-      <div className="form-field-container age-input">
-        <input
-          type="number"
-          name="age-days"
-          min="0"
-          max="31"
-          onChange={(e) => {
-            setDaysInput(+e.target.value);
-          }}
-        />
-      </div>
-
-      <div className="form-field-container age-label">
-        <label htmlFor="age-days">days</label>
-      </div>
-
-      <div className="form-field-container calculated-birthday-display">
-        Enter your pet's approximate age in years, months or days. Then click
-        'calculate birthday'.
-      </div>
-
-      <div className="form-field-container calculate-birthday-btn">
-        <button
-          className="btn"
-          onClick={(e) => {
-            e.preventDefault();
-            getBirthday();
-            setShowApproximateAgeInput(false);
-          }}
-        >
-          Calculate birthday
-        </button>
-      </div>
-      <div className="form-field-container enter-birthday-button">
-        <button
-          className="btn"
-          onClick={(e) => {
-            e.preventDefault();
-            setShowApproximateAgeInput(false);
-          }}
-        >
-          Enter birthday manually
-        </button>
-      </div>
-    </>
+    </div>
   );
 };
